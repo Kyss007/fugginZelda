@@ -11,18 +11,11 @@ public class swordSwinger : MonoBehaviour
     public UnityEvent onEnableHitDetection;
     public UnityEvent onDisableHitDetection;
 
-    private characterController characterController;
     private damageProvider damageProvider;
 
     private void Start()
     {
-        characterController = GetComponentInParent<characterController>();
         damageProvider = GetComponentInParent<damageProvider>();
-    }
-
-    private void Update()
-    {
-        animator.SetBool("isDodge", characterController.wasDodge || Time.time - characterController.getLastDodgeTime() <= stabBufferTime);
     }
 
     public void triggerSwing(InputAction.CallbackContext context)

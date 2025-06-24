@@ -27,17 +27,6 @@ public class hitTrigger : MonoBehaviour
             if (!doesTickDamage)
             {
                 hitReciever.healthProvider?.damage(damageProvider.currentDamage);
-
-                if (damageProvider.doesKnockback && hitReciever.gameObject.layer == LayerMask.NameToLayer("player"))
-                {
-                    characterController player = hitReciever.GetComponentInParent<characterController>();
-
-                    player.currentState = characterController.state.knockback;
-                    player.setKnockbackPartner(damageProvider.gameObject.transform);
-
-                    player.knockbackUpForce = damageProvider.currentKnockbackUpForce;
-                    player.knockbackBackForce = damageProvider.currentKnockbackBackForce;
-                }
             }
         }
     }
