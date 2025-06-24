@@ -289,6 +289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8510382281391744275}
+  - component: {fileID: 4148359762313782511}
   m_Layer: 3
   m_Name: atGround
   m_TagString: Untagged
@@ -312,6 +313,21 @@ Transform:
   - {fileID: 6970051231896107745}
   m_Father: {fileID: 4244579278436318364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4148359762313782511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848771982628452394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 971b7b1190d5dcc26ab46f63e837efb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1847251551493248041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,7 +1098,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxGroundAngle: 45
-  targetJumpHeight: 5
+  targetJumpHeight: 4
   cyoteTime: 0.2
   bufferedJumpTime: 0.1
   deccendGravityMultiplier: 1.7
