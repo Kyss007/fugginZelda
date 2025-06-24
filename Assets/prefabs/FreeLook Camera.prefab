@@ -143,13 +143,13 @@ MonoBehaviour:
   Radius: 8
   Orbits:
     Top:
-      Radius: 4
+      Radius: 8
       Height: 8
     Center:
-      Radius: 8
+      Radius: 16
       Height: 4
     Bottom:
-      Radius: 3
+      Radius: 6
       Height: -1
     SplineCurvature: 0.8
   RecenteringTarget: 2
@@ -205,7 +205,7 @@ MonoBehaviour:
       Enabled: 1
       Input:
         InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
-        Gain: 8
+        Gain: 4
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -216,7 +216,7 @@ MonoBehaviour:
       Enabled: 1
       Input:
         InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
-        Gain: 0.08
+        Gain: 0.04
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -282,7 +282,7 @@ MonoBehaviour:
   IgnoreTag: vehicle
   TransparentLayers:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 0
   MinimumDistanceFromTarget: 0.1
   AvoidObstacles:
     Enabled: 1
