@@ -29,6 +29,16 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
         return jumpInput;
     }
 
+    public bool getDodgeInput()
+    {
+        return dodgeInput;
+    }
+
+    public bool getAttackInput()
+    {
+        return swordAttackInput;
+    }
+
     public void onCameraChange()
     {
         onCameraChangeEvent?.Invoke();
@@ -66,11 +76,25 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
 
     public void collectSwordAttackInput(InputAction.CallbackContext callbackContext)
     {
-        throw new NotImplementedException();
+        if (callbackContext.started)
+        {
+            swordAttackInput = true;
+        }
+        else if (callbackContext.canceled)
+        {
+            swordAttackInput = false;
+        }
     }
     
     public void collectDodgeInput(InputAction.CallbackContext callbackContext)
     {
-        throw new NotImplementedException();
+        if (callbackContext.started)
+        {
+            dodgeInput = true;
+        }
+        else if (callbackContext.canceled)
+        {
+            dodgeInput = false;
+        }
     }
 }

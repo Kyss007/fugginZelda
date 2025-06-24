@@ -13,18 +13,40 @@ public class swordSwinger : MonoBehaviour
 
     private damageProvider damageProvider;
 
+    private keanusCharacterController cc;
+    private kccIinputDriver inputProvider;
+
+    private bool hasTriggeredAttackThisButtonPress = false;
+
     private void Start()
     {
         damageProvider = GetComponentInParent<damageProvider>();
+
+        cc = GetComponentInParent<keanusCharacterController>();
+        inputProvider = cc.inputDriver;
     }
 
-    public void triggerSwing(InputAction.CallbackContext context)
+    void Update()
+    {
+        if (inputProvider.getAttackInput() && !hasTriggeredAttackThisButtonPress)
+        {
+            animator.SetTrigger("swing");
+
+            hasTriggeredAttackThisButtonPress = true;
+        }
+        else if(!inputProvider.getAttackInput() && hasTriggeredAttackThisButtonPress)
+        {
+            hasTriggeredAttackThisButtonPress = false;
+        }
+    }
+
+    /*public void triggerSwing(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             animator.SetTrigger("swing");
         }
-    }
+    }*/
 
     public void switchSideToLeft()
     {

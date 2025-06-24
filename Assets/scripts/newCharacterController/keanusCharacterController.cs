@@ -22,7 +22,7 @@ public class keanusCharacterController : MonoBehaviour
 
     [SerializeField]private List<kccIMovementDriver> movementDrivers = new List<kccIMovementDriver>();
     [SerializeField]private kccIMovementDriver currentMovementDriver;
-    [SerializeField]private kccIinputDriver inputDriver;
+    [SerializeField]public kccIinputDriver inputDriver;
 
     private void Start()
     {
