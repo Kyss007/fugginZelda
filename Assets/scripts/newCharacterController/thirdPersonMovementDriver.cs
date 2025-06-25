@@ -262,45 +262,6 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
             Vector3 dampingForce = new Vector3(0f, -rb.linearVelocity.y, 0f) * rideSpringDamper;
 
             rb.AddForce(upForce + dampingForce);
-
-            StartCoroutine(moveOnPlatform(groundHit));
-        }
-    }
-
-    public IEnumerator moveOnPlatform(RaycastHit groundHit)
-    {
-        yield return new WaitForFixedUpdate();
-
-        if (groundHit.rigidbody != null)
-        {
-            if (true)//!groundHit.rigidbody.TryGetComponent<flying>(out flying flying))
-            {
-                // Handle linear velocity
-                Vector3 groundVelocity = groundHit.rigidbody.linearVelocity;
-                Vector3 groundAngularVelocity = groundHit.rigidbody.angularVelocity;
-
-                // Handle rotational velocity
-                Vector3 pointOfRotation = groundHit.rigidbody.worldCenterOfMass;
-                Quaternion rotationDelta = Quaternion.Euler(groundAngularVelocity * Mathf.Rad2Deg * Time.fixedDeltaTime);
-
-                // Calculate the desired position based on rotation
-                Vector3 desiredPosition = rotationDelta * (rb.position - pointOfRotation) + pointOfRotation;
-
-                // Calculate and apply velocity change needed for rotation
-                Vector3 velocityChange = (desiredPosition - rb.position) / Time.fixedDeltaTime;
-                rb.AddForce(velocityChange, ForceMode.VelocityChange);
-
-                // Handle angular velocity changes
-                Vector3 desiredAngularVelocity = groundAngularVelocity;
-                Vector3 angularVelocityChange = desiredAngularVelocity - rb.angularVelocity;
-                angularVelocityChange.x = 0;
-                angularVelocityChange.z = 0;
-                rb.AddTorque(angularVelocityChange, ForceMode.VelocityChange);
-            }
-        }
-        else
-        {
-            rb.angularVelocity = Vector3.zero;
         }
     }
 
