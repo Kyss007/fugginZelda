@@ -61,10 +61,15 @@ public class keanusCharacterController : MonoBehaviour
     {
         if(true)//currentVehicle == null)
         {
-            if(canMove)
+            if (canMove)
             {
                 currentMovementDriver.setMoveInput(inputDriver.getMoveInput());
                 currentMovementDriver.setJumpInput(inputDriver.getJumpInput());
+
+                if (inputDriver.getDodgeInput())
+                {
+                    currentMovementDriver.dodge();
+                }
             }
             else
             {

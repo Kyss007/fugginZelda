@@ -7,6 +7,8 @@ public interface kccIMovementDriver
     public void initDriver(Rigidbody rigidbody);
     public void movePlayer();
 
+    public void dodge();
+
     public void setLookInput(Vector2 input);
     public void setMoveInput(Vector2 input);
     public void setJumpInput(bool input);

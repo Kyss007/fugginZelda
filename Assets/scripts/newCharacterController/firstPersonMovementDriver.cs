@@ -371,4 +371,9 @@ public class firstPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
         rotatePlayer();
     }
+
+    public void dodge()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -30,14 +30,24 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     public float rideSpringDamper = 20f;
     public LayerMask groundLayerMask;
 
+    [Header("Dodge Parameters")]
+    public float dodgeDistance = 2f;
+    public float dodgeSpeed = 20f;
+    public float dodgeCooldown = 1f;
+
+
+
     //private shits
     private float lastGroundTime;
     private float lastJumpInputTime = -Mathf.Infinity;
 
+    [Space]
     public bool isMoving;
     public bool isJumping = false;
     public bool cancelJump = false;
     public bool isGrounded = true;
+    public bool isDodging = false;
+    public bool canDodge = true;
     private float goalSpeed;
 
     public RaycastHit groundHit;
@@ -53,7 +63,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     public void Start()
     {
-        if(camera == null)
+        if (camera == null)
         {
             camera = Camera.main;
         }
@@ -61,7 +71,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     private void OnEnable()
     {
-        if(camera == null)
+        if (camera == null)
         {
             camera = Camera.main;
         }
@@ -71,7 +81,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     private void OnDisable()
     {
-        if(camera == null)
+        if (camera == null)
         {
             camera = Camera.main;
         }
@@ -84,7 +94,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     {
         rb = rigidbody;
     }
-    
+
     public void setMoveInput(Vector2 input)
     {
         inputDir = input;
@@ -94,13 +104,13 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     {
         jumpInput = input;
 
-        if(jumpInput && !lastJumpInput)
+        if (jumpInput && !lastJumpInput)
         {
             lastJumpInputTime = Time.time;
         }
         else if (!jumpInput && lastJumpInput)
         {
-            if(isJumping)
+            if (isJumping)
             {
                 cancelJump = true;
             }
@@ -139,7 +149,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
             }
         }
 
-        if(moveDirection != Vector3.zero)
+        if (moveDirection != Vector3.zero)
         {
             lookDirection = moveDirection;
         }
@@ -191,6 +201,9 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     private bool doMovePlayer()
     {
+        if (isDodging)
+            return false;
+
         bool isMoving = false;
 
         float idealSpeed = moveDirection.magnitude * maxSpeed;
@@ -204,7 +217,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
         {
             goalSpeed = Mathf.Min(goalSpeed + ((acceleration * accelMod) * accelerationFactorFromDotCurve.Evaluate(velDot)) * Time.deltaTime, idealSpeed);
         }
-        else if(speedDifference < 0)
+        else if (speedDifference < 0)
         {
             if (!isJumping)
             {
@@ -269,10 +282,10 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
                 // Handle rotational velocity
                 Vector3 pointOfRotation = groundHit.rigidbody.worldCenterOfMass;
                 Quaternion rotationDelta = Quaternion.Euler(groundAngularVelocity * Mathf.Rad2Deg * Time.fixedDeltaTime);
-                
+
                 // Calculate the desired position based on rotation
                 Vector3 desiredPosition = rotationDelta * (rb.position - pointOfRotation) + pointOfRotation;
-                
+
                 // Calculate and apply velocity change needed for rotation
                 Vector3 velocityChange = (desiredPosition - rb.position) / Time.fixedDeltaTime;
                 rb.AddForce(velocityChange, ForceMode.VelocityChange);
@@ -308,7 +321,6 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
         float jumpForce = calculateJumpForce();
 
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        print("jump");
     }
 
     private void updateGravityMultiplier(float multiplier)
@@ -333,6 +345,40 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     public void setLookInput(Vector2 input)
     {
-        
+
+    }
+
+    public void dodge()
+    {
+        if (!canDodge || isDodging || !isGrounded)
+            return;
+
+        StartCoroutine(performDodge());
+    }
+
+    private IEnumerator performDodge()
+    {
+        isDodging = true;
+        canDodge = false;
+
+        Vector3 dodgeDirection = lookDirection.normalized;
+        float dodgeDuration = dodgeDistance / dodgeSpeed;
+        float elapsed = 0f;
+
+        float originalMaxSpeed = maxSpeed;
+        maxSpeed = 0f;
+
+        while (elapsed < dodgeDuration)
+        {
+            rb.linearVelocity = new Vector3(dodgeDirection.x * dodgeSpeed, rb.linearVelocity.y, dodgeDirection.z * dodgeSpeed);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        maxSpeed = originalMaxSpeed;
+        isDodging = false;
+
+        yield return new WaitForSeconds(dodgeCooldown);
+        canDodge = true;
     }
 }

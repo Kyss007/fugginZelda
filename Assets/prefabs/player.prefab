@@ -1110,10 +1110,15 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  dodgeDistance: 5
+  dodgeSpeed: 20
+  dodgeCooldown: 1
   isMoving: 0
   isJumping: 0
   cancelJump: 0
   isGrounded: 0
+  isDodging: 0
+  canDodge: 1
   rb: {fileID: 0}
   camera: {fileID: 0}
 --- !u!1 &5871955979735464907

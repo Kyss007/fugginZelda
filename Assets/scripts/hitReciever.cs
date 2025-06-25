@@ -19,4 +19,11 @@ public class hitReciever : MonoBehaviour
 
         healthProvider = GetComponentInParent<healthProvider>();
     }
+
+    //for debug
+    [ContextMenu("trigger onHit")]
+    public void triggerOnHit()
+    {
+        onHit.Invoke();
+    }
 }
