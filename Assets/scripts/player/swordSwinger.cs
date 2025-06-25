@@ -28,13 +28,16 @@ public class swordSwinger : MonoBehaviour
 
     void Update()
     {
+        if (inputProvider == null)
+            return;
+
         if (inputProvider.getAttackInput() && !hasTriggeredAttackThisButtonPress)
         {
             animator.SetTrigger("swing");
 
             hasTriggeredAttackThisButtonPress = true;
         }
-        else if(!inputProvider.getAttackInput() && hasTriggeredAttackThisButtonPress)
+        else if (!inputProvider.getAttackInput() && hasTriggeredAttackThisButtonPress)
         {
             hasTriggeredAttackThisButtonPress = false;
         }

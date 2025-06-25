@@ -24,7 +24,7 @@ public class keanusCharacterController : MonoBehaviour
     [SerializeField]private kccIMovementDriver currentMovementDriver;
     [SerializeField]public kccIinputDriver inputDriver;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
 

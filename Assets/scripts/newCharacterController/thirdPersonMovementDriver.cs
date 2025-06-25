@@ -76,7 +76,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
             camera = Camera.main;
         }
 
-        //sometimes errors out when stopping the editor. can be safely
+        //sometimes errors out when stopping the editor. can be safely ignored
         camera.gameObject.SetActive(false);
     }
 
