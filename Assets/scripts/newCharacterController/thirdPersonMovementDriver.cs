@@ -268,6 +268,11 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
             Vector3 dampingForce = new Vector3(0f, -rb.linearVelocity.y, 0f) * rideSpringDamper;
 
             rb.AddForce(upForce + dampingForce);
+
+            if (groundHit.rigidbody != null)
+            {
+                groundHit.rigidbody.AddForceAtPosition(-(upForce + dampingForce), groundHit.point);    
+            }
         }
     }
 
