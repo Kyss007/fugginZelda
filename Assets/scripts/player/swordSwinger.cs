@@ -41,6 +41,9 @@ public class swordSwinger : MonoBehaviour
         {
             hasTriggeredAttackThisButtonPress = false;
         }
+
+        thirdPersonMovementDriver movementDriver = (thirdPersonMovementDriver)cc.currentMovementDriver;
+        animator.SetBool("isDodge", movementDriver.isDodging);
     }
 
     /*public void triggerSwing(InputAction.CallbackContext context)

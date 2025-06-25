@@ -1662,17 +1662,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e93a09c333e9164295e99dcd4acb93f, type: 3}
---- !u!114 &289960928 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4820373867556585335, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-  m_PrefabInstance: {fileID: 692813741}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8599b376f44c34f4fad7aface20e56dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &300273231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1566554370342857490, guid: 8e93a09c333e9164295e99dcd4acb93f, type: 3}
@@ -3831,34 +3820,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 289960928}
-    - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: dodge
-      objectReference: {fileID: 0}
-    - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: thirdPersonMovementDriver, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 4244579278436318364, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 119.94

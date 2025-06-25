@@ -36,7 +36,7 @@
                     "name": "dodge",
                     "type": "Button",
                     "id": "89fcf66e-f73f-4b05-a865-beea4c157269",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -231,7 +231,7 @@
                 {
                     "name": "",
                     "id": "77110e81-daef-45a5-b646-fe2cc0ddc595",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "default",

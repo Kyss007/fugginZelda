@@ -21,7 +21,7 @@ public class keanusCharacterController : MonoBehaviour
     [SerializeField] public playerStatusData statusData = new playerStatusData();
 
     [SerializeField]private List<kccIMovementDriver> movementDrivers = new List<kccIMovementDriver>();
-    [SerializeField]private kccIMovementDriver currentMovementDriver;
+    [SerializeField]public kccIMovementDriver currentMovementDriver;
     [SerializeField]public kccIinputDriver inputDriver;
 
     private void Awake()
