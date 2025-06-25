@@ -165,9 +165,9 @@ MonoBehaviour:
     m_ActionName: 'basePlayer/jump[/Keyboard/space]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5984395726380800279}
-        m_TargetAssemblyTypeName: swordSwinger, Assembly-CSharp
-        m_MethodName: triggerSwing
+      - m_Target: {fileID: 357619495066999775}
+        m_TargetAssemblyTypeName: inputSystemInputDriver, Assembly-CSharp
+        m_MethodName: collectSwordAttackInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -578,7 +578,7 @@ GameObject:
   - component: {fileID: 3211009508895193244}
   - component: {fileID: 5984395726380800279}
   m_Layer: 3
-  m_Name: armMoverThings
+  m_Name: armMoverThingsPhysical
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1113,7 +1113,7 @@ MonoBehaviour:
   isMoving: 0
   isJumping: 0
   cancelJump: 0
-  isGrounded: 1
+  isGrounded: 0
   rb: {fileID: 0}
   camera: {fileID: 0}
 --- !u!1 &5871955979735464907
@@ -1576,7 +1576,7 @@ GameObject:
   - component: {fileID: 641753268108090327}
   - component: {fileID: 5211785028556062046}
   m_Layer: 3
-  m_Name: armPivot
+  m_Name: armPivotVisual
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

@@ -32,7 +32,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     //private shits
     private float lastGroundTime;
-    private float lastJumpInputTime;
+    private float lastJumpInputTime = -Mathf.Infinity;
 
     public bool isMoving;
     public bool isJumping = false;
@@ -308,6 +308,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
         float jumpForce = calculateJumpForce();
 
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        print("jump");
     }
 
     private void updateGravityMultiplier(float multiplier)
