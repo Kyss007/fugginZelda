@@ -21,6 +21,7 @@ public class targetController : MonoBehaviour
     private target lastSuggestedTarget = null;
 
     private kccIinputDriver inputDriver;
+    private kccIMovementDriver movementDriver;
 
     void Start()
     {
@@ -31,6 +32,7 @@ public class targetController : MonoBehaviour
         targetSellectedGO.SetActive(false);
 
         inputDriver = transform.parent.GetComponentInChildren<inputSystemInputDriver>();
+        movementDriver = transform.parent.GetComponentInChildren<kccIMovementDriver>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -149,6 +151,16 @@ public class targetController : MonoBehaviour
             targetSellectedGO.transform.position = currentSellectedTarget.transform.position;
         }
 
+        if (isTargeting && currentSellectedTarget != null)
+        {
+            Vector2 currentLookDirection = new Vector2(transform.forward.x, transform.forward.z).normalized;
+
+            Vector3 dir = currentSellectedTarget.transform.position - transform.parent.position;
+            Vector2 targetLookDirection = new Vector2(dir.x, dir.z).normalized;
+
+            Vector2 lerpedLookDirection = Vector2.Lerp(currentLookDirection, targetLookDirection, 100 * Time.deltaTime);
+            movementDriver.setLookInput(lerpedLookDirection);
+        }
 
         lastTargetsCount = targets.Count;
         wasTargeting = isTargeting;

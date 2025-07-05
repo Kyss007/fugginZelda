@@ -50,12 +50,6 @@ public class keanusCharacterController : MonoBehaviour
 
         inputDriver = GetComponentInChildren<kccIinputDriver>();
     }
-
-    public void Update()
-    {
-        if(canMove)
-            currentMovementDriver.setLookInput(inputDriver.getLookInput());
-    }
     
     public void FixedUpdate()
     {

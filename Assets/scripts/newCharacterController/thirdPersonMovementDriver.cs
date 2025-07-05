@@ -317,7 +317,8 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     public void setLookInput(Vector2 input)
     {
-
+        lookDirection.x = input.x;
+        lookDirection.z = input.y;
     }
 
     public void dodge()
