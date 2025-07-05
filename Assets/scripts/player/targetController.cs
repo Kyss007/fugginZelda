@@ -99,16 +99,29 @@ public class targetController : MonoBehaviour
                     index = 0;
             }
 
-            for (int i = index; i < targets.Count; i++)
+            // falls nur ein target vorhanden ist nimm es trotzdem
+            if (targets.Count == 1)
             {
-                if (targets[i] != currentSellectedTarget && targets[i] != lastSuggestedTarget)
+                if (targets[0] != currentSellectedTarget)
                 {
-                    currentSuggestedTarget = targets[i];
+                    currentSuggestedTarget = targets[0];
                     lastSuggestedTarget = currentSuggestedTarget;
-                    break;
+                }
+            }
+            else
+            {
+                for (int i = index; i < targets.Count; i++)
+                {
+                    if (targets[i] != currentSellectedTarget && targets[i] != lastSuggestedTarget)
+                    {
+                        currentSuggestedTarget = targets[i];
+                        lastSuggestedTarget = currentSuggestedTarget;
+                        break;
+                    }
                 }
             }
         }
+
 
         //target sellecten
         if (isTargeting && !wasTargeting)
