@@ -27,9 +27,7 @@ public class cameraController : MonoBehaviour
     {
         isTargeting = inputDriver.getTargetInput();
 
-        if (isTargeting)
-        {
-            //cmOrbitFollow.HorizontalAxis.Value = Vector3.SignedAngle(Vector3.forward, characterController.transform.forward, Vector3.up);
-        }
+        cmOrbitFollow.HorizontalAxis.Recentering.Enabled = isTargeting;
+        cmOrbitFollow.VerticalAxis.Recentering.Enabled = isTargeting;
     }
 }

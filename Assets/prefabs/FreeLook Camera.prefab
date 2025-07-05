@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4621291611887927648}
   - component: {fileID: 163213635772960305}
   - component: {fileID: 2913102164753082118}
+  - component: {fileID: 5304350385734033571}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Untagged
@@ -114,14 +115,14 @@ MonoBehaviour:
     SplineCurvature: 0.8
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: 1
+    Value: 0
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
     Recentering:
       Enabled: 0
-      Wait: 1
-      Time: 2
+      Wait: 0
+      Time: 0.3
     Restrictions: 0
   VerticalAxis:
     Value: 0.5
@@ -130,8 +131,8 @@ MonoBehaviour:
     Wrap: 0
     Recentering:
       Enabled: 0
-      Wait: 1
-      Time: 2
+      Wait: 0
+      Time: 0.3
     Restrictions: 0
   RadialAxis:
     Value: 1
@@ -303,3 +304,16 @@ MonoBehaviour:
     NearLimit: 5
     FarLimit: 30
     MaxQualityBoost: 0.2
+--- !u!114 &5304350385734033571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9107655013632228199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8457e3cf070e3b5ad8804189d7349487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTargeting: 0
