@@ -18,6 +18,8 @@ public class targetController : MonoBehaviour
 
     private int lastTargetsCount = 0;
 
+    private target lastSuggestedTarget = null;
+
     private kccIinputDriver inputDriver;
 
     void Start()
@@ -77,18 +79,32 @@ public class targetController : MonoBehaviour
         {
             lastTargetsCount = 0;
             wasTargeting = false;
+
+            lastSuggestedTarget = null;
             return;
         }
 
 
         //wenn kein target suggested wird oder wenn grade der erste target drinne ist soll der erste in der liste suggested werden
-        if (currentSuggestedTarget == null || lastTargetsCount <= 0 && targets.Count > 0)
-        {   
-            for (int i = 0; i < targets.Count; i++)
+        if (currentSuggestedTarget == null || (lastTargetsCount <= 0 && targets.Count > 0))
+        {
+            //TODO: statt einfach den nächsten in der liste picken, den nächsten zum letzten target
+            int index = 0;
+
+            if (targets.Contains(lastSuggestedTarget))
             {
-                if (targets[i] != currentSellectedTarget)
+                index = targets.IndexOf(lastSuggestedTarget);
+
+                if (index >= targets.Count - 1)
+                    index = 0;
+            }
+
+            for (int i = index; i < targets.Count; i++)
+            {
+                if (targets[i] != currentSellectedTarget && targets[i] != lastSuggestedTarget)
                 {
                     currentSuggestedTarget = targets[i];
+                    lastSuggestedTarget = currentSuggestedTarget;
                     break;
                 }
             }
