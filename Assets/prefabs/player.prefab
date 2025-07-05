@@ -204,7 +204,7 @@ MonoBehaviour:
     m_ActionId: 7b900d18-7616-49eb-a0d7-f07ea4f61864
     m_ActionName: 'Menus/Pause Menu[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: default
+  m_DefaultControlScheme: 
   m_DefaultActionMap: basePlayer
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -915,7 +915,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4244579278436318370}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: fb66c147c41ca094aa2f60b427307bf4, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

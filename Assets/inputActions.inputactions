@@ -6,6 +6,15 @@
             "id": "68912740-8d25-496a-8b1b-eec1744fc15b",
             "actions": [
                 {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "0d054016-e1b5-4060-8427-0fc9b658f971",
+                    "expectedControlType": "Vector2",
+                    "processors": "ScaleVector2(x=50,y=50)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "movement",
                     "type": "Value",
                     "id": "4673d872-f9c5-4ac1-858c-a74d85a205ab",
@@ -18,7 +27,7 @@
                     "name": "jump",
                     "type": "Button",
                     "id": "45961b79-d12d-4520-acb6-e179e61e45b4",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -27,7 +36,7 @@
                     "name": "swingSword",
                     "type": "Button",
                     "id": "0cbba1e0-4fe0-4652-9f65-de7e4f938ceb",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -69,7 +78,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";keyboard",
                     "action": "movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -80,7 +89,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": "keyboard",
                     "action": "movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -91,7 +100,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";keyboard",
                     "action": "movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -102,7 +111,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";keyboard",
                     "action": "movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -124,7 +133,7 @@
                     "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";gamepad",
                     "action": "movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -135,7 +144,7 @@
                     "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";gamepad",
                     "action": "movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -146,7 +155,7 @@
                     "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";gamepad",
                     "action": "movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -157,10 +166,32 @@
                     "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";gamepad",
                     "action": "movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "23c49da5-ee94-4c85-886a-7c51b5261822",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=5,y=5)",
+                    "groups": ";Gamepad;gamepad",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f0f80ed-930d-4644-bb37-ebe0870e5bee",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=2,y=2)",
+                    "groups": ";Keyboard&Mouse;keyboard",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -168,7 +199,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";keyboard",
                     "action": "jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -179,7 +210,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";keyboard",
                     "action": "swingSword",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -190,7 +221,7 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";keyboard",
                     "action": "escape",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -201,7 +232,7 @@
                     "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";gamepad",
                     "action": "escape",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -212,7 +243,7 @@
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";gamepad",
                     "action": "jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -223,7 +254,7 @@
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";gamepad",
                     "action": "swingSword",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -234,7 +265,7 @@
                     "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";keyboard",
                     "action": "dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -242,10 +273,10 @@
                 {
                     "name": "",
                     "id": "a5b4f1e1-4651-40b2-a935-65cd217140ad",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "default",
+                    "groups": ";gamepad",
                     "action": "dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -283,8 +314,8 @@
     ],
     "controlSchemes": [
         {
-            "name": "default",
-            "bindingGroup": "default",
+            "name": "keyboard",
+            "bindingGroup": "keyboard",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
@@ -295,10 +326,16 @@
                     "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "gamepad",
+            "bindingGroup": "gamepad",
+            "devices": [
                 {
                     "devicePath": "<Gamepad>",
-                    "isOptional": true,
+                    "isOptional": false,
                     "isOR": false
                 }
             ]
