@@ -13,6 +13,7 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
     [SerializeField] private bool jumpInput;
     [SerializeField] private bool dodgeInput;
     [SerializeField] private bool swordAttackInput;
+    [SerializeField] private bool targetInput;
 
     public Vector2 getLookInput()
     {
@@ -37,6 +38,11 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
     public bool getAttackInput()
     {
         return swordAttackInput;
+    }
+
+    public bool getTargetInput()
+    {
+        return targetInput;
     }
 
     public void onCameraChange()
@@ -85,7 +91,7 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
             swordAttackInput = false;
         }
     }
-    
+
     public void collectDodgeInput(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
@@ -95,6 +101,18 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
         else if (callbackContext.canceled)
         {
             dodgeInput = false;
+        }
+    }
+    
+    public void collectTargetInput(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            targetInput = true;
+        }
+        else if (callbackContext.canceled)
+        {
+            targetInput = false;
         }
     }
 }

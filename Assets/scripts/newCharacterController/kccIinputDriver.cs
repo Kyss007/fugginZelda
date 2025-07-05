@@ -11,7 +11,8 @@ public interface kccIinputDriver
 
     public bool getDodgeInput();
     public bool getAttackInput();
- 
+
+    public bool getTargetInput();
  
     event Action onCameraChangeEvent;
     public void onCameraChange();
