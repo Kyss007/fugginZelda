@@ -24,19 +24,21 @@ public class keanusCharacterController : MonoBehaviour
     [SerializeField]public kccIMovementDriver currentMovementDriver;
     [SerializeField]public kccIinputDriver inputDriver;
 
+    private bool wasDodge = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
 
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             kccIMovementDriver childMovementDriver = child.GetComponent<kccIMovementDriver>();
 
-            if(childMovementDriver != null)
+            if (childMovementDriver != null)
             {
                 childMovementDriver.initDriver(rb);
-    
-                if(movementDrivers.Count == 0)
+
+                if (movementDrivers.Count == 0)
                 {
                     currentMovementDriver = childMovementDriver;
                 }
@@ -50,17 +52,17 @@ public class keanusCharacterController : MonoBehaviour
 
         inputDriver = GetComponentInChildren<kccIinputDriver>();
     }
-    
+
     public void FixedUpdate()
     {
-        if(true)//currentVehicle == null)
+        if (true)//currentVehicle == null)
         {
             if (canMove)
             {
                 currentMovementDriver.setMoveInput(inputDriver.getMoveInput());
                 currentMovementDriver.setJumpInput(inputDriver.getJumpInput());
 
-                if (inputDriver.getDodgeInput())
+                if (inputDriver.getDodgeInput() && !wasDodge)
                 {
                     currentMovementDriver.dodge();
                 }
@@ -70,7 +72,7 @@ public class keanusCharacterController : MonoBehaviour
                 currentMovementDriver.setMoveInput(Vector2.zero);
                 currentMovementDriver.setJumpInput(false);
             }
-            
+
             currentMovementDriver.movePlayer();
         }
         else
@@ -78,6 +80,8 @@ public class keanusCharacterController : MonoBehaviour
 
             //currentVehicle.collectMoveInput(inputDriver.getMoveInput());
         }
+
+        wasDodge = inputDriver.getDodgeInput();
     }
 
     /*public void getLeaveVehicleInput(InputAction.CallbackContext context)
