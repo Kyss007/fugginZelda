@@ -6,8 +6,11 @@ public class cameraController : MonoBehaviour
 {
     public bool isTargeting = false;
 
+    public bool canMoveCam = true;
+
     private CinemachineOrbitalFollow cmOrbitFollow;
     private CinemachineCamera cm;
+    private CinemachineInputAxisController cmInputAxis;
 
     private keanusCharacterController characterController;
 
@@ -20,6 +23,7 @@ public class cameraController : MonoBehaviour
     {
         cmOrbitFollow = GetComponent<CinemachineOrbitalFollow>();
         cm = GetComponent<CinemachineCamera>();
+        cmInputAxis = GetComponent<CinemachineInputAxisController>();
 
         ogFov = cm.Lens.FieldOfView;
     }
@@ -37,6 +41,9 @@ public class cameraController : MonoBehaviour
 
         cmOrbitFollow.HorizontalAxis.Recentering.Enabled = isTargeting;
         cmOrbitFollow.VerticalAxis.Recentering.Enabled = isTargeting;
+
+        cmInputAxis.Controllers[0].Enabled = !isTargeting && canMoveCam;
+        cmInputAxis.Controllers[1].Enabled = !isTargeting && canMoveCam;
 
         thirdPersonMovementDriver thirdPersonMovementDriver = (thirdPersonMovementDriver)movementDriver;
         thirdPersonMovementDriver.lookRelativeInput = isTargeting;
