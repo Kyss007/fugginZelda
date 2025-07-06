@@ -62,7 +62,7 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
 
     public void collectJumpInput(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.started)
+        if (callbackContext.performed)
         {
             jumpInput = true;
         }
@@ -82,7 +82,7 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
 
     public void collectSwordAttackInput(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.started)
+        if (callbackContext.performed)
         {
             swordAttackInput = true;
         }
@@ -94,7 +94,7 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
 
     public void collectDodgeInput(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.started)
+        if (callbackContext.performed)
         {
             dodgeInput = true;
         }
@@ -106,7 +106,7 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
     
     public void collectTargetInput(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.started)
+        if (callbackContext.performed)
         {
             targetInput = true;
         }
