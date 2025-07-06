@@ -301,7 +301,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
             rb.linearVelocity = velocity;
         }
 
-        if (groundHit.rigidbody != null)
+        if (groundHit.rigidbody != null && isGrounded)
         {
             Vector3 pointVelocity = groundHit.rigidbody.GetPointVelocity(transform.position);
             rb.linearVelocity += new Vector3(pointVelocity.x, 0f, pointVelocity.z);
