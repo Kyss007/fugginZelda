@@ -36,8 +36,6 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     public float dodgeSpeed = 20f;
     public float dodgeCooldown = 1f;
 
-
-
     //private shits
     private float lastGroundTime;
     private float lastJumpInputTime = -Mathf.Infinity;
@@ -53,6 +51,10 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     public RaycastHit groundHit;
     private bool wasGrounded;
+
+    // Platform rotation tracking
+    private Rigidbody lastPlatformRigidbody;
+    private Quaternion lastPlatformRotation;
 
     private bool jumpInput;
     private bool lastJumpInput;
@@ -132,6 +134,8 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     {
         isGrounded = checkGrounded(out groundHit);
 
+        handlePlatformRotation();
+
         calculateDesiredMoveDirection();
 
         rotatePlayerSpeedBased();
@@ -167,6 +171,38 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
         wasGrounded = isGrounded;
         lastJumpInput = jumpInput;
+    }
+
+    private void handlePlatformRotation()
+    {
+        if (isGrounded && groundHit.rigidbody != null)
+        {
+            // if on  new platform store rotation
+            if (lastPlatformRigidbody != groundHit.rigidbody)
+            {
+                lastPlatformRigidbody = groundHit.rigidbody;
+                lastPlatformRotation = groundHit.rigidbody.rotation;
+            }
+            else
+            {
+                //calculate rotation difference since last frame
+                Quaternion currentPlatformRotation = groundHit.rigidbody.rotation;
+                Quaternion rotationDifference = currentPlatformRotation * Quaternion.Inverse(lastPlatformRotation);
+                
+                // apply the rotation difference to the look direction
+                lookDirection = rotationDifference * lookDirection;
+                lookDirection.y = 0; // Keep look direction horizontal
+                lookDirection = lookDirection.normalized;
+                
+                // update the stored platform rotation
+                lastPlatformRotation = currentPlatformRotation;
+            }
+        }
+        else
+        {
+            // clear platform tracking when not on a rigidbody
+            lastPlatformRigidbody = null;
+        }
     }
 
     public bool checkGrounded(out RaycastHit groundHit)
