@@ -7,15 +7,21 @@ public class cameraController : MonoBehaviour
     public bool isTargeting = false;
 
     private CinemachineOrbitalFollow cmOrbitFollow;
+    private CinemachineCamera cm;
 
     private keanusCharacterController characterController;
 
     private kccIinputDriver inputDriver;
     private kccIMovementDriver movementDriver;
 
+    private float ogFov;
+
     private void Awake()
     {
         cmOrbitFollow = GetComponent<CinemachineOrbitalFollow>();
+        cm = GetComponent<CinemachineCamera>();
+
+        ogFov = cm.Lens.FieldOfView;
     }
 
     void Start()
@@ -34,5 +40,7 @@ public class cameraController : MonoBehaviour
 
         thirdPersonMovementDriver thirdPersonMovementDriver = (thirdPersonMovementDriver)movementDriver;
         thirdPersonMovementDriver.lookRelativeInput = isTargeting;
+
+        cm.Lens.FieldOfView = Mathf.Lerp(cm.Lens.FieldOfView , isTargeting ? (ogFov / 1.1f) : ogFov, 10 * Time.deltaTime);
     }
 }
