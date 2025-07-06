@@ -15,6 +15,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     public float turnSpeed = 15f;
     public AnimationCurve rotationSpeedByMoveSpeed;
     public float maxGroundAngle = 45f;
+    public bool lookRelativeInput = false;
 
     [Header("Jump Parameters")]
     public float targetJumpHeight = 3.0f;
@@ -149,7 +150,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
             }
         }
 
-        if (moveDirection != Vector3.zero)
+        if (moveDirection != Vector3.zero && !lookRelativeInput)
         {
             lookDirection = moveDirection;
         }
@@ -195,6 +196,17 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
         camForward.y = 0f;
         camForward.Normalize();
 
+        if (lookRelativeInput)
+        {
+            Vector3 playerForward = transform.forward;
+            playerForward.y = 0f;
+            playerForward.Normalize();
+            
+            Vector3 desiredMoveDirection1 = (playerForward * moveVertical) + (transform.right * moveHorizontal);
+            moveDirection = desiredMoveDirection1.normalized;
+            return;
+        }
+
         Vector3 desiredMoveDirection = (camForward * moveVertical) + (camera.transform.right * moveHorizontal);
         moveDirection = desiredMoveDirection.normalized;
     }
@@ -229,7 +241,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
         {
             isMoving = true;
 
-            Vector3 idealVel = transform.forward * goalSpeed;
+            Vector3 idealVel = (lookRelativeInput ? moveDirection : transform.forward) * goalSpeed;
             Vector3 neededAccel = (idealVel - rb.linearVelocity) / Time.fixedDeltaTime;
 
             rb.AddForce(new Vector3(neededAccel.x, 0, neededAccel.z), ForceMode.Acceleration);

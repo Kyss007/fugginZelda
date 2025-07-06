@@ -12,6 +12,7 @@ public class targetController : MonoBehaviour
     public target currentSuggestedTarget = null;
     public target currentSellectedTarget = null;
     public float suggestionDisplayOffset = 2.5f;
+    public float turnToTargetSpeed = 160f;
     [Space]
     public bool isTargeting = false;
     public bool wasTargeting = false;
@@ -158,9 +159,10 @@ public class targetController : MonoBehaviour
             Vector3 dir = currentSellectedTarget.transform.position - transform.parent.position;
             Vector2 targetLookDirection = new Vector2(dir.x, dir.z).normalized;
 
-            Vector2 lerpedLookDirection = Vector2.Lerp(currentLookDirection, targetLookDirection, 100 * Time.deltaTime);
+            Vector2 lerpedLookDirection = Vector2.Lerp(currentLookDirection, targetLookDirection, turnToTargetSpeed * Time.deltaTime);
             movementDriver.setLookInput(lerpedLookDirection);
         }
+        
 
         lastTargetsCount = targets.Count;
         wasTargeting = isTargeting;

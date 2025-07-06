@@ -11,6 +11,7 @@ public class cameraController : MonoBehaviour
     private keanusCharacterController characterController;
 
     private kccIinputDriver inputDriver;
+    private kccIMovementDriver movementDriver;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class cameraController : MonoBehaviour
     {
         characterController = FindFirstObjectByType<keanusCharacterController>();
         inputDriver = characterController.inputDriver;
+        movementDriver = characterController.currentMovementDriver;
     }
 
     void Update()
@@ -29,5 +31,8 @@ public class cameraController : MonoBehaviour
 
         cmOrbitFollow.HorizontalAxis.Recentering.Enabled = isTargeting;
         cmOrbitFollow.VerticalAxis.Recentering.Enabled = isTargeting;
+
+        thirdPersonMovementDriver thirdPersonMovementDriver = (thirdPersonMovementDriver)movementDriver;
+        thirdPersonMovementDriver.lookRelativeInput = isTargeting;
     }
 }
