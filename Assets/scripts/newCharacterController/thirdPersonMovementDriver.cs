@@ -68,6 +68,8 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
         {
             camera = Camera.main;
         }
+
+        lookDirection = transform.forward.normalized;
     }
 
     private void OnEnable()
@@ -87,8 +89,16 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
             camera = Camera.main;
         }
 
-        //sometimes errors out when stopping the editor. can be safely ignored
-        camera.gameObject.SetActive(false);
+        try
+        {
+            //sometimes errors out when stopping the editor. can be safely ignored
+            camera.gameObject.SetActive(false);
+
+        }
+        catch
+        {
+            
+        }
     }
 
     public void initDriver(Rigidbody rigidbody)
@@ -336,6 +346,9 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     public void dodge()
     {
         if (!canDodge || isDodging || !isGrounded)
+            return;
+
+        if (lookRelativeInput && inputDir == Vector2.zero)
             return;
 
         StartCoroutine(performDodge());
