@@ -246,7 +246,7 @@ MonoBehaviour:
       Enabled: 1
       Input:
         InputAction: {fileID: 3030979887564296400, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
-        Gain: 0.01
+        Gain: -0.01
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
