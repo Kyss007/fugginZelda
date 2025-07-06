@@ -346,7 +346,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
         isDodging = true;
         canDodge = false;
 
-        Vector3 dodgeDirection = lookDirection.normalized;
+        Vector3 dodgeDirection = (lookRelativeInput ? moveDirection : lookDirection).normalized;
         float dodgeDuration = dodgeDistance / dodgeSpeed;
         float elapsed = 0f;
 
