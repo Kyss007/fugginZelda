@@ -729,6 +729,7 @@ MonoBehaviour:
   currentSuggestedTarget: {fileID: 0}
   currentSellectedTarget: {fileID: 0}
   suggestionDisplayOffset: 2.5
+  turnToTargetSpeed: 160
   isTargeting: 0
   wasTargeting: 0
 --- !u!135 &3676947228741831302
@@ -1339,6 +1340,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxGroundAngle: 45
+  lookRelativeInput: 0
   targetJumpHeight: 4
   cyoteTime: 0.2
   bufferedJumpTime: 0.1
@@ -1351,7 +1353,7 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  dodgeDistance: 4
+  dodgeDistance: 4.5
   dodgeSpeed: 25
   dodgeCooldown: 0.3
   isMoving: 0
