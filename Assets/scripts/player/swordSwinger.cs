@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using Unity.Collections;
 
 public class swordSwinger : MonoBehaviour
 {
@@ -15,8 +16,13 @@ public class swordSwinger : MonoBehaviour
 
     private keanusCharacterController cc;
     private kccIinputDriver inputProvider;
+    private thirdPersonMovementDriver movementDriver;
 
     private bool hasTriggeredAttackThisButtonPress = false;
+
+    private targetController targetController;
+
+    private bool wasGrounded = false;
 
     private void Start()
     {
@@ -24,16 +30,37 @@ public class swordSwinger : MonoBehaviour
 
         cc = GetComponentInParent<keanusCharacterController>();
         inputProvider = cc.inputDriver;
+
+        targetController = transform.parent.GetComponentInChildren<targetController>();
+
+        movementDriver = (thirdPersonMovementDriver)cc.currentMovementDriver;
     }
 
     void Update()
     {
+        thirdPersonMovementDriver movementDriver = (thirdPersonMovementDriver)cc.currentMovementDriver;
         if (inputProvider == null)
             return;
 
         if (inputProvider.getAttackInput() && !hasTriggeredAttackThisButtonPress)
         {
-            animator.SetTrigger("swing");
+            if (targetController.isTargeting)
+            {
+                if (movementDriver.isJumping)
+                {
+                    animator.SetBool("jumpSwing", true);
+                }
+                else
+                {
+                    animator.SetBool("jumpSwing", false);
+                }
+            }
+            else
+            {
+                animator.SetBool("jumpSwing", false);
+            }
+
+                animator.SetTrigger("swing");
 
             hasTriggeredAttackThisButtonPress = true;
         }
@@ -42,8 +69,14 @@ public class swordSwinger : MonoBehaviour
             hasTriggeredAttackThisButtonPress = false;
         }
 
-        thirdPersonMovementDriver movementDriver = (thirdPersonMovementDriver)cc.currentMovementDriver;
         animator.SetBool("isDodge", movementDriver.isDodging);
+
+        if (movementDriver.isGrounded && !wasGrounded)
+        {
+            animator.SetBool("jumpSwing", false);
+        }
+
+        wasGrounded = movementDriver.isGrounded;
     }
 
     /*public void triggerSwing(InputAction.CallbackContext context)

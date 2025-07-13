@@ -126,7 +126,7 @@ MonoBehaviour:
     Restrictions: 0
   VerticalAxis:
     Value: 0.5
-    Center: 0.5
+    Center: 0.7
     Range: {x: 0, y: 1}
     Wrap: 0
     Recentering:
@@ -317,3 +317,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTargeting: 0
+  canMoveCam: 1
