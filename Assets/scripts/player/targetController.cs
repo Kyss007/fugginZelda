@@ -165,7 +165,7 @@ public class targetController : MonoBehaviour
             Vector3 dir = currentSellectedTarget.transform.position - transform.parent.position;
             Vector2 targetLookDirection = new Vector2(dir.x, dir.z).normalized;
 
-            Vector2 lerpedLookDirection = Vector2.Lerp(currentLookDirection, targetLookDirection, turnToTargetSpeed * Time.deltaTime);
+            Vector2 lerpedLookDirection = Vector2.Lerp(currentLookDirection, targetLookDirection, turnToTargetSpeed * Time.fixedDeltaTime);
             movementDriver.setLookInput(lerpedLookDirection);
         }
         
