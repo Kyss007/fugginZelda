@@ -19,7 +19,7 @@ public class objectHold : MonoBehaviour
     private bool lastJumpInput = false;
 
     private float jumpDisableTimer = 0f;
-    public float jumpDisableDuration = 0.1f;
+    public float jumpDisableDuration = 0.2f;
 
     private void Awake()
     {
