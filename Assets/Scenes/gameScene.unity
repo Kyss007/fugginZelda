@@ -5874,10 +5874,9 @@ MonoBehaviour:
   animator: {fileID: 0}
   objectToPickup: {fileID: 0}
   pickedUpObject: {fileID: 0}
+  pickedUpCollider: {fileID: 0}
   motionCopier: {fileID: 0}
-  heldObjectLayer:
-    serializedVersion: 2
-    m_Bits: 8192
+  heldObjectLayer: heldObject
   ogHeldObjectLayer: 0
 --- !u!136 &947070844
 CapsuleCollider:
