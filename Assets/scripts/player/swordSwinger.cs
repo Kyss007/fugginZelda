@@ -24,6 +24,8 @@ public class swordSwinger : MonoBehaviour
 
     private bool wasGrounded = false;
 
+    public bool disableSword = false;
+
     private void Start()
     {
         damageProvider = GetComponentInParent<damageProvider>();
@@ -38,6 +40,9 @@ public class swordSwinger : MonoBehaviour
 
     void Update()
     {
+        if (disableSword)
+            return;
+
         thirdPersonMovementDriver movementDriver = (thirdPersonMovementDriver)cc.currentMovementDriver;
         if (inputProvider == null)
             return;

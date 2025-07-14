@@ -4,34 +4,52 @@ using UnityEngine;
 
 public class objectHold : MonoBehaviour
 {
-    public bool debugDopickUp = false;
     public bool isHolding = false;
     public Animator animator;
 
     public holdableObject objectToPickup;
     public holdableObject pickedUpObject;
 
+    private swordSwinger swordSwinger;
+    private keanusCharacterController cc;
+
+    private inputSystemInputDriver inputDriver;
+
+    private thirdPersonMovementDriver movementDriver;
+
+    private bool lastJumpInput = false;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
+    void Start()
+    {
+        cc = transform.parent.GetComponent<keanusCharacterController>();
+        swordSwinger = cc.GetComponentInChildren<swordSwinger>();
+        inputDriver = cc.GetComponentInChildren<inputSystemInputDriver>();
+        movementDriver = cc.GetComponentInChildren<thirdPersonMovementDriver>();
+    }
+
     public void Update()
     {
-        if (debugDopickUp)
-        {
-            debugDopickUp = false;
+        swordSwinger.disableSword = isHolding;
+        movementDriver.disableJump = objectToPickup != null || (inputDriver.getMoveInput() == Vector2.zero && isHolding);
 
+        if (inputDriver.getJumpInput() && !lastJumpInput && movementDriver.isGrounded)
+        {
             if (!isHolding)
             {
                 doPickup();
             }
-            else
+            else if(inputDriver.getMoveInput() == Vector2.zero)
             {
                 doDrop();
             }
         }
+            
+        lastJumpInput = inputDriver.getJumpInput();
     }
 
     public void doPickup()
@@ -45,6 +63,7 @@ public class objectHold : MonoBehaviour
             objectToPickup.doPickup(transform);
 
             pickedUpObject = objectToPickup;
+            objectToPickup = null;
         }
     }
 

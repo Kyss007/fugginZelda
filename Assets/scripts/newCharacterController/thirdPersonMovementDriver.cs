@@ -42,6 +42,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     [Space]
     public bool isMoving;
+    public bool disableJump = false;
     public bool isJumping = false;
     public bool cancelJump = false;
     public bool isGrounded = true;
@@ -346,10 +347,13 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     public void doJump()
     {
-        if (!(isGrounded || Time.time - lastGroundTime <= cyoteTime) || isJumping)
-        {
+        if (disableJump)
             return;
-        }
+
+        if (!(isGrounded || Time.time - lastGroundTime <= cyoteTime) || isJumping)
+            {
+                return;
+            }
 
         isGrounded = false;
         isJumping = true;

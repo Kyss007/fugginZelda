@@ -17,6 +17,7 @@ public class keanusCharacterController : MonoBehaviour
 
     public Rigidbody rb;
     public bool canMove = true;
+    public bool disableJump = false;
 
     [SerializeField] public playerStatusData statusData = new playerStatusData();
 
@@ -60,7 +61,8 @@ public class keanusCharacterController : MonoBehaviour
             if (canMove)
             {
                 currentMovementDriver.setMoveInput(inputDriver.getMoveInput());
-                currentMovementDriver.setJumpInput(inputDriver.getJumpInput());
+
+                currentMovementDriver.setJumpInput(disableJump ? false : inputDriver.getJumpInput());
 
                 if (inputDriver.getDodgeInput() && !wasDodge)
                 {
