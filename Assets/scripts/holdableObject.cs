@@ -24,6 +24,8 @@ public class holdableObject : MonoBehaviour
     private DampedSpringMotionCopier motionCopier;
 
     private Transform holdPoint;
+    public Vector3 holdOffset;
+    public float throwTargetHeightOffset;
 
     public bool isThrow = false;
 
@@ -40,6 +42,8 @@ public class holdableObject : MonoBehaviour
         {
             motionCopier.positionalSpring.sourceObject = holdPoint;
             motionCopier.transform.forward = holdPoint.forward;
+            
+            motionCopier.positionalSpring.frozenLocalOffset = holdOffset;
         }
         else
         {
@@ -86,7 +90,7 @@ public class holdableObject : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(origin, Vector3.down, out hit, Mathf.Infinity, groundLayer))
             {
-                target = hit.point + new Vector3(0, collider.bounds.size.y / 2.2f ,0);
+                target = hit.point + new Vector3(0, throwTargetHeightOffset, 0);
             }
             else
             {
@@ -132,7 +136,7 @@ public class holdableObject : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(groundCheckOrigin, Vector3.down, out hit, Mathf.Infinity, groundLayer))
         {
-            endPosition.y = hit.point.y + collider.bounds.size.y / 2.2f; // Ground + collider offset
+            endPosition.y = hit.point.y + throwTargetHeightOffset; // Ground + collider offset
         }
         else
         {

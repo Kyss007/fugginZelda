@@ -190,6 +190,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   heldObjectLayer: heldObject
+  holdOffset: {x: 0, y: 0, z: 0}
+  throwTargetHeightOffset: 0.35
   isThrow: 0
 --- !u!114 &5906898897818175821
 MonoBehaviour:
