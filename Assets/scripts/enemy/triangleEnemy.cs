@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 public class triangleEnemy : MonoBehaviour
 {
+    public bool isRight = false;
     public LayerMask groundLayer;
 
     public float knockbackForce = 15f;
@@ -109,15 +110,31 @@ public class triangleEnemy : MonoBehaviour
 
     public void triggerHit(Vector3 direction, string damageName)
     {
-        switch (damageName)
+        if (!isRight)
         {
-            case "lightSwingLeft":
-                Destroy(gameObject);
-                break;
-            case "lightSwingRight":
-                print("right + knockbak");
-                doKnockback(direction);
-                break;
+            switch (damageName)
+            {
+                case "lightSwingLeft":
+                    Destroy(gameObject);
+                    break;
+
+                case "lightSwingRight":
+                    doKnockback(direction);
+                    break;
+            }
+        }
+        else
+        {
+            switch (damageName)
+            {
+                case "lightSwingLeft":
+                    doKnockback(direction);
+                    break;
+                    
+                case "lightSwingRight":
+                    Destroy(gameObject);
+                    break;
+            }
         }
     }
 }
