@@ -22,7 +22,7 @@ public class hitTrigger : MonoBehaviour
 
         if (hitReciever != null)
         {
-            hitReciever.onHit.Invoke();
+            hitReciever.onHit.Invoke((hitReciever.transform.position - transform.position).normalized, damageProvider.currentDamageName);
 
             if (!doesTickDamage)
             {
@@ -42,7 +42,7 @@ public class hitTrigger : MonoBehaviour
 
         if (hitReciever != null)
         {
-            hitReciever.onHit.Invoke();
+            hitReciever.onHit.Invoke(Vector3.zero, "null");
 
             if (doesTickDamage)
             {

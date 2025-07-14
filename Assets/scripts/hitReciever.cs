@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class hitReciever : MonoBehaviour
 {
-    public UnityEvent onHit;
+    public UnityEvent<Vector3, string> onHit;
 
     [HideInInspector]
     public Collider collider;
@@ -22,8 +22,8 @@ public class hitReciever : MonoBehaviour
 
     //for debug
     [ContextMenu("trigger onHit")]
-    public void triggerOnHit()
+    public void triggerOnHit(Vector3 direction, string input = "null")
     {
-        onHit.Invoke();
+        onHit.Invoke(direction, input);
     }
 }

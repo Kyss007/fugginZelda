@@ -16,6 +16,7 @@ public class damageProvider : MonoBehaviour
 
     public SerializedDictionary<string, damageType> damageList;
 
+    public string currentDamageName;
     public float currentDamage;
     public bool doesKnockback;
     public float currentKnockbackUpForce;
@@ -24,6 +25,8 @@ public class damageProvider : MonoBehaviour
     public void updateDamageState(string damageName)
     {
         damageList.TryGetValue(damageName, out damageType newDamage);
+
+        currentDamageName = damageName;
 
         currentDamage = newDamage.damage;
         doesKnockback = newDamage.doesKnockback;

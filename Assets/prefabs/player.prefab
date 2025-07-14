@@ -1119,7 +1119,13 @@ MonoBehaviour:
         doesKnockback: 0
         knockbackUpForce: 0
         knockbackBackForce: 0
-    - Key: lightSwing
+    - Key: lightSwingLeft
+      Value:
+        damage: 5
+        doesKnockback: 0
+        knockbackUpForce: 0
+        knockbackBackForce: 0
+    - Key: lightSwingRight
       Value:
         damage: 5
         doesKnockback: 0
@@ -1131,6 +1137,7 @@ MonoBehaviour:
         doesKnockback: 0
         knockbackUpForce: 0
         knockbackBackForce: 0
+  currentDamageName: 
   currentDamage: 0
   doesKnockback: 0
   currentKnockbackUpForce: 0

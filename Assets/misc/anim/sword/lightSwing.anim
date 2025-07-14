@@ -452,7 +452,7 @@ AnimationClip:
     messageOptions: 0
   - time: 0
     functionName: setDamage
-    data: lightSwing
+    data: lightSwingRight
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
