@@ -8,16 +8,9 @@ public class objectHold : MonoBehaviour
     public bool isHolding = false;
     public Animator animator;
 
-    public Rigidbody objectToPickup;
-    public Rigidbody pickedUpObject;
+    public holdableObject objectToPickup;
+    public holdableObject pickedUpObject;
 
-    public Collider pickedUpCollider;
-
-    public DampedSpringMotionCopier motionCopier;
-
-    public string heldObjectLayer;
-
-    public int ogHeldObjectLayer;
 
     private void Awake()
     {
@@ -29,31 +22,49 @@ public class objectHold : MonoBehaviour
         if (debugDopickUp)
         {
             debugDopickUp = false;
-            doPickup();
-        }
 
-        if (pickedUpObject != null)
-        {
-            motionCopier = pickedUpObject.GetComponent<DampedSpringMotionCopier>();
-            motionCopier.positionalSpring.sourceObject = transform;
-            motionCopier.transform.forward = transform.forward;
+            if (!isHolding)
+            {
+                doPickup();
+            }
+            else
+            {
+                doDrop();
+            }
         }
     }
 
     public void doPickup()
     {
-        if (!isHolding)
+        if (!isHolding && objectToPickup != null)
         {
             isHolding = true;
 
-            objectToPickup.isKinematic = true;
-
-            pickedUpObject = objectToPickup;
-
             animator.SetBool("holdingObject", true);
 
-            ogHeldObjectLayer = pickedUpObject.gameObject.layer;
-            pickedUpCollider.gameObject.layer = LayerMask.NameToLayer(heldObjectLayer);
+            objectToPickup.doPickup(transform);
+
+            pickedUpObject = objectToPickup;
+        }
+    }
+
+    public void doDrop()
+    {
+        if (isHolding && pickedUpObject != null)
+        {
+            animator.SetBool("holdingObject", false);
+        }
+    }
+
+    public void triggerDropOnObject()
+    {
+        if (pickedUpObject != null)
+        {
+            isHolding = false;
+
+            pickedUpObject.doDrop();
+
+            pickedUpObject = null;
         }
     }
 
@@ -66,8 +77,7 @@ public class objectHold : MonoBehaviour
         {
             if (objectToPickup == null && pickedUpObject == null && !isHolding)
             {
-                objectToPickup = other.attachedRigidbody;
-                pickedUpCollider = other;
+                objectToPickup = holdableObject;
             }
         }
     }
@@ -79,7 +89,7 @@ public class objectHold : MonoBehaviour
             
         if (other.attachedRigidbody.TryGetComponent<holdableObject>(out holdableObject holdableObject))
         {
-            if (objectToPickup == other.attachedRigidbody)
+            if (objectToPickup == holdableObject)
             {
                 objectToPickup = null;
             }
