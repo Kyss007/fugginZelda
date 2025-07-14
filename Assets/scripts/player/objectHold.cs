@@ -1,5 +1,4 @@
 using PhysicalWalk;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class objectHold : MonoBehaviour
@@ -39,25 +38,33 @@ public class objectHold : MonoBehaviour
         swordSwinger.disableSword = isHolding;
 
         if (jumpDisableTimer > 0)
-        {
             jumpDisableTimer -= Time.deltaTime;
-        }
 
-        movementDriver.disableJump = jumpDisableTimer > 0 || objectToPickup != null || (inputDriver.getMoveInput() == Vector2.zero && isHolding);
+        movementDriver.disableJump = jumpDisableTimer > 0 || objectToPickup != null || (inputDriver.getMoveInput() == Vector2.zero && isHolding) || (isHolding && inputDriver.getTargetInput());
 
-        if (inputDriver.getJumpInput() && !lastJumpInput && movementDriver.isGrounded && !movementDriver.isJumping)
+        bool grounded = movementDriver.isGrounded && !movementDriver.isJumping;
+        bool jumpPressed = inputDriver.getJumpInput();
+        bool jumpJustPressed = jumpPressed && !lastJumpInput;
+
+        if (grounded && jumpJustPressed && isHolding && inputDriver.getTargetInput())
         {
-            if (!isHolding)
+            jumpDisableTimer = jumpDisableDuration;
+            doDrop();
+            pickedUpObject.doThrow();
+        }
+        else if (grounded && jumpJustPressed)
+        {
+            if (!isHolding && objectToPickup != null)
             {
                 doPickup();
             }
-            else if (inputDriver.getMoveInput() == Vector2.zero)
+            else if (isHolding && inputDriver.getMoveInput() == Vector2.zero)
             {
                 doDrop();
             }
         }
 
-        lastJumpInput = inputDriver.getJumpInput();
+        lastJumpInput = jumpPressed;
     }
 
     public void doPickup()
@@ -104,7 +111,6 @@ public class objectHold : MonoBehaviour
             {
                 objectToPickup = holdableObject;
 
-                // Jump kurzzeitig deaktivieren
                 jumpDisableTimer = jumpDisableDuration;
             }
         }
