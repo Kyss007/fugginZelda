@@ -26,6 +26,8 @@ public class triangleEnemy : MonoBehaviour
     private bool isGrounded;
     private bool isJumping = false;
 
+    private Coroutine currentJumpRoutine;
+
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -47,7 +49,7 @@ public class triangleEnemy : MonoBehaviour
 
         if (isGrounded && !isJumping)
         {
-            StartCoroutine(jumpRoutine());
+            currentJumpRoutine = StartCoroutine(jumpRoutine());
         }
     }
 
@@ -67,6 +69,8 @@ public class triangleEnemy : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         isJumping = false;
+
+        currentJumpRoutine = null;
     }
 
     public Vector3 getDirection()
@@ -95,6 +99,12 @@ public class triangleEnemy : MonoBehaviour
 
         rb.linearVelocity = Vector3.zero;
         rb.AddForce((direction + Vector3.up) * knockbackForce, ForceMode.Impulse);
+
+        if (currentJumpRoutine != null)
+        { 
+            StopCoroutine(currentJumpRoutine);
+            isJumping = false;
+        }
     }
 
     public void triggerHit(Vector3 direction, string damageName)
@@ -102,7 +112,7 @@ public class triangleEnemy : MonoBehaviour
         switch (damageName)
         {
             case "lightSwingLeft":
-                print("left + kill");
+                Destroy(gameObject);
                 break;
             case "lightSwingRight":
                 print("right + knockbak");
