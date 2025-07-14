@@ -1,5 +1,7 @@
+using System.Collections;
 using JetBrains.Annotations;
 using PhysicalWalk;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,7 +9,11 @@ public class holdableObject : MonoBehaviour
 {
     public bool isHeld = false;
 
+    public float throwDistance = 10f;
+    public float throwSpeed = 20f;
+
     public Collider collider;
+    public LayerMask groundLayer;
 
     public string heldObjectLayer = "heldObject";
     private Rigidbody rb;
@@ -73,49 +79,101 @@ public class holdableObject : MonoBehaviour
     {
         if (!withTarget)
         {
-            target = transform.position + transform.forward * 1;
+            Vector3 origin = transform.position + transform.forward * throwDistance;
+
+            RaycastHit hit;
+            if (Physics.Raycast(origin, Vector3.down, out hit, Mathf.Infinity, groundLayer))
+            {
+                target = hit.point + new Vector3(0, collider.bounds.size.y / 2.1f ,0);
+            }
+            else
+            {
+                Debug.Log("no ground found in throw. janky fallback throw target");
+                target = origin;
+            }
         }
 
         doDrop();
 
-        addArcImpulse(rb, target, 45, 10);
+        StartCoroutine(ThrowRigidbodyAlongArc(rb, throwSpeed, throwDistance, target));
     }
-    
-    public void addArcImpulse(Rigidbody rb, Vector3 target, float launchAngleDeg, float maxDistance)
+
+    public IEnumerator ThrowRigidbodyAlongArc(Rigidbody rigidbody, float speed, float maxHorizontalDistance, Vector3 targetPosition)
     {
-        float gravity = Mathf.Abs(Physics.gravity.y);
-        Vector3 start = rb.position;
-        Vector3 toTarget = target - start;
+        // Disable physics during arc movement
+        rigidbody.isKinematic = true;
 
-        Vector3 toTargetXZ = new Vector3(toTarget.x, 0, toTarget.z);
-        float horizontalDistance = Mathf.Min(toTargetXZ.magnitude, maxDistance); // clamp distance
-        float heightDifference = toTarget.y;
+        Vector3 startPosition = rigidbody.transform.position;
 
-        float angleRad = launchAngleDeg * Mathf.Deg2Rad;
-        float cosAngle = Mathf.Cos(angleRad);
-        float sinAngle = Mathf.Sin(angleRad);
+        // Calculate direction to target (horizontal plane only)
+        Vector3 toTarget = targetPosition - startPosition;
+        toTarget.y = 0f; // Remove vertical component
+        Vector3 horizontalDirection = toTarget.normalized;
 
-        float numerator = gravity * horizontalDistance * horizontalDistance;
-        float denominator = 2f * (heightDifference - horizontalDistance * Mathf.Tan(angleRad)) * cosAngle * cosAngle;
+        // Calculate actual horizontal distance, capped by max distance
+        float actualHorizontalDistance = Mathf.Min(toTarget.magnitude, maxHorizontalDistance);
 
-        float speed;
+        // Calculate arc parameters for 45-degree trajectory
+        float maxHeight = actualHorizontalDistance * 0.5f; // At 45 degrees, max height = horizontal distance / 2
 
-        // Check for invalid trajectory, fallback if needed
-        if (denominator > 0)
+        // Calculate total arc length (approximation for 45-degree parabola)
+        float arcLength = actualHorizontalDistance * 1.414f; // √2 * horizontal distance for 45-degree arc
+
+        // Calculate time to complete the arc at the given speed
+        float totalTime = arcLength / speed;
+
+        Vector3 endPosition = startPosition + (horizontalDirection * actualHorizontalDistance);
+        
+        // Do a ground check to ensure we end at ground level
+        Vector3 groundCheckOrigin = endPosition + Vector3.up * 100f; // Start high above the end position
+        RaycastHit hit;
+        if (Physics.Raycast(groundCheckOrigin, Vector3.down, out hit, Mathf.Infinity, groundLayer))
         {
-            speed = Mathf.Sqrt(numerator / denominator);
+            endPosition.y = hit.point.y + collider.bounds.size.y / 2.1f; // Ground + collider offset
         }
         else
         {
-            // Estimate max distance throw at this angle
-            speed = Mathf.Sqrt(gravity * maxDistance / (sinAngle * 2f));
+            endPosition.y = targetPosition.y; // Fallback to original target height
         }
 
-        Vector3 directionXZ = toTargetXZ.normalized;
-        Vector3 velocity = directionXZ * speed * cosAngle;
-        velocity.y = speed * sinAngle;
+        float elapsedTime = 0f;
 
-        rb.linearVelocity = Vector3.zero; // optional reset
-        rb.AddForce(velocity, ForceMode.Impulse);
+        while (elapsedTime < totalTime)
+        {
+            // Calculate progress along the arc (0 to 1)
+            float t = elapsedTime / totalTime;
+
+            // Calculate position along the parabolic arc
+            Vector3 currentPosition = Vector3.Lerp(startPosition, endPosition, t);
+
+            // Add parabolic height (45-degree arc peaks at middle)
+            float height = 4f * maxHeight * t * (1f - t); // Parabolic formula
+            currentPosition.y = Mathf.Lerp(startPosition.y, endPosition.y, t) + height;
+
+            // Move the rigidbody
+            rigidbody.transform.position = currentPosition;
+
+            elapsedTime += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        // Ensure final position is exact
+        rigidbody.transform.position = endPosition;
+
+        // Re-enable physics
+        rigidbody.isKinematic = false;
+        
+
+        // Calculate final velocity to continue the arc naturally
+        Vector3 previousPosition = rigidbody.transform.position;
+        float previousTime = Time.fixedDeltaTime;
+        yield return new WaitForFixedUpdate();
+
+        Vector3 finalPosition = rigidbody.transform.position;
+        Vector3 finalVelocity = (finalPosition - previousPosition) / previousTime;
+
+        // Re-enable physics
+        rigidbody.isKinematic = false;
+        rigidbody.linearVelocity = finalVelocity;
     }
 }

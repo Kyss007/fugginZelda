@@ -14,6 +14,7 @@ public class objectHold : MonoBehaviour
 
     private inputSystemInputDriver inputDriver;
     private thirdPersonMovementDriver movementDriver;
+    private targetController targetController;
 
     private bool lastJumpInput = false;
 
@@ -31,6 +32,7 @@ public class objectHold : MonoBehaviour
         swordSwinger = cc.GetComponentInChildren<swordSwinger>();
         inputDriver = cc.GetComponentInChildren<inputSystemInputDriver>();
         movementDriver = cc.GetComponentInChildren<thirdPersonMovementDriver>();
+        targetController = cc.GetComponentInChildren<targetController>();
     }
 
     public void Update()
@@ -50,7 +52,15 @@ public class objectHold : MonoBehaviour
         {
             jumpDisableTimer = jumpDisableDuration;
             doDrop();
-            pickedUpObject.doThrow();
+
+            if (targetController.currentSellectedTarget != null)
+            {
+                pickedUpObject.doThrow(targetController.currentSellectedTarget.transform.position, true);
+            }
+            else
+            {
+                pickedUpObject.doThrow();
+            }
         }
         else if (grounded && jumpJustPressed)
         {
