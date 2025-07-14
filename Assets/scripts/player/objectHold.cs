@@ -14,10 +14,12 @@ public class objectHold : MonoBehaviour
     private keanusCharacterController cc;
 
     private inputSystemInputDriver inputDriver;
-
     private thirdPersonMovementDriver movementDriver;
 
     private bool lastJumpInput = false;
+
+    private float jumpDisableTimer = 0f;
+    public float jumpDisableDuration = 0.1f;
 
     private void Awake()
     {
@@ -35,20 +37,26 @@ public class objectHold : MonoBehaviour
     public void Update()
     {
         swordSwinger.disableSword = isHolding;
-        movementDriver.disableJump = objectToPickup != null || (inputDriver.getMoveInput() == Vector2.zero && isHolding);
 
-        if (inputDriver.getJumpInput() && !lastJumpInput && movementDriver.isGrounded)
+        if (jumpDisableTimer > 0)
+        {
+            jumpDisableTimer -= Time.deltaTime;
+        }
+
+        movementDriver.disableJump = jumpDisableTimer > 0 || objectToPickup != null || (inputDriver.getMoveInput() == Vector2.zero && isHolding);
+
+        if (inputDriver.getJumpInput() && !lastJumpInput && movementDriver.isGrounded && !movementDriver.isJumping)
         {
             if (!isHolding)
             {
                 doPickup();
             }
-            else if(inputDriver.getMoveInput() == Vector2.zero)
+            else if (inputDriver.getMoveInput() == Vector2.zero)
             {
                 doDrop();
             }
         }
-            
+
         lastJumpInput = inputDriver.getJumpInput();
     }
 
@@ -80,9 +88,7 @@ public class objectHold : MonoBehaviour
         if (pickedUpObject != null)
         {
             isHolding = false;
-
             pickedUpObject.doDrop();
-
             pickedUpObject = null;
         }
     }
@@ -97,6 +103,9 @@ public class objectHold : MonoBehaviour
             if (objectToPickup == null && pickedUpObject == null && !isHolding)
             {
                 objectToPickup = holdableObject;
+
+                // Jump kurzzeitig deaktivieren
+                jumpDisableTimer = jumpDisableDuration;
             }
         }
     }
@@ -105,7 +114,7 @@ public class objectHold : MonoBehaviour
     {
         if (other.attachedRigidbody == null)
             return;
-            
+
         if (other.attachedRigidbody.TryGetComponent<holdableObject>(out holdableObject holdableObject))
         {
             if (objectToPickup == holdableObject)
