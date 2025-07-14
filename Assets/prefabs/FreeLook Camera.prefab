@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4982729650567229361}
   - component: {fileID: 4925041861799530813}
   - component: {fileID: 4621291611887927648}
+  - component: {fileID: 5304350385734033571}
   - component: {fileID: 163213635772960305}
   - component: {fileID: 2913102164753082118}
-  - component: {fileID: 5304350385734033571}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Untagged
@@ -60,7 +60,7 @@ MonoBehaviour:
   Target:
     TrackingTarget: {fileID: 0}
     LookAtTarget: {fileID: 0}
-    CustomLookAtTarget: 0
+    CustomLookAtTarget: 1
   Lens:
     FieldOfView: 50
     OrthographicSize: 10
@@ -213,6 +213,26 @@ MonoBehaviour:
               Enabled: 1
               Size: {x: 0.8, y: 0.8}
               Offset: {x: 0, y: 0}
+--- !u!114 &5304350385734033571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9107655013632228199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8457e3cf070e3b5ad8804189d7349487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTargeting: 0
+  canMoveCam: 1
+  cameraTrackingTarget: {fileID: 0}
+  cameraLookAtTarget: {fileID: 0}
+  targetSideAngle: -15
+  targetSideAngleSpeed: 10
+  targetRotSpeed: 5
+  targetPlayerDistancePercent: 0.4
 --- !u!114 &163213635772960305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,17 +324,3 @@ MonoBehaviour:
     NearLimit: 5
     FarLimit: 30
     MaxQualityBoost: 0.2
---- !u!114 &5304350385734033571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9107655013632228199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8457e3cf070e3b5ad8804189d7349487, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTargeting: 0
-  canMoveCam: 1

@@ -3945,6 +3945,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e93a09c333e9164295e99dcd4acb93f, type: 3}
+--- !u!1 &671570331 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2638554972324089942, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
+  m_PrefabInstance: {fileID: 692813741}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &671570332 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7271275312260163184, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
+  m_PrefabInstance: {fileID: 692813741}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &675280781 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1566554370342857490, guid: 8e93a09c333e9164295e99dcd4acb93f, type: 3}
@@ -9054,10 +9064,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5304350385734033571, guid: 4a4ee06f44a00cd7ea9e8473152cef18, type: 3}
+      propertyPath: cameraLookAtTarget
+      value: 
+      objectReference: {fileID: 1705057423}
+    - target: {fileID: 5304350385734033571, guid: 4a4ee06f44a00cd7ea9e8473152cef18, type: 3}
+      propertyPath: cameraTrackingTarget
+      value: 
+      objectReference: {fileID: 671570331}
+    - target: {fileID: 7608229869280718380, guid: 4a4ee06f44a00cd7ea9e8473152cef18, type: 3}
+      propertyPath: Target.LookAtTarget
+      value: 
+      objectReference: {fileID: 1705057424}
     - target: {fileID: 7608229869280718380, guid: 4a4ee06f44a00cd7ea9e8473152cef18, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
-      objectReference: {fileID: 692813742}
+      objectReference: {fileID: 671570332}
     - target: {fileID: 9107655013632228199, guid: 4a4ee06f44a00cd7ea9e8473152cef18, type: 3}
       propertyPath: m_Name
       value: FreeLook Camera
@@ -9364,6 +9386,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1566554370342857490, guid: 8e93a09c333e9164295e99dcd4acb93f, type: 3}
   m_PrefabInstance: {fileID: 818529110}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1705057423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1705057424}
+  m_Layer: 3
+  m_Name: cameraLookAtTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1705057424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705057423}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 119.94, y: 4.65, z: -285.81}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1713943044
 GameObject:
   m_ObjectHideFlags: 0
@@ -11603,6 +11656,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 326930280}
   - {fileID: 1625600287}
+  - {fileID: 1705057424}
   - {fileID: 334221660}
   - {fileID: 1656382045}
   - {fileID: 1890204529}

@@ -66,6 +66,12 @@ public class targetController : MonoBehaviour
                 {
                     currentSuggestedTarget = null;
                 }
+
+                //remove from sellected target
+                if (toBeRemovedTarget == currentSellectedTarget)
+                {
+                    currentSellectedTarget = null;
+                }
             }
         }
     }
