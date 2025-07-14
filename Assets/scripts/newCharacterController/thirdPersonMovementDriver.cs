@@ -60,6 +60,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     private bool lastJumpInput;
     private Vector2 inputDir;
     private Vector3 moveDirection;
+    private Vector3 lastMoveDirection;
     private Vector3 lookDirection;
     public Rigidbody rb;
     public Camera camera;
@@ -72,6 +73,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
         }
 
         lookDirection = transform.forward.normalized;
+        lastMoveDirection = transform.forward.normalized;
     }
 
     private void OnEnable()
@@ -250,6 +252,12 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
             
             Vector3 desiredMoveDirection1 = (playerForward * moveVertical) + (transform.right * moveHorizontal);
             moveDirection = desiredMoveDirection1.normalized;
+
+            if (moveDirection != Vector3.zero)
+            {
+                lastMoveDirection = moveDirection;
+            }
+
             return;
         }
 
@@ -287,7 +295,9 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
         {
             isMoving = true;
 
-            Vector3 idealVel = (lookRelativeInput ? moveDirection : transform.forward) * goalSpeed;
+            Vector3 movementDirection = lookRelativeInput ? (moveDirection.magnitude > 0 ? moveDirection : lastMoveDirection) : transform.forward;
+            Vector3 idealVel = movementDirection * goalSpeed;
+
             Vector3 neededAccel = (idealVel - rb.linearVelocity) / Time.fixedDeltaTime;
 
             rb.AddForce(new Vector3(neededAccel.x, 0, neededAccel.z), ForceMode.Acceleration);
