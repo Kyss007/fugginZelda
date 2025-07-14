@@ -96,7 +96,7 @@ namespace PhysicalWalk
 		{
 			if(positionalSpring.sourceObject == null &&	rotationalSpring.sourceObject == null)
 			{
-				Debug.LogWarning("DampedSpringMotionCopier: you need to set positionalSpring.sourceObject and/or rotationalSpring.sourceObject for the component to have any affect.");
+				//Debug.LogWarning("DampedSpringMotionCopier: you need to set positionalSpring.sourceObject and/or rotationalSpring.sourceObject for the component to have any affect.");
 				return;
 			}
 

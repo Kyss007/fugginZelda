@@ -59,7 +59,10 @@ public class objectHold : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.attachedRigidbody.GetComponent<holdableObject>())
+        if (other.attachedRigidbody == null)
+            return;
+
+        if (other.attachedRigidbody.TryGetComponent<holdableObject>(out holdableObject holdableObject))
         {
             if (objectToPickup == null && pickedUpObject == null && !isHolding)
             {
@@ -71,7 +74,10 @@ public class objectHold : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.attachedRigidbody.GetComponent<holdableObject>())
+        if (other.attachedRigidbody == null)
+            return;
+            
+        if (other.attachedRigidbody.TryGetComponent<holdableObject>(out holdableObject holdableObject))
         {
             if (objectToPickup == other.attachedRigidbody)
             {
