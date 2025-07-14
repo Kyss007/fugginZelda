@@ -25,6 +25,8 @@ public class holdableObject : MonoBehaviour
 
     private Transform holdPoint;
 
+    public bool isThrow = false;
+
 
     private void Awake()
     {
@@ -48,7 +50,7 @@ public class holdableObject : MonoBehaviour
 
     public void doPickup(Transform holdPointInput)
     {
-        if (!isHeld)
+        if (!isHeld && !isThrow)
         {
             isHeld = true;
 
@@ -84,7 +86,7 @@ public class holdableObject : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(origin, Vector3.down, out hit, Mathf.Infinity, groundLayer))
             {
-                target = hit.point + new Vector3(0, collider.bounds.size.y / 2.1f ,0);
+                target = hit.point + new Vector3(0, collider.bounds.size.y / 2.2f ,0);
             }
             else
             {
@@ -100,6 +102,7 @@ public class holdableObject : MonoBehaviour
 
     public IEnumerator ThrowRigidbodyAlongArc(Rigidbody rigidbody, float speed, float maxHorizontalDistance, Vector3 targetPosition)
     {
+        isThrow = true;
         // Disable physics during arc movement
         rigidbody.isKinematic = true;
 
@@ -123,13 +126,13 @@ public class holdableObject : MonoBehaviour
         float totalTime = arcLength / speed;
 
         Vector3 endPosition = startPosition + (horizontalDirection * actualHorizontalDistance);
-        
+
         // Do a ground check to ensure we end at ground level
         Vector3 groundCheckOrigin = endPosition + Vector3.up * 100f; // Start high above the end position
         RaycastHit hit;
         if (Physics.Raycast(groundCheckOrigin, Vector3.down, out hit, Mathf.Infinity, groundLayer))
         {
-            endPosition.y = hit.point.y + collider.bounds.size.y / 2.1f; // Ground + collider offset
+            endPosition.y = hit.point.y + collider.bounds.size.y / 2.2f; // Ground + collider offset
         }
         else
         {
@@ -162,7 +165,7 @@ public class holdableObject : MonoBehaviour
 
         // Re-enable physics
         rigidbody.isKinematic = false;
-        
+
 
         // Calculate final velocity to continue the arc naturally
         Vector3 previousPosition = rigidbody.transform.position;
@@ -175,5 +178,7 @@ public class holdableObject : MonoBehaviour
         // Re-enable physics
         rigidbody.isKinematic = false;
         rigidbody.linearVelocity = finalVelocity;
+
+        isThrow = false;
     }
 }

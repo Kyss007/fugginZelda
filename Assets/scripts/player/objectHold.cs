@@ -64,7 +64,7 @@ public class objectHold : MonoBehaviour
         }
         else if (grounded && jumpJustPressed)
         {
-            if (!isHolding && objectToPickup != null)
+            if (!isHolding && objectToPickup != null && !objectToPickup.isThrow)
             {
                 doPickup();
             }
