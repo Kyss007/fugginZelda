@@ -25,8 +25,12 @@ public class targetController : MonoBehaviour
     private kccIinputDriver inputDriver;
     private kccIMovementDriver movementDriver;
 
+    private Camera camera;
+
     void Start()
     {
+        camera = Camera.main;
+
         targetSuggestionGO.transform.SetParent(null);
         targetSuggestionGO.SetActive(false);
 
@@ -37,7 +41,7 @@ public class targetController : MonoBehaviour
         movementDriver = transform.parent.GetComponentInChildren<kccIMovementDriver>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         target newTarget = null;
         other.gameObject.TryGetComponent<target>(out newTarget);
@@ -84,6 +88,18 @@ public class targetController : MonoBehaviour
             if (targets[i] == null)
             {
                 targets.Remove(targets[i]);
+            }
+        }
+
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
+        for (int i = targets.Count - 1; i >= 0; i--)
+        {
+            if (!GeometryUtility.TestPlanesAABB(planes, targets[i].GetComponent<Collider>().bounds))
+            {
+                if (targets[i] == currentSuggestedTarget) currentSuggestedTarget = null;
+                if (targets[i] == currentSellectedTarget) currentSellectedTarget = null;
+
+                targets.RemoveAt(i);
             }
         } 
 
