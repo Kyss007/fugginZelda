@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class targetController : MonoBehaviour
@@ -78,6 +79,15 @@ public class targetController : MonoBehaviour
 
     private void Update()
     {
+        for (int i = 0; i < targets.Count; i++)
+        {
+            if (targets[i] == null)
+            {
+                targets.Remove(targets[i]);
+            }
+        } 
+
+
         targetSuggestionGO.SetActive(false);
         targetSellectedGO.SetActive(false);
 
@@ -168,7 +178,7 @@ public class targetController : MonoBehaviour
             Vector2 lerpedLookDirection = Vector2.Lerp(currentLookDirection, targetLookDirection, turnToTargetSpeed * Time.fixedDeltaTime);
             movementDriver.setLookInput(lerpedLookDirection);
         }
-        
+
 
         lastTargetsCount = targets.Count;
         wasTargeting = isTargeting;

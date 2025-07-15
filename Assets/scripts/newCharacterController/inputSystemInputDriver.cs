@@ -62,14 +62,7 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
 
     public void collectJumpInput(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
-        {
-            jumpInput = true;
-        }
-        else if (callbackContext.canceled)
-        {
-            jumpInput = false;
-        }
+        jumpInput = callbackContext.ReadValueAsButton();
     }
 
     public void collectCameraInput(InputAction.CallbackContext callbackContext)
@@ -82,37 +75,16 @@ public class inputSystemInputDriver : MonoBehaviour, kccIinputDriver
 
     public void collectSwordAttackInput(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
-        {
-            swordAttackInput = true;
-        }
-        else if (callbackContext.canceled)
-        {
-            swordAttackInput = false;
-        }
+        swordAttackInput = callbackContext.ReadValueAsButton();
     }
 
     public void collectDodgeInput(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
-        {
-            dodgeInput = true;
-        }
-        else if (callbackContext.canceled)
-        {
-            dodgeInput = false;
-        }
+        dodgeInput = callbackContext.ReadValueAsButton();
     }
     
     public void collectTargetInput(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
-        {
-            targetInput = true;
-        }
-        else if (callbackContext.canceled)
-        {
-            targetInput = false;
-        }
+        targetInput = callbackContext.ReadValueAsButton();
     }
 }
