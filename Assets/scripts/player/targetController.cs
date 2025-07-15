@@ -41,7 +41,17 @@ public class targetController : MonoBehaviour
         movementDriver = transform.parent.GetComponentInChildren<kccIMovementDriver>();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        addNewTarget(other);
+    }
+
     private void OnTriggerStay(Collider other)
+    {
+        addNewTarget(other);
+    }
+
+    private void addNewTarget(Collider other)
     {
         target newTarget = null;
         other.gameObject.TryGetComponent<target>(out newTarget);
