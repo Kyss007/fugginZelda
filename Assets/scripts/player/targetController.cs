@@ -87,12 +87,29 @@ public class targetController : MonoBehaviour
                 {
                     currentSellectedTarget = null;
                 }
+
+                //remove from last suggested target
+                if (toBeRemovedTarget == lastSuggestedTarget)
+                {
+                    lastSuggestedTarget = null;
+                }
             }
         }
     }
 
     private void Update()
     {
+        //this bullshit fixes an error that occurs when any of these get deleted when set in any of these fields
+        if (currentSellectedTarget == null)
+            currentSellectedTarget = null;
+
+        if (currentSuggestedTarget == null)
+            currentSuggestedTarget = null;
+
+        if (lastSuggestedTarget == null)
+            lastSuggestedTarget = null;
+
+
         for (int i = 0; i < targets.Count; i++)
         {
             if (targets[i] == null)
