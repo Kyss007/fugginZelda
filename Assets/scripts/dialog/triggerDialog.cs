@@ -14,10 +14,17 @@ public class triggerDialog : MonoBehaviour
 
     private bool doneDisplayPage = false;
 
+    private inputSystemInputDriver inputDriver;
+    private bool lastJumpInput;
+
+    void Start()
+    {
+        inputDriver = FindFirstObjectByType<inputSystemInputDriver>();
+    }
 
     public bool getInDialog()
     {
-        if(currentDialogObject == null)
+        if (currentDialogObject == null)
         {
             return false;
         }
@@ -64,8 +71,9 @@ public class triggerDialog : MonoBehaviour
 
                 currentDialogHelper.endOfTextIndicator.SetActive(true);
 
-                while (!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Mouse0))
+                while (!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Mouse0) && !(inputDriver.getJumpInput() && !lastJumpInput))
                 {
+                    lastJumpInput = inputDriver.getJumpInput();
                     yield return null;
                 }
 
