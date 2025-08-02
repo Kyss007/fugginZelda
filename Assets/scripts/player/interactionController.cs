@@ -6,14 +6,19 @@ public class interactionController : MonoBehaviour
 {
     public interaction currentAvailabeInteraction;
 
+    public float targetInteractionRange = 5f;
+
     private keanusCharacterController cc;
 
     private inputSystemInputDriver inputDriver;
     private objectHold objectHold;
     private swordSwinger swordSwinger;
+    private targetController targetController;
 
     private bool lastJumpInput;
-    
+
+    private Vector3 ogPos;
+
     private void Start()
     {
         cc = GetComponentInParent<keanusCharacterController>();
@@ -21,6 +26,9 @@ public class interactionController : MonoBehaviour
         inputDriver = cc.GetComponentInChildren<inputSystemInputDriver>();
         objectHold = cc.GetComponentInChildren<objectHold>();
         swordSwinger = cc.GetComponentInChildren<swordSwinger>();
+        targetController = cc.GetComponentInChildren<targetController>();
+
+        ogPos = transform.localPosition;
     }
 
     public enum interactionType
@@ -31,6 +39,25 @@ public class interactionController : MonoBehaviour
 
     public void Update()
     {
+
+        if (targetController.currentSellectedTarget != null)
+        {
+            float distance = Vector3.Distance(transform.parent.position, targetController.currentSellectedTarget.transform.position);
+            print(distance);
+            if (distance < targetInteractionRange)
+            {
+                transform.position = targetController.currentSellectedTarget.transform.position;
+            }
+            else
+            {
+                transform.localPosition = ogPos;
+            }
+        }
+        else
+        {
+            transform.localPosition = ogPos;
+        }   
+
         if (currentAvailabeInteraction != null)
         {
             if (inputDriver.getJumpInput() && !lastJumpInput)
