@@ -39,11 +39,10 @@ public class interactionController : MonoBehaviour
 
     public void Update()
     {
-
         if (targetController.currentSellectedTarget != null)
         {
             float distance = Vector3.Distance(transform.parent.position, targetController.currentSellectedTarget.transform.position);
-            print(distance);
+
             if (distance < targetInteractionRange)
             {
                 transform.position = targetController.currentSellectedTarget.transform.position;
@@ -56,10 +55,16 @@ public class interactionController : MonoBehaviour
         else
         {
             transform.localPosition = ogPos;
-        }   
+        }
 
         if (currentAvailabeInteraction != null)
         {
+            if (!currentAvailabeInteraction.isEnabled)
+            {
+                currentAvailabeInteraction = null;
+                enableShit();
+            }
+            
             if (inputDriver.getJumpInput() && !lastJumpInput)
             {
                 switch (currentAvailabeInteraction.interactionType)
@@ -73,6 +78,7 @@ public class interactionController : MonoBehaviour
                         break;
                 }
             }
+            
         }
 
         lastJumpInput = inputDriver.getJumpInput();

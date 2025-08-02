@@ -5,6 +5,7 @@ public class interaction : MonoBehaviour
 {
     public interactionController.interactionType interactionType;
     public bool mustBeInfront = true;
+    public bool isEnabled = true;
 
     [Space]
     public triggerDialog triggerDialog;
@@ -39,5 +40,10 @@ public class interaction : MonoBehaviour
         {
             Debug.Log("no event on interaction: " + name);
         }
+    }
+
+    public void setIsEnabled(bool input)
+    {
+        isEnabled = input;
     }
 }
