@@ -18,7 +18,7 @@ TagManager:
   - 
   - hitDetection
   - target
-  - 
+  - interaction
   - enemy
   - heldObject
   - 

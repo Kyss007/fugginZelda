@@ -21,6 +21,8 @@ public class objectHold : MonoBehaviour
     private float jumpDisableTimer = 0f;
     public float jumpDisableDuration = 0.2f;
 
+    public bool disableHold = false;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -79,6 +81,9 @@ public class objectHold : MonoBehaviour
 
     public void doPickup()
     {
+        if (disableHold)
+            return;
+
         if (!isHolding && objectToPickup != null)
         {
             isHolding = true;
@@ -94,6 +99,9 @@ public class objectHold : MonoBehaviour
 
     public void doDrop()
     {
+        if (disableHold)
+            return;
+
         if (isHolding && pickedUpObject != null)
         {
             animator.SetBool("holdingObject", false);

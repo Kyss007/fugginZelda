@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d3f623c8b53693da692e1fff6bf6c1, type: 3}
+  m_Name: testDialog_1
+  m_EditorClassIdentifier: 
+  speaker: test dialog 1
+  dialogPages:
+  - terminator: 0
+    text: i will tell you something very long now.
+    options: []
+  - terminator: 0
+    text: Yesterday i met this strager at my local kiosk. He was a bit creepy and
+      approached me in the dark. But to my supprise he only wanted to give me a candy.
+    options: []
+  - terminator: 0
+    text: Man i was so weirded out!
+    options: []
+  - terminator: 0
+    text: "But hey i got candy in the end. it must\xB4ve been worth it then right?"
+    options:
+    - optionText: it wasnt
+      targetPage: 4
+    - optionText: it depends
+      targetPage: 6
+    - optionText: it was
+      targetPage: 7
+  - terminator: 0
+    text: IT SO WAS!
+    options: []
+  - terminator: 1
+    text: You are just jealous
+    options: []
+  - terminator: 0
+    text: mhh it was a strawberry falvoured candy.. so?
+    options:
+    - optionText: then no
+      targetPage: 4
+    - optionText: then yes
+      targetPage: 7
+  - terminator: 1
+    text: hihi i know it was worth it. i will safe it for darker times
+    options: []
