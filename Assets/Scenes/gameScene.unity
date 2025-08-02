@@ -5806,6 +5806,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sign1
       objectReference: {fileID: 0}
+    - target: {fileID: 7967020341758881583, guid: 4fc7f5482dd134b65bed52aed0c51eca, type: 3}
+      propertyPath: dialog
+      value: 
+      objectReference: {fileID: 11400000, guid: b79c5c8a74bbd56cc8559280b7af8020, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
