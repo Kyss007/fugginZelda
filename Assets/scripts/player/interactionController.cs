@@ -1,5 +1,3 @@
-using Unity.VisualScripting;
-using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 using UnityEngine;
 
 public class interactionController : MonoBehaviour
