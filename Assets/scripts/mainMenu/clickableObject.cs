@@ -6,11 +6,12 @@ public class clickableObject : MonoBehaviour
 {
     public UnityEvent onClicked;
 
-    private Camera mainCamera;
+    public Camera mainCamera;
 
     void Awake()
     {
-        mainCamera = Camera.main;
+        if (mainCamera == null)
+            mainCamera = Camera.main;
     }
 
     void OnMouseDown()

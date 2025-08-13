@@ -16,6 +16,7 @@ public class pauseMenu : MonoBehaviour
             {
                 Time.timeScale = 0;
                 isPaused = true;
+                Cursor.lockState = CursorLockMode.None;
 
                 playerInput.enabled = false;
 
@@ -31,6 +32,7 @@ public class pauseMenu : MonoBehaviour
             {
                 Time.timeScale = 1;
                 isPaused = false;
+                Cursor.lockState = CursorLockMode.Locked;
 
                 playerInput.enabled = true;
 
