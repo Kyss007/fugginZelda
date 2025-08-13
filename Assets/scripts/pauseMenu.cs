@@ -1,3 +1,6 @@
+using System.Collections;
+using PhysicalWalk;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +8,9 @@ public class pauseMenu : MonoBehaviour
 {
     public InputActionReference pauseAction;
     public PlayerInput playerInput;
+
+    public randomRotator randomRotator;
+    public DampedSpringMotionCopier pauseSpring;
 
     public bool isPaused = false;
 
@@ -20,6 +26,7 @@ public class pauseMenu : MonoBehaviour
     {
         if (!isPaused)
         {
+
             if (pauseAction.action.triggered)
             {
                 Time.timeScale = 0;
@@ -32,10 +39,17 @@ public class pauseMenu : MonoBehaviour
                 {
                     child.gameObject.SetActive(true);
                 }
+
+                randomRotator.setDefaultRot(Quaternion.Euler(0, 180, 0));
+
+                pauseSpring.rotationalSpring.lastRotation = Quaternion.identity;
+                pauseSpring.rotationalSpring.lastSourceRotation = Quaternion.identity;
+                pauseSpring.rotationalSpring.springVelocity = Vector3.zero;
             }
         }
         else
         {
+
             if (pauseAction.action.triggered)
             {
                 Time.timeScale = 1;
