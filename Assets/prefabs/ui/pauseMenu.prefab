@@ -1,5 +1,77 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &697914128844817453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8811691697293661163}
+  - component: {fileID: 9026939693301462714}
+  - component: {fileID: 3869800385984232036}
+  m_Layer: 20
+  m_Name: selector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8811691697293661163
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697914128844817453}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3986517657594232957}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -532, y: 446}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9026939693301462714
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697914128844817453}
+  m_CullTransparentMesh: 1
+--- !u!114 &3869800385984232036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697914128844817453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 652d1ef50e0fa8797bb4ea192fd96b0c, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &767939247627352911
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +363,7 @@ MonoBehaviour:
   rightAction: {fileID: -4697991277199927337, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   backAction: {fileID: -6100007879763909765, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   acceptAction: {fileID: 4061828303072291182, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  menuLock: 0
 --- !u!114 &7618336687622092444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4727750097804504965}
+  - component: {fileID: 1301892488911838329}
   m_Layer: 20
   m_Name: mouseSensitivitySlider
   m_TagString: Untagged
@@ -602,6 +676,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &1301892488911838329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2419887850004351312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5ed1e9ce3e46b60874ed61bc4cc174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handleTransform: {fileID: 6629333588514389568}
+  slider: {fileID: 4219248154990201728}
 --- !u!1 &2604239614530878249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2122,7 +2210,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 0
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: -10
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 12762694698325940}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1057652675182319133}
@@ -2391,6 +2479,7 @@ RectTransform:
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 8811691697293661163}
   - {fileID: 3062174803003353074}
   m_Father: {fileID: 5157556979963985322}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -2623,7 +2712,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 1, y: 1}
 --- !u!222 &1460415558511860048
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2704,7 +2793,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2741499489061618206}
   m_HandleRect: {fileID: 6742260389788056534}
-  m_Direction: 3
+  m_Direction: 2
   m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
@@ -3001,6 +3090,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5157556979963985322}
   - component: {fileID: 3077195558465511109}
+  - component: {fileID: 8041194053498941667}
   m_Layer: 20
   m_Name: settingsMenu
   m_TagString: Untagged
@@ -3042,6 +3132,34 @@ MonoBehaviour:
   lookInput: {fileID: 3030979887564296400, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   mouseSensitivitySlider: {fileID: 4219248154990201728}
   controllerSensitivitySlider: {fileID: 3620985043978324052}
+--- !u!114 &8041194053498941667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5705938214272967198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6649b3e75a39b808987cc59388a511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuInputThing: {fileID: 1664731736347619417}
+  menuCanvas: {fileID: 707045966759562029}
+  selector: {fileID: 8811691697293661163}
+  targetTransform: {fileID: 4727750097804504965}
+  menuOptionsParent: {fileID: 8122745080628313960}
+  isVertical: 1
+  verticalOffset: {x: -30, y: -75}
+  horizontalOffset: {x: 0, y: 50}
+  currentSelectedValue: 0
+  upAction: {fileID: -796926440308838918, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  downAction: {fileID: -7733918034240089970, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  leftAction: {fileID: 8274041306490351614, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  rightAction: {fileID: -4697991277199927337, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  backAction: {fileID: -6100007879763909765, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  acceptAction: {fileID: 4061828303072291182, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  lerpSpeed: 30
 --- !u!1 &5723876677402197327
 GameObject:
   m_ObjectHideFlags: 0
@@ -4111,6 +4229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4355312667765825851}
+  - component: {fileID: 5089225034133427572}
   m_Layer: 20
   m_Name: controllerSensitivitySlider
   m_TagString: Untagged
@@ -4139,6 +4258,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &5089225034133427572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7626843776252423626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5ed1e9ce3e46b60874ed61bc4cc174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handleTransform: {fileID: 235324494971383127}
+  slider: {fileID: 3620985043978324052}
 --- !u!1 &7875138742745906195
 GameObject:
   m_ObjectHideFlags: 0

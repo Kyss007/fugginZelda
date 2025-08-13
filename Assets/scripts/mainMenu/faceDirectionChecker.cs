@@ -45,29 +45,10 @@ public class faceDirectionChecker : MonoBehaviour
 
     void HandleDirection(FaceDirection dir)
     {
-        frontMenu?.SetActive(false);
-        leftMenu?.SetActive(false);
-        rightMenu?.SetActive(false);
-        upMenu?.SetActive(false);
-        downMenu?.SetActive(false);
-
-        switch (dir)
-        {
-            case FaceDirection.Front:
-                frontMenu?.SetActive(true);
-                break;
-            case FaceDirection.Left:
-                leftMenu?.SetActive(true);
-                break;
-            case FaceDirection.Right:
-                rightMenu?.SetActive(true);
-                break;
-            case FaceDirection.Up:
-                upMenu?.SetActive(true);
-                break;
-            case FaceDirection.Down:
-                downMenu?.SetActive(true);
-                break;
-        }
+        if (frontMenu != null) frontMenu.SetActive(dir == FaceDirection.Front);
+        if (leftMenu != null) leftMenu.SetActive(dir == FaceDirection.Left);
+        if (rightMenu != null) rightMenu.SetActive(dir == FaceDirection.Right);
+        if (upMenu != null) upMenu.SetActive(dir == FaceDirection.Up);
+        if (downMenu != null) downMenu.SetActive(dir == FaceDirection.Down);
     }
 }

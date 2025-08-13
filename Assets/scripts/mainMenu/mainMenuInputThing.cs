@@ -11,6 +11,8 @@ public class mainMenuInputThing : MonoBehaviour
     public InputActionReference backAction;
     public InputActionReference acceptAction;
 
+    public bool menuLock = false;
+
     private faceDirectionChecker faceDirectionChecker;
 
     private float inputTimer = 0f;
@@ -29,75 +31,78 @@ public class mainMenuInputThing : MonoBehaviour
             return;
         }
 
+        if (menuLock)
+            return;
+
         switch (faceDirectionChecker.currentDirection)
-        {
-            case faceDirectionChecker.FaceDirection.Front:
-                if (upAction.action.triggered)
-                {
-                    menuCubeController.rotUp();
-                    inputTimer = inputDelay;
-                }
+            {
+                case faceDirectionChecker.FaceDirection.Front:
+                    if (upAction.action.triggered)
+                    {
+                        menuCubeController.rotUp();
+                        inputTimer = inputDelay;
+                    }
 
-                if (downAction.action.triggered)
-                {
-                    menuCubeController.rotDown();
-                    inputTimer = inputDelay;
-                }
+                    if (downAction.action.triggered)
+                    {
+                        menuCubeController.rotDown();
+                        inputTimer = inputDelay;
+                    }
 
-                if (leftAction.action.triggered)
-                {
-                    menuCubeController.rotLeft();
-                    inputTimer = inputDelay;
-                }
+                    if (leftAction.action.triggered)
+                    {
+                        menuCubeController.rotLeft();
+                        inputTimer = inputDelay;
+                    }
 
-                if (rightAction.action.triggered)
-                {
-                    menuCubeController.rotRight();
-                    inputTimer = inputDelay;
-                }
-                break;
+                    if (rightAction.action.triggered)
+                    {
+                        menuCubeController.rotRight();
+                        inputTimer = inputDelay;
+                    }
+                    break;
 
-            case faceDirectionChecker.FaceDirection.Up:
-                if (downAction.action.triggered || backAction.action.triggered)
-                {
-                    menuCubeController.rotDown();
-                    inputTimer = inputDelay;
-                }
+                case faceDirectionChecker.FaceDirection.Up:
+                    if (downAction.action.triggered || backAction.action.triggered)
+                    {
+                        menuCubeController.rotDown();
+                        inputTimer = inputDelay;
+                    }
 
-                if (acceptAction.action.triggered)
-                {
-                    GetComponent<changeScene>().loadNextScene();
-                }
-                break;
+                    if (acceptAction.action.triggered)
+                    {
+                        GetComponent<changeScene>().loadNextScene();
+                    }
+                    break;
 
-            case faceDirectionChecker.FaceDirection.Down:
-                if (upAction.action.triggered || backAction.action.triggered)
-                {
-                    menuCubeController.rotUp();
-                    inputTimer = inputDelay;
-                }
+                case faceDirectionChecker.FaceDirection.Down:
+                    if (upAction.action.triggered || backAction.action.triggered)
+                    {
+                        menuCubeController.rotUp();
+                        inputTimer = inputDelay;
+                    }
 
-                if (acceptAction.action.triggered)
-                {
-                    GetComponent<changeScene>().loadLastScene();
-                }
-                break;
+                    if (acceptAction.action.triggered)
+                    {
+                        GetComponent<changeScene>().loadLastScene();
+                    }
+                    break;
 
-            case faceDirectionChecker.FaceDirection.Left:
-                if (rightAction.action.triggered || backAction.action.triggered)
-                {
-                    menuCubeController.rotRight();
-                    inputTimer = inputDelay;
-                }
-                break;
+                case faceDirectionChecker.FaceDirection.Left:
+                    if (rightAction.action.triggered || backAction.action.triggered)
+                    {
+                        menuCubeController.rotRight();
+                        inputTimer = inputDelay;
+                    }
+                    break;
 
-            case faceDirectionChecker.FaceDirection.Right:
-                if (leftAction.action.triggered || backAction.action.triggered)
-                {
-                    menuCubeController.rotLeft();
-                    inputTimer = inputDelay;
-                }
-                break;
-        }
+                case faceDirectionChecker.FaceDirection.Right:
+                    if (leftAction.action.triggered || backAction.action.triggered)
+                    {
+                        menuCubeController.rotLeft();
+                        inputTimer = inputDelay;
+                    }
+                    break;
+            }
     }
 }
