@@ -11,6 +11,7 @@ public class pauseMenu : MonoBehaviour
 
     public randomRotator randomRotator;
     public DampedSpringMotionCopier pauseSpring;
+    public pauseMenuSpwanAnimat spawnAnim;
 
     public bool isPaused = false;
 
@@ -57,10 +58,10 @@ public class pauseMenu : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
 
                 playerInput.enabled = true;
-
+                spawnAnim.triggerDissapear();
                 foreach (Transform child in transform)
                 {
-                    child.gameObject.SetActive(false);
+                    //child.gameObject.SetActive(false);
                 }
             }
         }
