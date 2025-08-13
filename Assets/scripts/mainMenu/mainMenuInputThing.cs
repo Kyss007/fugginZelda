@@ -76,6 +76,11 @@ public class mainMenuInputThing : MonoBehaviour
                     menuCubeController.rotUp();
                     inputTimer = inputDelay;
                 }
+
+                if (acceptAction.action.triggered)
+                {
+                    GetComponent<changeScene>().loadLastScene();
+                }
                 break;
 
             case faceDirectionChecker.FaceDirection.Left:
