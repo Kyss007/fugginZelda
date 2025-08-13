@@ -23,7 +23,7 @@ public class onGUIFPS : MonoBehaviour
     void Update()
     {
         frames++;
-        timer += Time.deltaTime;
+        timer += Time.unscaledDeltaTime;
         
         if (timer >= updateInterval)
         {

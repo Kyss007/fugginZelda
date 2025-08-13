@@ -141,7 +141,7 @@ namespace PhysicalWalk
 	
 		void ApplyPositionalSpring(float zDt)
 		{
-			if(positionalSpring.sourceObject == null)
+			if (positionalSpring.sourceObject == null)
 				return;
 
 			if(positionalSpring.motionCopyingType == eMotionCopyingType.NO_MOTION_COPYING)
@@ -201,7 +201,7 @@ namespace PhysicalWalk
 	
 		void ApplyRotationalSpring(float zDt)
 		{
-			if(rotationalSpring.sourceObject == null)
+			if (rotationalSpring.sourceObject == null)
 				return;
 
 			if(rotationalSpring.motionCopyingType == eMotionCopyingType.NO_MOTION_COPYING)
@@ -259,18 +259,21 @@ namespace PhysicalWalk
 //		public void FixedUpdate()
  		public void Update()
 		{
-			if(resetOnNextUpdate)
+			if (Time.deltaTime <= Mathf.Epsilon)
+        		return;
+
+			if (resetOnNextUpdate)
 			{
 				transform.position = positionalSpring.sourceObject.TransformPoint(positionalSpring.frozenLocalOffset);
 
-				if(positionalSpring.fixRelativePositionAtStart == PositionalSpringTweaksAndState.eFreezeType.DONT_FIX_INITIAL_RELATIVE_POSITION)
+				if (positionalSpring.fixRelativePositionAtStart == PositionalSpringTweaksAndState.eFreezeType.DONT_FIX_INITIAL_RELATIVE_POSITION)
 					positionalSpring.lastSourcePosition = positionalSpring.sourceObject.position;
 				else
 					positionalSpring.lastSourcePosition = transform.position;
-		
+
 				positionalSpring.lastPosition = transform.position;
 				positionalSpring.springVelocity = Vector3.zero;
-			
+
 				resetOnNextUpdate = false;
 			}
 			else
