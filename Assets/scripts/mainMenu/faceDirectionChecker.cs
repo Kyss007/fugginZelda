@@ -5,7 +5,7 @@ public class faceDirectionChecker : MonoBehaviour
     public Transform target;
 
     public enum FaceDirection { Front, Left, Right, Up }
-    private FaceDirection currentDirection;
+    public FaceDirection currentDirection;
 
     public GameObject frontMenu;
     public GameObject leftMenu;

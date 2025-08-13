@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 56301284}
   - component: {fileID: 56301283}
   - component: {fileID: 56301285}
+  - component: {fileID: 56301286}
   m_Layer: 0
   m_Name: cubeMenu
   m_TagString: Untagged
@@ -200,10 +201,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 269477938}
+  currentDirection: 0
   frontMenu: {fileID: 1813501798}
   leftMenu: {fileID: 1988601971}
   rightMenu: {fileID: 1772002588}
   upMenu: {fileID: 332033448}
+--- !u!114 &56301286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56301282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b8e8646a52e5ed1815813d209f19c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuCubeController: {fileID: 1040439404}
+  upAction: {fileID: -796926440308838918, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  downAction: {fileID: -7733918034240089970, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  leftAction: {fileID: 8274041306490351614, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  rightAction: {fileID: -4697991277199927337, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  backAction: {fileID: -6100007879763909765, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
 --- !u!1 &140795091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2146,6 +2166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1539731718}
   - component: {fileID: 1539731717}
+  - component: {fileID: 1539731719}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -2233,6 +2254,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1539731719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539731716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &1772002588
 GameObject:
   m_ObjectHideFlags: 0
