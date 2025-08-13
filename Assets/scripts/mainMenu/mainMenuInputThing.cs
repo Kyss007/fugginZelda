@@ -38,6 +38,12 @@ public class mainMenuInputThing : MonoBehaviour
                     inputTimer = inputDelay;
                 }
 
+                if (downAction.action.triggered)
+                {
+                    menuCubeController.rotDown();
+                    inputTimer = inputDelay;
+                }
+
                 if (leftAction.action.triggered)
                 {
                     menuCubeController.rotLeft();
@@ -61,6 +67,14 @@ public class mainMenuInputThing : MonoBehaviour
                 if (acceptAction.action.triggered)
                 {
                     GetComponent<changeScene>().loadNextScene();
+                }
+                break;
+
+            case faceDirectionChecker.FaceDirection.Down:
+                if (upAction.action.triggered || backAction.action.triggered)
+                {
+                    menuCubeController.rotUp();
+                    inputTimer = inputDelay;
                 }
                 break;
 

@@ -4,15 +4,14 @@ public class faceDirectionChecker : MonoBehaviour
 {
     public Transform target;
 
-    public enum FaceDirection { Front, Left, Right, Up }
+    public enum FaceDirection { Front, Left, Right, Up, Down }
     public FaceDirection currentDirection;
 
     public GameObject frontMenu;
     public GameObject leftMenu;
     public GameObject rightMenu;
     public GameObject upMenu;
-
-
+    public GameObject downMenu;
 
     void Update()
     {
@@ -38,7 +37,7 @@ public class faceDirectionChecker : MonoBehaviour
         }
         else
         {
-            currentDirection = FaceDirection.Up;
+            currentDirection = (upDot > 0) ? FaceDirection.Up : FaceDirection.Down;
         }
 
         HandleDirection(currentDirection);
@@ -46,38 +45,28 @@ public class faceDirectionChecker : MonoBehaviour
 
     void HandleDirection(FaceDirection dir)
     {
+        frontMenu?.SetActive(false);
+        leftMenu?.SetActive(false);
+        rightMenu?.SetActive(false);
+        upMenu?.SetActive(false);
+        downMenu?.SetActive(false);
+
         switch (dir)
         {
             case FaceDirection.Front:
                 frontMenu?.SetActive(true);
-
-                leftMenu?.SetActive(false);
-                rightMenu?.SetActive(false);
-                upMenu?.SetActive(false);
                 break;
-
             case FaceDirection.Left:
                 leftMenu?.SetActive(true);
-
-                frontMenu?.SetActive(false);
-                rightMenu?.SetActive(false);
-                upMenu?.SetActive(false);
                 break;
-
             case FaceDirection.Right:
                 rightMenu?.SetActive(true);
-
-                frontMenu?.SetActive(false);
-                leftMenu?.SetActive(false);
-                upMenu?.SetActive(false);
                 break;
-
             case FaceDirection.Up:
                 upMenu?.SetActive(true);
-
-                frontMenu?.SetActive(false);
-                leftMenu?.SetActive(false);
-                rightMenu?.SetActive(false);
+                break;
+            case FaceDirection.Down:
+                downMenu?.SetActive(true);
                 break;
         }
     }

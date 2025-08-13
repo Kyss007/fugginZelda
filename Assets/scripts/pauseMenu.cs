@@ -8,6 +8,14 @@ public class pauseMenu : MonoBehaviour
 
     public bool isPaused = false;
 
+    void Start()
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
     private void Update()
     {
         if (!isPaused)
