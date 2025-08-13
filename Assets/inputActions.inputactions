@@ -362,6 +362,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "acceptAction",
+                    "type": "Button",
+                    "id": "b8c57d62-4c4b-4543-b618-e801af2a1474",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -560,6 +569,28 @@
                     "processors": "",
                     "groups": ";gamepad",
                     "action": "backAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7eb8af22-5a1c-47a5-91dc-e2e513b2563f",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";keyboard",
+                    "action": "acceptAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd0ca6de-c4c3-4144-8620-b8478f22ab02",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";gamepad",
+                    "action": "acceptAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

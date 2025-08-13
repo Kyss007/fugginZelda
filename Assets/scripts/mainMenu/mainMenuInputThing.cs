@@ -9,6 +9,8 @@ public class mainMenuInputThing : MonoBehaviour
     public InputActionReference leftAction;
     public InputActionReference rightAction;
     public InputActionReference backAction;
+    public InputActionReference acceptAction;
+
     private faceDirectionChecker faceDirectionChecker;
 
     private float inputTimer = 0f;
@@ -54,6 +56,11 @@ public class mainMenuInputThing : MonoBehaviour
                 {
                     menuCubeController.rotDown();
                     inputTimer = inputDelay;
+                }
+
+                if (acceptAction.action.triggered)
+                {
+                    GetComponent<changeScene>().loadNextScene();
                 }
                 break;
 

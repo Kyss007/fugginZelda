@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 56301283}
   - component: {fileID: 56301285}
   - component: {fileID: 56301286}
+  - component: {fileID: 56301287}
   m_Layer: 0
   m_Name: cubeMenu
   m_TagString: Untagged
@@ -224,6 +225,19 @@ MonoBehaviour:
   leftAction: {fileID: 8274041306490351614, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   rightAction: {fileID: -4697991277199927337, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   backAction: {fileID: -6100007879763909765, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  acceptAction: {fileID: 0}
+--- !u!114 &56301287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56301282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98fc2f31c1f893031b2ac03afebf0cd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &140795091
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,7 +753,6 @@ GameObject:
   - component: {fileID: 654955591}
   - component: {fileID: 654955595}
   - component: {fileID: 654955594}
-  - component: {fileID: 654955596}
   - component: {fileID: 654955593}
   - component: {fileID: 654955592}
   m_Layer: 0
@@ -922,7 +935,7 @@ MonoBehaviour:
   onClicked:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 654955596}
+      - m_Target: {fileID: 56301287}
         m_TargetAssemblyTypeName: changeScene, Assembly-CSharp
         m_MethodName: loadNextScene
         m_Mode: 1
@@ -955,18 +968,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3122093, y: 0.09593023, z: 0}
   m_Center: {x: -0.0016946271, y: -0.009086572, z: 0}
---- !u!114 &654955596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 654955590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98fc2f31c1f893031b2ac03afebf0cd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &998134104
 GameObject:
   m_ObjectHideFlags: 0
