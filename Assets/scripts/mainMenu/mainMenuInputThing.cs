@@ -25,7 +25,7 @@ public class mainMenuInputThing : MonoBehaviour
     {
         if (inputTimer > 0f)
         {
-            inputTimer -= Time.deltaTime;
+            inputTimer -= Time.unscaledDeltaTime;
             return;
         }
 

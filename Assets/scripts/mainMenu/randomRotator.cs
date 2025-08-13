@@ -16,9 +16,9 @@ public class randomRotator : MonoBehaviour
 
     void Update()
     {
-        float swayX = Mathf.Sin(Time.time * swaySpeed.x + randomPhase.x) * swayAmplitude.x;
-        float swayY = Mathf.Sin(Time.time * swaySpeed.y + randomPhase.y) * swayAmplitude.y;
-        float swayZ = Mathf.Sin(Time.time * swaySpeed.z + randomPhase.z) * swayAmplitude.z;
+        float swayX = Mathf.Sin(Time.unscaledTime * swaySpeed.x + randomPhase.x) * swayAmplitude.x;
+        float swayY = Mathf.Sin(Time.unscaledTime * swaySpeed.y + randomPhase.y) * swayAmplitude.y;
+        float swayZ = Mathf.Sin(Time.unscaledTime * swaySpeed.z + randomPhase.z) * swayAmplitude.z;
 
         Quaternion swayRotation = Quaternion.Euler(swayX, swayY, swayZ);
 

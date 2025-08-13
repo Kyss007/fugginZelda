@@ -255,12 +255,17 @@ namespace PhysicalWalk
 		{
 			resetOnNextUpdate = true;
 		}
-	
+
+
+		public bool useUnscaledTime = false;
 //		public void FixedUpdate()
- 		public void Update()
+		public void Update()
 		{
-			if (Time.deltaTime <= Mathf.Epsilon)
-        		return;
+			if (!useUnscaledTime)
+			{
+				if (Time.deltaTime <= Mathf.Epsilon)
+					return;
+			}
 
 			if (resetOnNextUpdate)
 			{
@@ -278,8 +283,8 @@ namespace PhysicalWalk
 			}
 			else
 			{
-				ApplyPositionalSpring(Time.deltaTime);
-				ApplyRotationalSpring(Time.deltaTime);
+				ApplyPositionalSpring(useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime);
+				ApplyRotationalSpring(useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime);
 			}
 		}
 	}

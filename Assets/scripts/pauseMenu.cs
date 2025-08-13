@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class pauseMenu : MonoBehaviour
 {
     public InputActionReference pauseAction;
+    public PlayerInput playerInput;
 
     public bool isPaused = false;
 
@@ -15,6 +16,13 @@ public class pauseMenu : MonoBehaviour
             {
                 Time.timeScale = 0;
                 isPaused = true;
+
+                playerInput.enabled = false;
+
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
             }
         }
         else
@@ -23,6 +31,13 @@ public class pauseMenu : MonoBehaviour
             {
                 Time.timeScale = 1;
                 isPaused = false;
+
+                playerInput.enabled = true;
+
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(false);
+                }
             }
         }
     }
