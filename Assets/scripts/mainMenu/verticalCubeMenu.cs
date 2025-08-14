@@ -101,6 +101,13 @@ public class verticalCubeMenu : MonoBehaviour
                         currentSliderSelector = sliderSel;
                         ensureVisible();
                     }
+                    else
+                    {
+                        currentSliderSelector = null;
+                        isVertical = true;
+
+                        menuUp();
+                    }
                 }
 
                 if (downAction.action.triggered)
@@ -114,6 +121,13 @@ public class verticalCubeMenu : MonoBehaviour
                         currentSelectedValue = index;
                         currentSliderSelector = sliderSel;
                         ensureVisible();
+                    }
+                    else
+                    {
+                        currentSliderSelector = null;
+                        isVertical = true;
+
+                        menuDown();
                     }
                 }
 
