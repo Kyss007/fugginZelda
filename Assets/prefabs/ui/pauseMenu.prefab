@@ -3155,6 +3155,7 @@ MonoBehaviour:
   horizontalOffset: {x: 0, y: 50}
   currentSelectedValue: 0
   lerpSpeed: 30
+  pauseAction: {fileID: -2224398279964500451, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   upAction: {fileID: -796926440308838918, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   downAction: {fileID: -7733918034240089970, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   leftAction: {fileID: 8274041306490351614, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}

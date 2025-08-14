@@ -20,6 +20,7 @@ public class verticalCubeMenu : MonoBehaviour
 
 
     [Space]
+    public InputActionReference pauseAction;
     public InputActionReference upAction;
     public InputActionReference downAction;
     public InputActionReference leftAction;
@@ -76,7 +77,33 @@ public class verticalCubeMenu : MonoBehaviour
                 if (rightAction.action.triggered)
                     currentSliderSelector.slider.value++;
 
-                if (backAction.action.triggered)
+                if (upAction.action.triggered)
+                {
+                    int index = currentSelectedValue - 1;
+                    if (index < 0)
+                        index = menuOptionsParent.childCount - 1;
+
+                    if (menuOptionsParent.GetChild(index).TryGetComponent(out sliderSelector sliderSel))
+                    {
+                        currentSelectedValue = index;
+                        currentSliderSelector = sliderSel;
+                    }
+                }
+
+                if (downAction.action.triggered)
+                {
+                    int index = currentSelectedValue + 1;
+                    if (index > menuOptionsParent.childCount - 1)
+                        index = 0;
+
+                    if (menuOptionsParent.GetChild(index).TryGetComponent(out sliderSelector sliderSel))
+                    {
+                        currentSelectedValue = index;
+                        currentSliderSelector = sliderSel;
+                    }
+                }
+
+                if (backAction.action.triggered || pauseAction.action.triggered)
                 {
                     currentSliderSelector = null;
                     isVertical = true;
