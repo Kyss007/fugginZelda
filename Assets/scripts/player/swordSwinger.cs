@@ -7,8 +7,6 @@ public class swordSwinger : MonoBehaviour
 {
     public Animator animator;
 
-    public float stabBufferTime = 0.2f;
-
     public UnityEvent onEnableHitDetection;
     public UnityEvent onDisableHitDetection;
 
@@ -65,7 +63,7 @@ public class swordSwinger : MonoBehaviour
                 animator.SetBool("jumpSwing", false);
             }
 
-                animator.SetTrigger("swing");
+            animator.SetTrigger("swing");
 
             hasTriggeredAttackThisButtonPress = true;
         }
