@@ -302,7 +302,7 @@
                     "id": "3e669f91-5822-4533-aff5-e878cb767956",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "PressAndRepeat(repeatInterval=0.05)",
                     "initialStateCheck": false
                 },
                 {
@@ -311,7 +311,7 @@
                     "id": "a37f59ba-d038-4d42-afbd-9ba49eed3b9b",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "PressAndRepeat(repeatInterval=0.05)",
                     "initialStateCheck": false
                 },
                 {
@@ -320,7 +320,7 @@
                     "id": "96a929cd-fe44-448a-8663-b051814bd9ee",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "PressAndRepeat(repeatInterval=0.05)",
                     "initialStateCheck": false
                 },
                 {
@@ -329,7 +329,7 @@
                     "id": "9cb51764-1cda-43b4-922a-fe83ae5e429d",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "PressAndRepeat(repeatInterval=0.05)",
                     "initialStateCheck": false
                 },
                 {
@@ -390,7 +390,7 @@
                     "id": "9ed9e672-8251-49fe-a186-4cd68a07951c",
                     "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "AxisDeadzone(min=0.9,max=1)",
                     "groups": ";gamepad",
                     "action": "upAction",
                     "isComposite": false,
@@ -434,7 +434,7 @@
                     "id": "0f7f1cf9-8b89-4d7a-a7ee-30a05249efd7",
                     "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "AxisDeadzone(min=0.9,max=1)",
                     "groups": ";gamepad",
                     "action": "leftAction",
                     "isComposite": false,
@@ -478,7 +478,7 @@
                     "id": "069b9aca-ac8e-4b29-9dc3-ca174c7c3f15",
                     "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "AxisDeadzone(min=0.9,max=1)",
                     "groups": ";gamepad",
                     "action": "rightAction",
                     "isComposite": false,
@@ -544,7 +544,7 @@
                     "id": "4abbaf3a-6b4d-478a-9c03-6c178eff68e4",
                     "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "AxisDeadzone(min=0.9,max=1)",
                     "groups": ";gamepad",
                     "action": "downAction",
                     "isComposite": false,
