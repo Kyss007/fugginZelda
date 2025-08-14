@@ -4643,7 +4643,7 @@ MonoBehaviour:
   menuOptionsParent: {fileID: 8122745080628313960}
   isVertical: 1
   verticalOffset: {x: -30, y: -75}
-  horizontalOffset: {x: 0, y: 50}
+  horizontalOffset: {x: 0, y: 40}
   currentSelectedValue: 0
   lerpSpeed: 30
   scrollRect: {fileID: 7304970391089156259}
