@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 public class mainMenuInputThing : MonoBehaviour
 {
     public menuCubeController menuCubeController;
+
+    public InputActionReference pauseAction;
     public InputActionReference upAction;
     public InputActionReference downAction;
     public InputActionReference leftAction;
@@ -63,7 +65,7 @@ public class mainMenuInputThing : MonoBehaviour
                     break;
 
                 case faceDirectionChecker.FaceDirection.Up:
-                    if (downAction.action.triggered || backAction.action.triggered)
+                    if (downAction.action.triggered || backAction.action.triggered || pauseAction.action.triggered)
                     {
                         menuCubeController.rotDown();
                         inputTimer = inputDelay;
@@ -76,7 +78,7 @@ public class mainMenuInputThing : MonoBehaviour
                     break;
 
                 case faceDirectionChecker.FaceDirection.Down:
-                    if (upAction.action.triggered || backAction.action.triggered)
+                    if (upAction.action.triggered || backAction.action.triggered || pauseAction.action.triggered)
                     {
                         menuCubeController.rotUp();
                         inputTimer = inputDelay;
@@ -89,7 +91,7 @@ public class mainMenuInputThing : MonoBehaviour
                     break;
 
                 case faceDirectionChecker.FaceDirection.Left:
-                    if (rightAction.action.triggered || backAction.action.triggered)
+                    if (rightAction.action.triggered || backAction.action.triggered || pauseAction.action.triggered)
                     {
                         menuCubeController.rotRight();
                         inputTimer = inputDelay;
@@ -97,7 +99,7 @@ public class mainMenuInputThing : MonoBehaviour
                     break;
 
                 case faceDirectionChecker.FaceDirection.Right:
-                    if (leftAction.action.triggered || backAction.action.triggered)
+                    if (leftAction.action.triggered || backAction.action.triggered || pauseAction.action.triggered)
                     {
                         menuCubeController.rotLeft();
                         inputTimer = inputDelay;

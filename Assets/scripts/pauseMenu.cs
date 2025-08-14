@@ -13,6 +13,8 @@ public class pauseMenu : MonoBehaviour
     public DampedSpringMotionCopier pauseSpring;
     public pauseMenuSpwanAnimat spawnAnim;
 
+    public faceDirectionChecker faceDirectionChecker;
+
     public bool isPaused = false;
 
     void Start()
@@ -27,7 +29,6 @@ public class pauseMenu : MonoBehaviour
     {
         if (!isPaused)
         {
-
             if (pauseAction.action.triggered)
             {
                 Time.timeScale = 0;
@@ -50,8 +51,7 @@ public class pauseMenu : MonoBehaviour
         }
         else
         {
-
-            if (pauseAction.action.triggered)
+            if (pauseAction.action.triggered && faceDirectionChecker.currentDirection == faceDirectionChecker.FaceDirection.Front)
             {
                 Time.timeScale = 1;
                 isPaused = false;

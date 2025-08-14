@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuCubeController: {fileID: 6435127155477228672}
+  pauseAction: {fileID: -2224398279964500451, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   upAction: {fileID: -796926440308838918, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   downAction: {fileID: -7733918034240089970, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   leftAction: {fileID: 8274041306490351614, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
@@ -3153,13 +3154,13 @@ MonoBehaviour:
   verticalOffset: {x: -30, y: -75}
   horizontalOffset: {x: 0, y: 50}
   currentSelectedValue: 0
+  lerpSpeed: 30
   upAction: {fileID: -796926440308838918, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   downAction: {fileID: -7733918034240089970, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   leftAction: {fileID: 8274041306490351614, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   rightAction: {fileID: -4697991277199927337, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   backAction: {fileID: -6100007879763909765, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   acceptAction: {fileID: 4061828303072291182, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
-  lerpSpeed: 30
 --- !u!1 &5723876677402197327
 GameObject:
   m_ObjectHideFlags: 0
@@ -4325,6 +4326,7 @@ MonoBehaviour:
   randomRotator: {fileID: 8804689207083963141}
   pauseSpring: {fileID: 5683697685299446042}
   spawnAnim: {fileID: 4438285679685010896}
+  faceDirectionChecker: {fileID: 6436769384585703433}
   isPaused: 0
 --- !u!114 &1976473458254607577
 MonoBehaviour:
