@@ -429,18 +429,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2830812148206379179, guid: e3e5795ca5f0de523b2521d78030ce3d, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7873198740962586707, guid: e3e5795ca5f0de523b2521d78030ce3d, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7873198740962586707, guid: e3e5795ca5f0de523b2521d78030ce3d, type: 3}
-      propertyPath: onClicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8724819775987617392, guid: e3e5795ca5f0de523b2521d78030ce3d, type: 3}
       propertyPath: m_Name
       value: cubeMenu
@@ -471,12 +459,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 1650593896759302727, guid: e3e5795ca5f0de523b2521d78030ce3d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1215699475476432186, guid: e3e5795ca5f0de523b2521d78030ce3d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1429880696296386975, guid: e3e5795ca5f0de523b2521d78030ce3d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: e3e5795ca5f0de523b2521d78030ce3d, type: 3}

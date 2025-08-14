@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class pauseMenu : MonoBehaviour
 {
     public InputActionReference pauseAction;
+    public InputActionReference backAction;
     public PlayerInput playerInput;
 
     public randomRotator randomRotator;
@@ -51,7 +52,8 @@ public class pauseMenu : MonoBehaviour
         }
         else
         {
-            if (pauseAction.action.triggered && faceDirectionChecker.currentDirection == faceDirectionChecker.FaceDirection.Front)
+            if ((pauseAction.action.triggered || backAction.action.triggered)
+                && faceDirectionChecker.currentDirection == faceDirectionChecker.FaceDirection.Front)
             {
                 Time.timeScale = 1;
                 isPaused = false;

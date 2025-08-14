@@ -4323,6 +4323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseAction: {fileID: -2224398279964500451, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  backAction: {fileID: -6100007879763909765, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   playerInput: {fileID: 0}
   randomRotator: {fileID: 8804689207083963141}
   pauseSpring: {fileID: 5683697685299446042}
