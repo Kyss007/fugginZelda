@@ -1,6 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI; // For ScrollRect
 
 public class verticalCubeMenu : MonoBehaviour
 {
@@ -19,6 +20,10 @@ public class verticalCubeMenu : MonoBehaviour
     public float lerpSpeed = 30f;
 
 
+    public ScrollRect scrollRect;
+    public float entryHeight = 150f;
+    public int visibleItems = 5;
+
     [Space]
     public InputActionReference pauseAction;
     public InputActionReference upAction;
@@ -33,6 +38,7 @@ public class verticalCubeMenu : MonoBehaviour
     void OnEnable()
     {
         currentSelectedValue = 0;
+        scrollToCurrent();
     }
 
     void OnDisable()
@@ -55,9 +61,15 @@ public class verticalCubeMenu : MonoBehaviour
             targetTransform = menuOptionsParent.GetChild(currentSelectedValue).GetComponent<RectTransform>();
 
             if (upAction.action.triggered)
+            {
                 menuUp();
+                ensureVisible();
+            }
             if (downAction.action.triggered)
+            {
                 menuDown();
+                ensureVisible();
+            }
 
             if (acceptAction.action.triggered &&
                 menuOptionsParent.GetChild(currentSelectedValue).TryGetComponent(out sliderSelector sliderSel))
@@ -87,6 +99,7 @@ public class verticalCubeMenu : MonoBehaviour
                     {
                         currentSelectedValue = index;
                         currentSliderSelector = sliderSel;
+                        ensureVisible();
                     }
                 }
 
@@ -100,6 +113,7 @@ public class verticalCubeMenu : MonoBehaviour
                     {
                         currentSelectedValue = index;
                         currentSliderSelector = sliderSel;
+                        ensureVisible();
                     }
                 }
 
@@ -137,5 +151,34 @@ public class verticalCubeMenu : MonoBehaviour
         currentSelectedValue++;
         if (currentSelectedValue > menuOptionsParent.childCount - 1)
             currentSelectedValue = 0;
+    }
+
+    private void ensureVisible()
+    {
+        if (scrollRect == null) return;
+
+        RectTransform content = scrollRect.content;
+
+        float viewportHeight = entryHeight * visibleItems;
+        float scrollY = content.anchoredPosition.y;
+
+        float itemY = currentSelectedValue * entryHeight;
+
+        if (itemY > scrollY + viewportHeight - entryHeight)
+        {
+            content.anchoredPosition = new Vector2(content.anchoredPosition.x, itemY - (visibleItems - 1) * entryHeight);
+        }
+
+        else if (itemY < scrollY)
+        {
+            content.anchoredPosition = new Vector2(content.anchoredPosition.x, itemY);
+        }
+    }
+
+    private void scrollToCurrent()
+    {
+        if (scrollRect == null) return;
+        RectTransform content = scrollRect.content;
+        content.anchoredPosition = new Vector2(0, currentSelectedValue * entryHeight);
     }
 }
