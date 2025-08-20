@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class PressAndRepeatInteraction : IInputInteraction
+public class pressAndRepeatInteraction : IInputInteraction
 {
     public float initialDelay = 0.5f;
 
@@ -13,9 +13,9 @@ public class PressAndRepeatInteraction : IInputInteraction
     private bool _initialFired;
     private bool _wasActuated;
 
-    static PressAndRepeatInteraction()
+    static pressAndRepeatInteraction()
     {
-       InputSystem.RegisterInteraction<PressAndRepeatInteraction>();
+       InputSystem.RegisterInteraction<pressAndRepeatInteraction>();
     }
 
 
