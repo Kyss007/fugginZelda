@@ -1034,7 +1034,7 @@ Rigidbody:
   m_Mass: 3
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 1, z: 0}
+  m_CenterOfMass: {x: 0, y: 0.3, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
@@ -1063,16 +1063,78 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::spiderController
   legs:
-  - {fileID: 6514785137955213202}
-  - {fileID: 1754374136550377273}
-  - {fileID: 5265922401621270538}
-  - {fileID: 6569746415634607614}
-  stepDistance: 0.8
+  - footTarget: {fileID: 6671931401888128605}
+    ikSolver: {fileID: 5265922401621270538}
+    localHomeOffset: {x: -2.1524506, y: -3.234, z: 2.0273132}
+    worldHomePosition: {x: 169.018, y: 2.0361195, z: -225.54681}
+    isStepping: 0
+    stepProgress: 1
+    isGrounded: 0
+  - footTarget: {fileID: 998654800148003182}
+    ikSolver: {fileID: 1754374136550377273}
+    localHomeOffset: {x: 2.0273132, y: -3.234, z: 2.1524506}
+    worldHomePosition: {x: 164.88127, y: 1.9001997, z: -224.95091}
+    isStepping: 0
+    stepProgress: 1
+    isGrounded: 0
+  - footTarget: {fileID: 5758428630273765829}
+    ikSolver: {fileID: 6514785137955213202}
+    localHomeOffset: {x: -2.0273132, y: -3.234, z: -2.1524506}
+    worldHomePosition: {x: 169.57185, y: 2.9269438, z: -221.49887}
+    isStepping: 0
+    stepProgress: 1
+    isGrounded: 0
+  - footTarget: {fileID: 5669833237559727017}
+    ikSolver: {fileID: 6569746415634607614}
+    localHomeOffset: {x: 2.1524506, y: -3.234, z: -2.0273132}
+    worldHomePosition: {x: 165.43512, y: 2.7910237, z: -220.90297}
+    isStepping: 0
+    stepProgress: 1
+    isGrounded: 0
+  stepTriggerDistance: 0.6
   stepHeight: 0.6
-  stepSpeed: 10
-  footForwardBias: 0.5
-  uprightTorque: 1000
-  maxAngularVelocity: 1500
+  stepDuration: 0.15
+  stepCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speedStepReduction: 0.1
+  minStepDuration: 0.1
+  velocityPrediction: 0.05
+  uprightTorque: 3000
+  uprightDamping: 0
+  maxTiltAngle: 50
+  useAngularDrag: 0
+  targetAngularDrag: 5
+  maintainHeight: 1
+  targetHeight: 3
+  heightCorrectionForce: 20
+  heightDamping: 5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  maxGroundCheckDistance: 5
+  showGizmos: 1
 --- !u!1 &2140953146575087579
 GameObject:
   m_ObjectHideFlags: 0
@@ -4455,6 +4517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: leg
       objectReference: {fileID: 0}
+    - target: {fileID: 5549848100903944224, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.31
+      objectReference: {fileID: 0}
     - target: {fileID: 6777703132772280272, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -4467,6 +4533,11 @@ PrefabInstance:
 --- !u!4 &3994582693753919373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3855242833523484264, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
+  m_PrefabInstance: {fileID: 211397765923189221}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5758428630273765829 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5549848100903944224, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
   m_PrefabInstance: {fileID: 211397765923189221}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &6514785137955213202 stripped
@@ -4536,6 +4607,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: leg (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5549848100903944224, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.31
+      objectReference: {fileID: 0}
     - target: {fileID: 6777703132772280272, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -4548,6 +4623,11 @@ PrefabInstance:
 --- !u!4 &3903174837689611745 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3855242833523484264, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
+  m_PrefabInstance: {fileID: 264109546143929225}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5669833237559727017 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5549848100903944224, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
   m_PrefabInstance: {fileID: 264109546143929225}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &6569746415634607614 stripped
@@ -4617,6 +4697,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: leg (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5549848100903944224, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.31
+      objectReference: {fileID: 0}
     - target: {fileID: 6777703132772280272, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -4642,6 +4726,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ae31360bb290659ba087d98a0b7fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::twoBoneIK
+--- !u!4 &6671931401888128605 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5549848100903944224, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
+  m_PrefabInstance: {fileID: 1266201109006999165}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4674431085794228558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4698,6 +4787,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: leg (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5549848100903944224, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.31
+      objectReference: {fileID: 0}
     - target: {fileID: 6777703132772280272, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -4707,6 +4800,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
+--- !u!4 &998654800148003182 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5549848100903944224, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}
+  m_PrefabInstance: {fileID: 4674431085794228558}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1754374136550377273 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6378825182646713975, guid: 57aa04511e0ceaa49b1ec3ee18e7f593, type: 3}

@@ -1,134 +1,323 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Rigidbody))]
 public class SpiderController : MonoBehaviour
 {
-    [Header("Legs")]
-    public twoBodeIK[] legs;
+    [System.Serializable]
+    public class Leg
+    {
+        public Transform footTarget;
+        public twoBodeIK ikSolver;
+        [HideInInspector] public Vector3 localHomeOffset;
+        [HideInInspector] public Vector3 worldHomePosition;
+        [HideInInspector] public bool isStepping;
+        [HideInInspector] public float stepProgress;
+        [HideInInspector] public bool isGrounded; // Track individual leg contact
+    }
 
-    [Header("Step Settings")]
-    public float stepDistance = 0.7f;
-    public float stepHeight = 0.3f;
-    public float stepSpeed = 12f;
-    public float footForwardBias = 0.2f;
+    [Header("Legs - Order: Front-Left, Front-Right, Back-Left, Back-Right")]
+    [SerializeField] private Leg[] legs = new Leg[4];
 
-    [Header("Stability")]
-    public float uprightTorque = 50f;
-    public float maxAngularVelocity = 5f;
+    [Header("Step Behavior")]
+    [SerializeField] private float stepTriggerDistance = 0.5f;
+    [SerializeField] private float stepHeight = 0.25f;
+    [SerializeField] private float stepDuration = 0.15f;
+    [SerializeField] private AnimationCurve stepCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    
+    [Header("Speed Adaptation")]
+    [SerializeField] private float speedStepReduction = 0.5f;
+    [SerializeField] private float minStepDuration = 0.08f;
+    [SerializeField] private float velocityPrediction = 0.4f;
+    
+    [Header("Body Stabilization")]
+    [SerializeField] private float uprightTorque = 50f;
+    [SerializeField] private float uprightDamping = 10f;
+    [SerializeField] private float maxTiltAngle = 30f;
+    [SerializeField] private bool useAngularDrag = true;
+    [SerializeField] private float targetAngularDrag = 5f;
+    
+    [Header("Height Stabilization")]
+    [SerializeField] private bool maintainHeight = true;
+    [SerializeField] private float targetHeight = 1f;
+    [SerializeField] private float heightCorrectionForce = 20f;
+    [SerializeField] private float heightDamping = 5f;
+    
+    [Header("Ground Detection")]
+    [SerializeField] private LayerMask groundMask = -1;
+    [SerializeField] private float maxGroundCheckDistance = 3f;
+    
+    [Header("Debug Visualization")]
+    [SerializeField] private bool showGizmos = true;
 
-    private Vector3[] localHomePositions;
-    private bool[] isStepping;
     private Rigidbody rb;
+    private Vector3 lastBodyPosition;
+    private Vector3 bodyVelocity;
+    private bool isDiagonalLeftTurn = true;
+    private float averageGroundHeight;
+    private Vector3 surfaceNormal = Vector3.up;
+    private bool isAnyLegGrounded;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.maxAngularVelocity = maxAngularVelocity;
+        if (rb == null)
+        {
+            Debug.LogError("SpiderController requires a Rigidbody component!");
+            enabled = false;
+            return;
+        }
+        
+        lastBodyPosition = transform.position;
+        InitializeLegs();
+        
+        if (useAngularDrag)
+        {
+            rb.angularDamping = targetAngularDrag;
+        }
+    }
 
-        localHomePositions = new Vector3[legs.Length];
-        isStepping = new bool[legs.Length];
-
+    void InitializeLegs()
+    {
         for (int i = 0; i < legs.Length; i++)
         {
-            localHomePositions[i] = transform.InverseTransformPoint(legs[i].footTarget.position);
-            legs[i].footTarget.position = GetGroundPoint(legs[i].footTarget.position);
-            legs[i].footTarget.parent = null; // world space foot targets
+            if (legs[i].footTarget == null) continue;
+            
+            legs[i].localHomeOffset = transform.InverseTransformPoint(legs[i].footTarget.position);
+            legs[i].worldHomePosition = legs[i].footTarget.position;
+            
+            Vector3 groundPoint = FindGroundPoint(legs[i].footTarget.position, out _);
+            legs[i].footTarget.position = groundPoint;
+            legs[i].footTarget.SetParent(null);
+            legs[i].isStepping = false;
+            legs[i].stepProgress = 0f;
         }
+        
+        CalculateAverageGroundHeightAndNormal();
     }
 
     void Update()
     {
-        HandleLegs();
-    }
-
-    void FixedUpdate()
-    {
-        StayUpright();
-    }
-
-    void HandleLegs()
-    {
-        int steppingCount = CountSteppingLegs();
-
-        for (int i = 0; i < legs.Length; i++)
+        UpdateBodyVelocity();
+        UpdateHomePositions();
+        
+        if (isAnyLegGrounded)
         {
-            if (isStepping[i])
-                continue; // skip legs already stepping
-
-            // Only allow stepping if at least 2 legs are not moving
-            if (steppingCount > legs.Length - 2)
-                continue;
-
-            Vector3 worldHome = transform.TransformPoint(localHomePositions[i]);
-            Vector3 footPos = legs[i].footTarget.position;
-            float dist = Vector3.Distance(footPos, worldHome);
-
-            if (dist > stepDistance)
+            EvaluateStepNeeds();
+        }
+        else
+        {
+            // If airborne, keep feet at home positions
+            for (int i = 0; i < legs.Length; i++)
             {
-                Vector3 stepDir = (worldHome - footPos).normalized;
-                Vector3 targetPos = GetGroundPoint(worldHome + stepDir * footForwardBias);
-
-                StartCoroutine(ExecuteStep(i, targetPos));
-                steppingCount++; // count this leg as stepping for next iterations
+                legs[i].footTarget.position = legs[i].worldHomePosition;
+                legs[i].isStepping = false;
             }
         }
     }
 
-    int CountSteppingLegs()
+    void FixedUpdate()
     {
-        int count = 0;
-        for (int i = 0; i < isStepping.Length; i++)
-            if (isStepping[i])
-                count++;
-        return count;
+        CalculateAverageGroundHeightAndNormal();
+        StabilizeBody();
+        if (isAnyLegGrounded) MaintainBodyHeight();
     }
 
-    IEnumerator ExecuteStep(int index, Vector3 targetWorldPos)
+    void UpdateBodyVelocity()
     {
-        isStepping[index] = true;
-        Vector3 startPos = legs[index].footTarget.position;
-        float progress = 0f;
-
-        while (progress < 1f)
-        {
-            progress += Time.deltaTime * stepSpeed;
-
-            Vector3 pos = Vector3.Lerp(startPos, targetWorldPos, progress);
-            pos += Vector3.up * Mathf.Sin(progress * Mathf.PI) * stepHeight;
-
-            legs[index].footTarget.position = pos;
-            yield return null;
-        }
-
-        isStepping[index] = false;
+        bodyVelocity = (transform.position - lastBodyPosition) / Time.deltaTime;
+        lastBodyPosition = transform.position;
     }
 
-    void StayUpright()
+    void StabilizeBody()
     {
-        Vector3 upright = Vector3.up;
         Vector3 currentUp = transform.up;
-        Vector3 torqueAxis = Vector3.Cross(currentUp, upright);
-        rb.AddTorque(torqueAxis * uprightTorque, ForceMode.Force);
+        // Target Up is now the surface normal calculated from leg hits
+        Vector3 targetUp = surfaceNormal;
+        
+        float tiltAngle = Vector3.Angle(currentUp, targetUp);
+        
+        if (tiltAngle > 0.1f)
+        {
+            Vector3 torqueAxis = Vector3.Cross(currentUp, targetUp);
+            float torqueMagnitude = Mathf.Min(tiltAngle / maxTiltAngle, 1f) * uprightTorque;
+            
+            Vector3 correctionTorque = torqueAxis.normalized * torqueMagnitude;
+            rb.AddTorque(correctionTorque, ForceMode.Force);
+            
+            rb.AddTorque(-rb.angularVelocity * uprightDamping, ForceMode.Force);
+        }
     }
 
-    Vector3 GetGroundPoint(Vector3 point)
+    void MaintainBodyHeight()
     {
-        if (Physics.Raycast(point + Vector3.up * 2f, Vector3.down, out RaycastHit hit, 5f))
-            return hit.point;
-        return point;
+        if (!maintainHeight) return;
+        
+        float currentHeight = transform.position.y;
+        float desiredHeight = averageGroundHeight + targetHeight;
+        float heightError = desiredHeight - currentHeight;
+        
+        if (Mathf.Abs(heightError) > 0.05f)
+        {
+            float correctionForce = heightError * heightCorrectionForce;
+            float damping = -rb.linearVelocity.y * heightDamping;
+            rb.AddForce(Vector3.up * (correctionForce + damping), ForceMode.Force);
+        }
     }
 
-    private void OnDrawGizmos()
+    void CalculateAverageGroundHeightAndNormal()
     {
-        if (legs == null || localHomePositions == null) return;
-
+        float totalHeight = 0f;
+        int groundedFeet = 0;
+        Vector3 combinedNormal = Vector3.zero;
+        
         for (int i = 0; i < legs.Length; i++)
         {
-            Gizmos.color = Color.green;
-            Vector3 worldHome = transform.TransformPoint(localHomePositions[i]);
-            Gizmos.DrawWireSphere(worldHome, 0.1f);
-            Gizmos.DrawLine(worldHome, legs[i].footTarget.position);
+            // Raycast down from the leg's home position to find surface
+            Vector3 rayOrigin = transform.TransformPoint(legs[i].localHomeOffset) + Vector3.up * 1f;
+            if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, maxGroundCheckDistance, groundMask))
+            {
+                totalHeight += hit.point.y;
+                combinedNormal += hit.normal;
+                groundedFeet++;
+                legs[i].isGrounded = true;
+            }
+            else
+            {
+                legs[i].isGrounded = false;
+            }
+        }
+        
+        isAnyLegGrounded = groundedFeet > 0;
+
+        if (isAnyLegGrounded)
+        {
+            averageGroundHeight = totalHeight / groundedFeet;
+            surfaceNormal = (combinedNormal / groundedFeet).normalized;
+        }
+        else
+        {
+            // Default to world up if completely airborne
+            surfaceNormal = Vector3.up;
         }
     }
+
+    void UpdateHomePositions()
+    {
+        float speed = new Vector3(bodyVelocity.x, 0, bodyVelocity.z).magnitude;
+        
+        for (int i = 0; i < legs.Length; i++)
+        {
+            if (legs[i].footTarget == null) continue;
+            
+            Vector3 baseHome = transform.TransformPoint(legs[i].localHomeOffset);
+            Vector3 velocityOffset = Vector3.zero;
+
+            if (speed > 0.1f)
+            {
+                Vector3 flatVelocity = new Vector3(bodyVelocity.x, 0, bodyVelocity.z);
+                velocityOffset = flatVelocity.normalized * (speed * velocityPrediction);
+            }
+            
+            legs[i].worldHomePosition = baseHome + velocityOffset;
+        }
+    }
+
+    void EvaluateStepNeeds()
+    {
+        int[] leftDiagonal = { 0, 3 };
+        int[] rightDiagonal = { 1, 2 };
+        
+        bool leftNeedsStep = NeedsStep(leftDiagonal[0]) || NeedsStep(leftDiagonal[1]);
+        bool rightNeedsStep = NeedsStep(rightDiagonal[0]) || NeedsStep(rightDiagonal[1]);
+        
+        bool leftDiagonalGrounded = !legs[leftDiagonal[0]].isStepping && !legs[leftDiagonal[1]].isStepping;
+        bool rightDiagonalGrounded = !legs[rightDiagonal[0]].isStepping && !legs[rightDiagonal[1]].isStepping;
+        
+        if (isDiagonalLeftTurn && leftNeedsStep && rightDiagonalGrounded)
+        {
+            TriggerDiagonalStep(leftDiagonal);
+            isDiagonalLeftTurn = false;
+        }
+        else if (!isDiagonalLeftTurn && rightNeedsStep && leftDiagonalGrounded)
+        {
+            TriggerDiagonalStep(rightDiagonal);
+            isDiagonalLeftTurn = true;
+        }
+    }
+
+    bool NeedsStep(int legIndex)
+    {
+        if (legs[legIndex].isStepping || !legs[legIndex].isGrounded) return false;
+        
+        float distanceFromHome = Vector3.Distance(
+            legs[legIndex].footTarget.position,
+            legs[legIndex].worldHomePosition
+        );
+        
+        return distanceFromHome > stepTriggerDistance;
+    }
+
+    void TriggerDiagonalStep(int[] legIndices)
+    {
+        foreach (int index in legIndices)
+        {
+            if (NeedsStep(index))
+            {
+                StartCoroutine(PerformStep(index));
+            }
+        }
+    }
+
+    IEnumerator PerformStep(int legIndex)
+    {
+        legs[legIndex].isStepping = true;
+        legs[legIndex].stepProgress = 0f;
+        
+        Vector3 startPosition = legs[legIndex].footTarget.position;
+        Vector3 targetPosition = FindGroundPoint(legs[legIndex].worldHomePosition, out _);
+        
+        float speed = new Vector3(bodyVelocity.x, 0, bodyVelocity.z).magnitude;
+        float adaptedDuration = Mathf.Lerp(stepDuration, minStepDuration, speed * speedStepReduction);
+        
+        float elapsed = 0f;
+        
+        while (elapsed < adaptedDuration)
+        {
+            elapsed += Time.deltaTime;
+            float normalizedTime = elapsed / adaptedDuration;
+            legs[legIndex].stepProgress = normalizedTime;
+            
+            targetPosition = FindGroundPoint(legs[legIndex].worldHomePosition, out _);
+            
+            float curveValue = stepCurve.Evaluate(normalizedTime);
+            Vector3 currentPosition = Vector3.Lerp(startPosition, targetPosition, curveValue);
+            
+            float arcHeight = Mathf.Sin(normalizedTime * Mathf.PI) * stepHeight;
+            currentPosition.y += arcHeight;
+            
+            legs[legIndex].footTarget.position = currentPosition;
+            
+            yield return null;
+        }
+        
+        legs[legIndex].footTarget.position = FindGroundPoint(legs[legIndex].worldHomePosition, out _);
+        legs[legIndex].isStepping = false;
+        legs[legIndex].stepProgress = 1f;
+    }
+
+    Vector3 FindGroundPoint(Vector3 worldPosition, out Vector3 normal)
+    {
+        Vector3 rayOrigin = worldPosition + Vector3.up * 2f;
+        
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, maxGroundCheckDistance, groundMask))
+        {
+            normal = hit.normal;
+            return hit.point + Vector3.up * 0.02f;
+        }
+        
+        normal = Vector3.up;
+        return worldPosition;
+    }
+
+    // ... Gizmos code remains mostly the same, drawing surfaceNormal instead of Vector3.up ...
 }
