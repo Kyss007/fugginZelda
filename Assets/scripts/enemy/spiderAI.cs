@@ -27,6 +27,12 @@ public class SpiderAI : MonoBehaviour
     public float circleRadius = 5f;
     public float circleSpeed = 2f;
 
+    public bool hasBall = true;
+    public float waitTimeForNewBall = 15;
+    public Transform ballSpot;
+    public GameObject ballPrefab;
+    public Transform body;
+
     private Rigidbody rb;
     private float currentSpeed;
     private Transform player;
@@ -39,38 +45,38 @@ public class SpiderAI : MonoBehaviour
     private float waitTimer;
     private float circleAngle;
 
-    void Awake()
+    private float ballRespawnTimer;
+
+
+   void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        
-        // Initialize random wander direction
+
         wanderDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
         wanderTimer = wanderChangeInterval;
+
+        ballRespawnTimer = waitTimeForNewBall;
     }
 
     void FixedUpdate()
     {
+        HandleBallLogic();
         DetectPlayer();
         UpdateState();
-        
+
         Vector3 desiredDirection = GetDesiredDirection();
         Vector3 avoidanceDirection = GetAvoidanceDirection();
-        
-        // Always combine desired direction with avoidance (for all states)
+
         Vector3 finalDirection;
         if (desiredDirection.magnitude > 0.01f)
-        {
             finalDirection = (desiredDirection + avoidanceDirection).normalized;
-        }
         else
-        {
-            // Even when stationary, apply avoidance to move away from other spiders
             finalDirection = avoidanceDirection.normalized;
-        }
-        
+
         ApplyMovement(finalDirection);
     }
+
 
     void DetectPlayer()
     {
@@ -86,6 +92,11 @@ public class SpiderAI : MonoBehaviour
 
     void UpdateState()
     {
+        if (!hasBall)
+        {
+            currentState = State.Retreating;
+        }
+
         if (player == null)
         {
             // Even without a player, handle wandering wait state
@@ -226,19 +237,22 @@ public class SpiderAI : MonoBehaviour
         foreach (Collider other in nearbyColliders)
         {
             // Check if the other object has a SpiderAI component
-            other.transform.parent.TryGetComponent<SpiderAI>(out SpiderAI otherSpider);
-            
-            if (otherSpider != null && otherSpider != this)
+            if(other.transform.parent != null)
             {
-                Vector3 awayFromOther = transform.position - other.transform.position;
-                float distance = awayFromOther.magnitude;
+                other.transform.parent.TryGetComponent<SpiderAI>(out SpiderAI otherSpider);
                 
-                if (distance > 0.01f && distance < avoidanceRadius)
+                if (otherSpider != null && otherSpider != this)
                 {
-                    // Stronger avoidance when closer
-                    float avoidanceFactor = 1f - (distance / avoidanceRadius);
-                    avoidance += awayFromOther.normalized * avoidanceFactor;
-                    avoidanceCount++;
+                    Vector3 awayFromOther = transform.position - other.transform.position;
+                    float distance = awayFromOther.magnitude;
+                    
+                    if (distance > 0.01f && distance < avoidanceRadius)
+                    {
+                        // Stronger avoidance when closer
+                        float avoidanceFactor = 1f - (distance / avoidanceRadius);
+                        avoidance += awayFromOther.normalized * avoidanceFactor;
+                        avoidanceCount++;
+                    }
                 }
             }
         }
@@ -310,6 +324,40 @@ public class SpiderAI : MonoBehaviour
                 return wanderSpeed;
         }
     }
+
+    void HandleBallLogic()
+    {
+        hasBall = ballSpot.childCount > 0;
+
+        if (!hasBall) 
+        {
+            // Force retreat while ball is missing
+            currentState = State.Retreating;
+
+            ballRespawnTimer -= Time.fixedDeltaTime;
+            if (ballRespawnTimer <= 0f)
+            {
+                SpawnBall();
+            }
+        }
+        else
+        {
+            ballRespawnTimer = waitTimeForNewBall;
+        }
+    }
+
+    void SpawnBall()
+    {
+        GameObject ball = Instantiate(ballPrefab, ballSpot.position, ballSpot.rotation);
+        ball.transform.SetParent(ballSpot);
+        ball.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        hasBall = true;
+        ballRespawnTimer = waitTimeForNewBall;
+
+        ball.GetComponent<SpringJoint>().connectedBody = rb;
+        ball.GetComponentInChildren<segmentedLineRenderer>().source = body;
+    }
+
 
     // Visualize detection and avoidance radius in editor
     void OnDrawGizmosSelected()
