@@ -202,14 +202,6 @@ MonoBehaviour:
     m_ActionName: 'basePlayer/dodge[/Mouse/rightButton]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 1b51d001-8094-4211-a2dc-f7eec37e3bfe
-    m_ActionName: 'basePlayer/escape[/Keyboard/escape]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7b900d18-7616-49eb-a0d7-f07ea4f61864
-    m_ActionName: 'Menus/Pause Menu[/Keyboard/escape]'
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 0d054016-e1b5-4060-8427-0fc9b658f971
     m_ActionName: 'basePlayer/Look[/Gamepad/rightStick,/Mouse/delta]'
   - m_PersistentCalls:
@@ -228,6 +220,34 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9c68e051-6cea-4497-b03a-425f0d2c1c9b
     m_ActionName: 'basePlayer/target[/Keyboard/ctrl,/Gamepad/leftTrigger]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a27765c5-a9c1-445d-b280-ce2f8000418c
+    m_ActionName: 'Menus/pauseAction[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3e669f91-5822-4533-aff5-e878cb767956
+    m_ActionName: 'Menus/upAction[/Keyboard/w,/Keyboard/upArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a37f59ba-d038-4d42-afbd-9ba49eed3b9b
+    m_ActionName: 'Menus/leftAction[/Keyboard/a,/Keyboard/leftArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 96a929cd-fe44-448a-8663-b051814bd9ee
+    m_ActionName: 'Menus/rightAction[/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9cb51764-1cda-43b4-922a-fe83ae5e429d
+    m_ActionName: 'Menus/downAction[/Keyboard/s,/Keyboard/downArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ff0dc5b-764d-43a7-ad63-2f329f6113d0
+    m_ActionName: 'Menus/backAction[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b8c57d62-4c4b-4543-b618-e801af2a1474
+    m_ActionName: 'Menus/acceptAction[/Keyboard/enter]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: basePlayer
@@ -487,6 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4348d9d52434aee7f948fbd69b3007df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::spikeBallTarget
+  targetController: {fileID: 2050566669739553905}
 --- !u!1 &1847251551493248041
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,6 +940,18 @@ MonoBehaviour:
       - m_Target: {fileID: 700876348744172566}
         m_TargetAssemblyTypeName: hitTrigger, Assembly-CSharp
         m_MethodName: enableHitDetection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1392537185526516895}
+        m_TargetAssemblyTypeName: spikeBallTarget, Assembly-CSharp
+        m_MethodName: decreaseUsage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

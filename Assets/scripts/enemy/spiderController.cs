@@ -295,7 +295,10 @@ public class SpiderController : MonoBehaviour
             float arcHeight = Mathf.Sin(normalizedTime * Mathf.PI) * stepHeight;
             currentPosition.y += arcHeight;
             
-            legs[legIndex].footTarget.position = currentPosition;
+            if(currentPosition != null)
+            {
+                try{legs[legIndex].footTarget.position = currentPosition;} catch{}
+            }
             
             yield return null;
         }

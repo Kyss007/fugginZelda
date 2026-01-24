@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AdaptivePerformance;
 using UnityEngine.UI;
 
 public class spikeBall : MonoBehaviour
@@ -9,14 +10,22 @@ public class spikeBall : MonoBehaviour
     [Header("Settings")]
     public float velocityThreshold = 5f;
 
+    public float[] distances = {0.15f, -0.4f, -0.7f};
+
+    public int usesLeft = 2;
+
     private Rigidbody rb;
     private Animator animator;
 
     public bool onSword = false;
+    public bool thrown = false;
 
     private spikeBallTarget spikeBallTarget;
 
     public SpringJoint springJoint;
+    public targetController targetController;
+
+    private throwableObject throwableObject;
 
     void Awake()
     {
@@ -24,11 +33,21 @@ public class spikeBall : MonoBehaviour
         animator = GetComponent<Animator>();
 
         springJoint = GetComponent<SpringJoint>();
+        throwableObject = GetComponent<throwableObject>();
     }
 
     private void Start()
     {
         spikeBallTarget = FindFirstObjectByType<spikeBallTarget>();
+        targetController = spikeBallTarget.targetController;
+    }
+
+    private void Update()
+    {
+        if(onSword && !thrown)
+        {
+            transform.localPosition = new Vector3(0, distances[usesLeft], 0);
+        }
     }
 
     void FixedUpdate()
@@ -47,7 +66,7 @@ public class spikeBall : MonoBehaviour
         if(onSword)
             return;
 
-        if(attackName == "frontStab")
+        if(attackName == "frontStab" && spikeBallTarget.transform.childCount == 0)
         {
             line.SetActive(false);
 
@@ -59,5 +78,33 @@ public class spikeBall : MonoBehaviour
 
             onSword = true;
         }
+    }
+
+    public void decreaseUsage()
+    {
+        usesLeft--;
+        
+        if(usesLeft < 0)
+        {
+            throwBall();
+        }
+    }
+
+    public void throwBall()
+    {
+        rb.detectCollisions = true;
+        rb.isKinematic = false;
+        transform.parent = null;
+
+        if (targetController.currentSellectedTarget != null)
+        {
+            throwableObject.doThrow(targetController.currentSellectedTarget.transform.position, true);
+        }
+        else
+        {
+            throwableObject.doThrow();
+        }
+
+        thrown = true;
     }
 }

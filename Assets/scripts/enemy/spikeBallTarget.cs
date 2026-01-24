@@ -1,16 +1,20 @@
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class spikeBallTarget : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public targetController targetController;
 
-    // Update is called once per frame
-    void Update()
+    public void decreaseUsage()
     {
-        
+        if(transform.childCount <= 0)
+            return;
+
+        Transform child = transform.GetChild(0);
+
+        if(child != null)
+        {
+            child.GetComponent<spikeBall>().decreaseUsage();
+        }
     }
 }

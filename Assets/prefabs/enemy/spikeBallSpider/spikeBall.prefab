@@ -3615,6 +3615,7 @@ GameObject:
   - component: {fileID: 4621466825417482881}
   - component: {fileID: 4069539566684321457}
   - component: {fileID: 7677090830762770966}
+  - component: {fileID: 808560497579634298}
   m_Layer: 12
   m_Name: spikeBall
   m_TagString: Untagged
@@ -3783,7 +3784,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!145 &3626697596013088847
@@ -3846,6 +3847,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::spikeBall
   line: {fileID: 5261703492216820574}
   velocityThreshold: 16.5
+  distances:
+  - 0.15
+  - -0.4
+  - -0.7
+  usesLeft: 2
+  onSword: 0
+  springJoint: {fileID: 0}
+  targetController: {fileID: 0}
 --- !u!114 &7279764094950425992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3937,6 +3946,25 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &808560497579634298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8381226156054963222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66afaee579d926d1af26264c1708f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::throwableObject
+  throwDistance: 13
+  throwSpeed: 25
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  throwTargetHeightOffset: 0.35
+  isThrow: 0
 --- !u!1 &8415362081096252719
 GameObject:
   m_ObjectHideFlags: 0
