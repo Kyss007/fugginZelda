@@ -3853,8 +3853,13 @@ MonoBehaviour:
   - -0.7
   usesLeft: 2
   onSword: 0
+  thrown: 0
   springJoint: {fileID: 0}
   targetController: {fileID: 0}
+  nobreakLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  breakEffectPrefab: {fileID: 3143279864343273860, guid: 39dabf5d0e7264fcd9f16beea04a18ac, type: 3}
 --- !u!114 &7279764094950425992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3965,6 +3970,7 @@ MonoBehaviour:
     m_Bits: 64
   throwTargetHeightOffset: 0.35
   isThrow: 0
+  usePlayerForThrowDirection: 1
 --- !u!1 &8415362081096252719
 GameObject:
   m_ObjectHideFlags: 0

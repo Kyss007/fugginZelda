@@ -1,4 +1,6 @@
+using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.AdaptivePerformance;
 using UnityEngine.UI;
@@ -26,6 +28,9 @@ public class spikeBall : MonoBehaviour
     public targetController targetController;
 
     private throwableObject throwableObject;
+    public LayerMask nobreakLayers;
+
+    public GameObject breakEffectPrefab;
 
     void Awake()
     {
@@ -106,5 +111,14 @@ public class spikeBall : MonoBehaviour
         }
 
         thrown = true;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(thrown && ((nobreakLayers.value & (1 << collision.gameObject.layer)) == 0))
+        {
+            Instantiate(breakEffectPrefab, this.transform.position, this.transform.rotation);
+            Destroy(gameObject);
+        }    
     }
 }

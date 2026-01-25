@@ -18,17 +18,34 @@ public class throwableObject : MonoBehaviour
 
     public bool isThrow = false;
 
+    public bool usePlayerForThrowDirection = true;
+
+    private keanusCharacterController characterController;
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
+    void Start()
+    {
+        characterController = FindFirstObjectByType<keanusCharacterController>();
+    }
+
     public void doThrow(Vector3 target = new Vector3(), bool withTarget = false)
     {
         if (!withTarget)
         {
-            Vector3 origin = transform.position + transform.forward * throwDistance;
+            Vector3 origin;
+            if(!usePlayerForThrowDirection)
+            {
+                origin = transform.position + transform.forward * throwDistance;
+            }
+            else
+            {
+                origin = characterController.transform.position + characterController.transform.forward * throwDistance;
+            }
 
             RaycastHit hit;
             if (Physics.Raycast(origin, Vector3.down, out hit, Mathf.Infinity, groundLayer))
