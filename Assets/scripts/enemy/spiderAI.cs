@@ -374,4 +374,15 @@ public class SpiderAI : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, retreatDistance);
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        collision.gameObject.TryGetComponent<spikeBall>(out spikeBall spikeBall);
+
+        if(spikeBall != null)
+        {
+            if(spikeBall.thrown)
+                Destroy(gameObject);
+        }
+    }
 }
