@@ -350,6 +350,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "inventoryAction",
+                    "type": "Button",
+                    "id": "9c7a66f4-a75e-4d1c-bfde-e9d7ae261234",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -592,6 +601,28 @@
                     "processors": "",
                     "groups": ";gamepad",
                     "action": "acceptAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6f5f7781-471f-48f2-a871-6beda96a899e",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";keyboard",
+                    "action": "inventoryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d32ab86-aaf2-4b91-bdd1-c3ed04cb569a",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";gamepad",
+                    "action": "inventoryAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

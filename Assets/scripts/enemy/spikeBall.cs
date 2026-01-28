@@ -1,9 +1,4 @@
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
-using UnityEngine.AdaptivePerformance;
-using UnityEngine.UI;
 
 public class spikeBall : MonoBehaviour
 {

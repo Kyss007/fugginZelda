@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using PhysicalWalk;
 using Unity.Mathematics;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class pauseMenu : MonoBehaviour
 
     public bool isPaused = false;
 
+    public pauseMenu otherPauseMenu;
+
     void Start()
     {
         foreach (Transform child in transform)
@@ -32,22 +35,12 @@ public class pauseMenu : MonoBehaviour
         {
             if (pauseAction.action.triggered)
             {
-                Time.timeScale = 0;
-                isPaused = true;
-                Cursor.lockState = CursorLockMode.None;
-
-                playerInput.enabled = false;
-
-                foreach (Transform child in transform)
+                if (otherPauseMenu != null && otherPauseMenu.isPaused)
                 {
-                    child.gameObject.SetActive(true);
+                    otherPauseMenu.CloseMenu();
                 }
 
-                randomRotator.setDefaultRot(Quaternion.Euler(0, 180, 0));
-
-                pauseSpring.rotationalSpring.lastRotation = Quaternion.identity;
-                pauseSpring.rotationalSpring.lastSourceRotation = Quaternion.identity;
-                pauseSpring.rotationalSpring.springVelocity = Vector3.zero;
+                OpenMenu();
             }
         }
         else
@@ -55,17 +48,38 @@ public class pauseMenu : MonoBehaviour
             if ((pauseAction.action.triggered || backAction.action.triggered)
                 && faceDirectionChecker.currentDirection == faceDirectionChecker.FaceDirection.Front)
             {
-                Time.timeScale = 1;
-                isPaused = false;
-                Cursor.lockState = CursorLockMode.Locked;
-
-                playerInput.enabled = true;
-                spawnAnim.triggerDissapear();
-                foreach (Transform child in transform)
-                {
-                    //child.gameObject.SetActive(false);
-                }
+                CloseMenu();
             }
         }
+    }
+
+
+    void OpenMenu()
+    {
+        Time.timeScale = 0;
+        isPaused = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        playerInput.enabled = false;
+
+        foreach (Transform child in transform)
+            child.gameObject.SetActive(true);
+
+        randomRotator.setDefaultRot(Quaternion.Euler(0, 180, 0));
+
+        pauseSpring.rotationalSpring.lastRotation = Quaternion.identity;
+        pauseSpring.rotationalSpring.lastSourceRotation = Quaternion.identity;
+        pauseSpring.rotationalSpring.springVelocity = Vector3.zero;
+    }
+
+    void CloseMenu()
+    {
+        Time.timeScale = 1;
+        isPaused = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        playerInput.enabled = true;
+
+        spawnAnim.triggerDissapear();
     }
 }
