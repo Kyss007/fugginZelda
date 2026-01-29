@@ -39,7 +39,14 @@ public class objectHold : MonoBehaviour
 
     public void Update()
     {
+        if(isHolding && pickedUpObject == null)
+        {
+            isHolding = false;
+            animator.SetBool("holdingObject", false);
+        }
+
         swordSwinger.disableSword = isHolding;
+
 
         if (jumpDisableTimer > 0)
             jumpDisableTimer -= Time.deltaTime;
