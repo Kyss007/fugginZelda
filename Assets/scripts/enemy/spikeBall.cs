@@ -38,7 +38,7 @@ public class spikeBall : MonoBehaviour
 
     private void Start()
     {
-        spikeBallTarget = FindFirstObjectByType<spikeBallTarget>();
+        spikeBallTarget = FindFirstObjectByType<spikeBallTarget>(FindObjectsInactive.Include);
         targetController = spikeBallTarget.targetController;
     }
 
