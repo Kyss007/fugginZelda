@@ -20,6 +20,14 @@ public class inventoryMenuShowGrid : MonoBehaviour
         lastActiveState = showGridThing.activeSelf;
     }
 
+    void OnEnable()
+    {
+        foreach (Transform transform in transform)
+        {
+            transform.gameObject.SetActive(true);
+        }
+    }
+
     void Update()
     {
         if(showGridThing.activeSelf && !lastActiveState)

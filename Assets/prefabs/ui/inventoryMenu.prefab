@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::inventoryItemEquipper
   inventory: {fileID: 0}
+  isSword: 1
 --- !u!65 &7134992343600084999
 BoxCollider:
   m_ObjectHideFlags: 0
