@@ -14085,6 +14085,10 @@ PrefabInstance:
       propertyPath: otherPauseMenu
       value: 
       objectReference: {fileID: 579283430}
+    - target: {fileID: 4555538368548440823, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4825827585439109249, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
       propertyPath: m_LocalPosition.x
       value: 142.00047

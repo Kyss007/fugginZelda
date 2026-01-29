@@ -35,18 +35,29 @@ public class pauseMenu : MonoBehaviour
         {
             if (pauseAction.action.triggered)
             {
-                if (otherPauseMenu != null && otherPauseMenu.isPaused)
+                if (otherPauseMenu != null)
                 {
-                    otherPauseMenu.CloseMenu();
+                    if (otherPauseMenu.isPaused && 
+                        otherPauseMenu.faceDirectionChecker.currentDirection == faceDirectionChecker.FaceDirection.Front)
+                    {
+                        otherPauseMenu.CloseMenu();
+                        OpenMenu();
+                    }
+                    else if (!otherPauseMenu.isPaused)
+                    {
+                        OpenMenu();
+                    }
                 }
-
-                OpenMenu();
+                else
+                {
+                    OpenMenu();
+                }
             }
-        }
+        }  
         else
         {
-            if ((pauseAction.action.triggered || backAction.action.triggered)
-                && faceDirectionChecker.currentDirection == faceDirectionChecker.FaceDirection.Front)
+            if ((pauseAction.action.triggered || backAction.action.triggered) &&
+                faceDirectionChecker.currentDirection == faceDirectionChecker.FaceDirection.Front)
             {
                 CloseMenu();
             }

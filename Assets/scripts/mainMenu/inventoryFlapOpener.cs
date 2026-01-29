@@ -26,6 +26,7 @@ public class inventoryFlapOpener : MonoBehaviour
         currentAngle = 0f;
     }
 
+
     public void openFlap()
     {
         float target = openAngle * (direction == RotationDirection.Positive ? 1f : -1f);
