@@ -22,7 +22,7 @@ public class inventoryMenuShowGrid : MonoBehaviour
 
     void OnEnable()
     {
-        foreach (Transform transform in transform)
+        foreach (Transform transform in transform.GetChild(0).transform)
         {
             transform.gameObject.SetActive(true);
         }

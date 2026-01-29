@@ -5,6 +5,10 @@ public class lookAt : MonoBehaviour
     public bool atCamera = false;
     public Transform targetTransform;
     public Camera cam;
+    
+    [Header("Rotation Options")]
+    public bool matchTargetRotation = false; // New: Syncs rotation instead of looking at position
+    
     [Space]
     public bool addSpin = false;
     public float spinSpeed = 90f;
@@ -29,12 +33,23 @@ public class lookAt : MonoBehaviour
         if (targetTransform == null)
             return;
 
-        Vector3 direction = (targetTransform.position - transform.position).normalized;
+        Quaternion finalRotation;
 
-        if (direction.sqrMagnitude < 0.0001f)
-            return;
+        if (matchTargetRotation)
+        {
+            // Simply copy the rotation of the target
+            finalRotation = targetTransform.rotation;
+        }
+        else
+        {
+            // Calculate the rotation to face the target's position
+            Vector3 direction = (targetTransform.position - transform.position).normalized;
 
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
+            if (direction.sqrMagnitude < 0.0001f)
+                return;
+
+            finalRotation = Quaternion.LookRotation(direction);
+        }
 
         if (addSpin)
         {
@@ -49,12 +64,11 @@ public class lookAt : MonoBehaviour
             }
 
             Quaternion spinRotation = Quaternion.AngleAxis(spinAngle, axis);
-
-            transform.rotation = lookRotation * spinRotation;
+            transform.rotation = finalRotation * spinRotation;
         }
         else
         {
-            transform.rotation = lookRotation;
+            transform.rotation = finalRotation;
         }
     }
 }
