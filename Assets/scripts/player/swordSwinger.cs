@@ -25,7 +25,7 @@ public class swordSwinger : MonoBehaviour
     public bool disableSword = false;
 
     private float dodgeDisableTimer = 0f;
-    public float dodgeBufferTime = 0.2f; 
+    public float dodgeBufferTime = 0.2f;
 
 
     private void Start()
@@ -52,7 +52,22 @@ public class swordSwinger : MonoBehaviour
         // --- Attack Logic ---
         if (inputProvider.getAttackInput() && !hasTriggeredAttackThisButtonPress)
         {
-            // ... (existing attack logic)
+            if (targetController.isTargeting)
+            {
+                if (movementDriver.isJumping)
+                {
+                    animator.SetBool("jumpSwing", true);
+                }
+                else
+                {
+                    animator.SetBool("jumpSwing", false);
+                }
+            }
+            else
+            {
+                animator.SetBool("jumpSwing", false);
+            }
+
             animator.SetTrigger("swing");
             hasTriggeredAttackThisButtonPress = true;
         }
