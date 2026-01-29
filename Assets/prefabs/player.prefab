@@ -2860,6 +2860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keys: 0
+  sword: {fileID: 7249343806544305860}
   unlockedSword: 1
   swordEquipped: 1
 --- !u!1 &9160705449991432386

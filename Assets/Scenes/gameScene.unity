@@ -4701,6 +4701,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 678550062}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &686229052 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2378930294912876544, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
+  m_PrefabInstance: {fileID: 692813741}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f9eb7b2e6810f468963532dca0cef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &691730030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10331,6 +10342,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1566554370342857490, guid: 8e93a09c333e9164295e99dcd4acb93f, type: 3}
   m_PrefabInstance: {fileID: 1588105326}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &1577312200 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 545713323418852354, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
+  m_PrefabInstance: {fileID: 6350360565376858794}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1588039445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1566554370342857490, guid: 8e93a09c333e9164295e99dcd4acb93f, type: 3}
@@ -10605,6 +10621,143 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1566554370342857490, guid: 8e93a09c333e9164295e99dcd4acb93f, type: 3}
   m_PrefabInstance: {fileID: 1273122214}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1632425371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1632425372}
+  - component: {fileID: 1632425377}
+  - component: {fileID: 1632425376}
+  - component: {fileID: 1632425375}
+  - component: {fileID: 1632425374}
+  - component: {fileID: 1632425373}
+  m_Layer: 21
+  m_Name: swordIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1632425372
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632425371}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1577312200}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.356, y: 0.115}
+  m_SizeDelta: {x: 2, y: 3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1632425373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632425371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b698cb44ff42388b3327cfc2f5d167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::clickableObject
+  onClicked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1632425375}
+        m_TargetAssemblyTypeName: inventoryItemEquipper, Assembly-CSharp
+        m_MethodName: equipSword
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  mainCamera: {fileID: 5732605688012620948}
+--- !u!65 &1632425374
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632425371}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4, y: 2.63, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1632425375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632425371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6152bed760ba3f5d49fbba86642b3e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::inventoryItemEquipper
+  inventory: {fileID: 686229052}
+--- !u!114 &1632425376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632425371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: e8292f60be545ec728164ff94d7dd948, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1632425377
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632425371}
+  m_CullTransparentMesh: 1
 --- !u!1 &1639195166
 GameObject:
   m_ObjectHideFlags: 0
@@ -14085,6 +14238,10 @@ PrefabInstance:
       propertyPath: otherPauseMenu
       value: 
       objectReference: {fileID: 579283430}
+    - target: {fileID: 3029990405162027575, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
+      propertyPath: m_Name
+      value: bg
+      objectReference: {fileID: 0}
     - target: {fileID: 4825827585439109249, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
       propertyPath: m_LocalPosition.x
       value: 142.00047
@@ -14159,7 +14316,10 @@ PrefabInstance:
       objectReference: {fileID: 925298103}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 545713323418852354, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1632425372}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5184619725020514725, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
       insertIndex: -1

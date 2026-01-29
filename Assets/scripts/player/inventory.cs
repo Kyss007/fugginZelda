@@ -8,6 +8,11 @@ public class inventory : MonoBehaviour
     public bool unlockedSword = true;
     public bool swordEquipped = true;
 
+    void Start()
+    {
+        reloadInventory();
+    }
+
     public void reloadInventory()
     {
         loadSword();

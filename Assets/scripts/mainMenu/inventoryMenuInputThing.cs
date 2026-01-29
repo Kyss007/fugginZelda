@@ -38,14 +38,14 @@ public class inventoryMenuInputThing : MonoBehaviour
         if (menuLock)
             return;
 
+        cubeAnimator.SetBool("inventoryOpen", faceDirectionChecker.currentDirection == faceDirectionChecker.FaceDirection.Up);
+
         switch (faceDirectionChecker.currentDirection)
             {
                 case faceDirectionChecker.FaceDirection.Front:
                     if (upAction.action.triggered)
                     {
                         menuCubeController.rotUp();
-                        cubeAnimator.SetBool("inventoryOpen", true);
-
                         inputTimer = inputDelay;
                     }
 
@@ -72,8 +72,6 @@ public class inventoryMenuInputThing : MonoBehaviour
                     if (backAction.action.triggered || pauseAction.action.triggered)
                     {
                         menuCubeController.rotDown();
-
-                        cubeAnimator.SetBool("inventoryOpen", false);
                         inputTimer = inputDelay;
                     }
 
