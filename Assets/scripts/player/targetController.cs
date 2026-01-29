@@ -74,26 +74,31 @@ public class targetController : MonoBehaviour
         {
             if (targets.Contains(toBeRemovedTarget))
             {
-                targets.Remove(toBeRemovedTarget);
-
-                //remove from suggested target
-                if (toBeRemovedTarget == currentSuggestedTarget)
-                {
-                    currentSuggestedTarget = null;
-                }
-
-                //remove from sellected target
-                if (toBeRemovedTarget == currentSellectedTarget)
-                {
-                    currentSellectedTarget = null;
-                }
-
-                //remove from last suggested target
-                if (toBeRemovedTarget == lastSuggestedTarget)
-                {
-                    lastSuggestedTarget = null;
-                }
+                removeTarget(toBeRemovedTarget);
             }
+        }
+    }
+
+    public void removeTarget(target toBeRemovedTarget)
+    {
+        targets.Remove(toBeRemovedTarget);
+
+        //remove from suggested target
+        if (toBeRemovedTarget == currentSuggestedTarget)
+        {
+            currentSuggestedTarget = null;
+        }
+
+        //remove from sellected target
+        if (toBeRemovedTarget == currentSellectedTarget)
+        {
+            currentSellectedTarget = null;
+        }
+
+        //remove from last suggested target
+        if (toBeRemovedTarget == lastSuggestedTarget)
+        {
+            lastSuggestedTarget = null;
         }
     }
 

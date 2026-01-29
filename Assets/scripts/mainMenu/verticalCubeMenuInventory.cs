@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class verticalCubeMenuInventory : MonoBehaviour
 {
+    public inventoryMenuInputThing cubeMenu;
     public inventoryMenuInputThing inventoryMenuInputThing;
     public Canvas menuCanvas;
     public RectTransform selector;
@@ -36,6 +37,8 @@ public class verticalCubeMenuInventory : MonoBehaviour
 
     private void Update()
     {
+        cubeMenu.menuLock = lockMenu;
+
         handleInput();
         updateSelectorTransform();
     }

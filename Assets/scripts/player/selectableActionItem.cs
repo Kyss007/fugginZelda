@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class selectableActionItem : MonoBehaviour
@@ -7,6 +8,8 @@ public class selectableActionItem : MonoBehaviour
     public List<InputActionReference> inputActions;
 
     public InputActionReference assigedAction = null;
+
+    public UnityEvent onAssignedActionTriggered;
 
     public void assignAction(InputActionReference action)
     {
@@ -21,7 +24,7 @@ public class selectableActionItem : MonoBehaviour
 
         if(assigedAction.action.triggered)
         {
-            print("triggered action with assiged action: " + assigedAction.name);
+            onAssignedActionTriggered.Invoke();
         }
     }
 }

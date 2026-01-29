@@ -10,7 +10,8 @@ public class inventory : MonoBehaviour
     public bool swordEquipped = true;
 
     [Space]
-    public GameObject debugObject;
+    public GameObject lasso;
+    public bool unlockedLasso = true;
 
     void Start()
     {

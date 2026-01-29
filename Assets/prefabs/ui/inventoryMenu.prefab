@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e422ffabc9bfd82bb781ee7b0b7a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::verticalCubeMenuInventory
+  cubeMenu: {fileID: 5738296674473229940}
   inventoryMenuInputThing: {fileID: 5738296674473229940}
   menuCanvas: {fileID: 5644235054050897637}
   selector: {fileID: 8277766485922022745}
@@ -180,9 +181,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::inventoryItemEquipper
   inventory: {fileID: 0}
-  menu: {fileID: 0}
+  menu: {fileID: 4920310135658618881}
   isSword: 1
-  isDebug: 0
+  isLasso: 0
 --- !u!65 &7134992343600084999
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2249,7 +2250,7 @@ GameObject:
   - component: {fileID: 9080448652825787893}
   - component: {fileID: 5947372041537143511}
   m_Layer: 21
-  m_Name: debugItem
+  m_Name: lassoIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2264,7 +2265,7 @@ RectTransform:
   m_GameObject: {fileID: 6176623053288387067}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.04, y: 0.04, z: 0.04}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7065135611524535624}
@@ -2272,7 +2273,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.063, y: 0.115}
-  m_SizeDelta: {x: 2, y: 3}
+  m_SizeDelta: {x: 2.5, y: 2.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4185785781996763821
 CanvasRenderer:
@@ -2302,7 +2303,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 9a56ed08b4ad14744914c607c78a863a, type: 3}
+  m_Texture: {fileID: 2800000, guid: 038b6156914fd0c51b1eaba6064b5c1b, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2324,7 +2325,7 @@ MonoBehaviour:
   inventory: {fileID: 0}
   menu: {fileID: 4920310135658618881}
   isSword: 0
-  isDebug: 1
+  isLasso: 1
 --- !u!65 &9080448652825787893
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2344,8 +2345,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: -1.4, y: 2.63, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.447128, y: 1.6082764, z: 0}
+  m_Center: {x: 0.025749207, y: -0.05645752, z: 0}
 --- !u!114 &5947372041537143511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2363,7 +2364,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4602023035907925909}
         m_TargetAssemblyTypeName: inventoryItemEquipper, Assembly-CSharp
-        m_MethodName: equipDebug
+        m_MethodName: equipLasso
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

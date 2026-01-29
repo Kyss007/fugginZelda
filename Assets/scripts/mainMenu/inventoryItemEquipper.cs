@@ -8,6 +8,7 @@ public class inventoryItemEquipper : MonoBehaviour
     public verticalCubeMenuInventory menu;
     [Space]
     public bool isSword = false;
+    public bool isLasso = false;
 
     void OnEnable()
     {
@@ -23,6 +24,14 @@ public class inventoryItemEquipper : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+
+        if(isLasso)
+        {
+            if(!inventory.unlockedLasso)
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }    
 
     public void equipSword()
@@ -34,10 +43,10 @@ public class inventoryItemEquipper : MonoBehaviour
         }
     }
 
-    public void equipDebug()
+    public void equipLasso()
     {
         menu.lockMenu = true;
-        StartCoroutine(selectAssianbleAction(inventory.debugObject));
+        StartCoroutine(selectAssianbleAction(inventory.lasso));
     }
 
     public IEnumerator selectAssianbleAction(GameObject targetObject)
@@ -70,6 +79,9 @@ public class inventoryItemEquipper : MonoBehaviour
         }
 
         actionItem.assignAction(selectedAction);
+
+        yield return new WaitForEndOfFrame();
+
         menu.lockMenu = false;
     }
 }
