@@ -1233,6 +1233,7 @@ Transform:
   - {fileID: 7271275312260163184}
   - {fileID: 5707405217063551296}
   - {fileID: 8458888942829289712}
+  - {fileID: 372113356516164285}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &282992021066616709
@@ -1462,6 +1463,56 @@ MonoBehaviour:
   addSpin: 1
   spinSpeed: -100
   spinAxis: 2
+--- !u!1 &4682453209293612618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 372113356516164285}
+  - component: {fileID: 1550577676760367388}
+  m_Layer: 3
+  m_Name: setableActionItem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &372113356516164285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4682453209293612618}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4244579278436318364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1550577676760367388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4682453209293612618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168d2af5bcf022b7aa35e83a2f46e4b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::selectableActionItem
+  inputActions:
+  - {fileID: -3748679576350768177, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  - {fileID: 6051347885377546165, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  - {fileID: 4731120728592478868, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  - {fileID: 6022168764884074888, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  assigedAction: {fileID: 0}
 --- !u!1 &5017599920566579060
 GameObject:
   m_ObjectHideFlags: 0
@@ -2864,8 +2915,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keys: 0
   sword: {fileID: 7249343806544305860}
-  unlockedSword: 1
-  swordEquipped: 1
+  unlockedSword: 0
+  swordEquipped: 0
+  debugObject: {fileID: 4682453209293612618}
 --- !u!1 &9160705449991432386
 GameObject:
   m_ObjectHideFlags: 0

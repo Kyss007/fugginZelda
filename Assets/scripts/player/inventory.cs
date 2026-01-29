@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class inventory : MonoBehaviour
@@ -7,6 +8,9 @@ public class inventory : MonoBehaviour
     public GameObject sword;
     public bool unlockedSword = true;
     public bool swordEquipped = true;
+
+    [Space]
+    public GameObject debugObject;
 
     void Start()
     {

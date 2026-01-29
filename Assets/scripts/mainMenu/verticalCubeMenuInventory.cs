@@ -12,6 +12,7 @@ public class verticalCubeMenuInventory : MonoBehaviour
     public Vector2 verticalOffset;
     public int currentSelectedValue = 0;
     public float lerpSpeed = 30f;
+    public bool lockMenu = false;
 
     [Space]
     public InputActionReference upAction;
@@ -43,6 +44,9 @@ public class verticalCubeMenuInventory : MonoBehaviour
     {
         // Safety check for empty menus
         if (menuOptionsParent.childCount == 0) return;
+
+        if(lockMenu)
+            return;
 
         targetTransform = menuOptionsParent.GetChild(currentSelectedValue).GetComponent<RectTransform>();
 
