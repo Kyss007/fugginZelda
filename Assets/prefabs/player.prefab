@@ -891,13 +891,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3780238808247592712}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5342903160252196335}
-  m_Father: {fileID: 4244579278436318364}
+  m_Father: {fileID: 5001615753758695258}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3211009508895193244
 Animator:
@@ -1225,8 +1225,7 @@ Transform:
   - {fileID: 450988692248822457}
   - {fileID: 191708736257754696}
   - {fileID: 4244579276822663888}
-  - {fileID: 641753268108090327}
-  - {fileID: 7210682358257958215}
+  - {fileID: 5001615753758695258}
   - {fileID: 8510382281391744275}
   - {fileID: 6843660683237626840}
   - {fileID: 2685037912032699339}
@@ -2291,6 +2290,39 @@ MonoBehaviour:
   addSpin: 0
   spinSpeed: 90
   spinAxis: 1
+--- !u!1 &7249343806544305860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5001615753758695258}
+  m_Layer: 3
+  m_Name: sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5001615753758695258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249343806544305860}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 641753268108090327}
+  - {fileID: 7210682358257958215}
+  m_Father: {fileID: 4244579278436318364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7289860636345068831
 GameObject:
   m_ObjectHideFlags: 0
@@ -2316,13 +2348,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7289860636345068831}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7632441114691260975}
-  m_Father: {fileID: 4244579278436318364}
+  m_Father: {fileID: 5001615753758695258}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5211785028556062046
 MonoBehaviour:
@@ -2828,6 +2860,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keys: 0
+  unlockedSword: 1
+  swordEquipped: 1
 --- !u!1 &9160705449991432386
 GameObject:
   m_ObjectHideFlags: 0

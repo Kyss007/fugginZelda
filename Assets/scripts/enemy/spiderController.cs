@@ -297,7 +297,10 @@ public class SpiderController : MonoBehaviour
             
             if(currentPosition != null)
             {
-                try{legs[legIndex].footTarget.position = currentPosition;} catch{}
+                if(currentPosition != new Vector3(float.NaN, float.NaN, float.NaN))
+                {
+                    legs[legIndex].footTarget.position = currentPosition;
+                }
             }
             
             yield return null;

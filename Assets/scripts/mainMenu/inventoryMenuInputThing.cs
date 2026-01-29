@@ -69,7 +69,7 @@ public class inventoryMenuInputThing : MonoBehaviour
                     break;
 
                 case faceDirectionChecker.FaceDirection.Up:
-                    if (downAction.action.triggered || backAction.action.triggered || pauseAction.action.triggered)
+                    if (backAction.action.triggered || pauseAction.action.triggered)
                     {
                         menuCubeController.rotDown();
 

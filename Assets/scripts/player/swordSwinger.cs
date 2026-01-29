@@ -31,7 +31,7 @@ public class swordSwinger : MonoBehaviour
         cc = GetComponentInParent<keanusCharacterController>();
         inputProvider = cc.inputDriver;
 
-        targetController = transform.parent.GetComponentInChildren<targetController>();
+        targetController = transform.parent.parent.GetComponentInChildren<targetController>();
 
         movementDriver = (thirdPersonMovementDriver)cc.currentMovementDriver;
     }

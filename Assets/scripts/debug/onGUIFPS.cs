@@ -44,8 +44,14 @@ public class onGUIFPS : MonoBehaviour
     {
         if (showFPS)
         {
+            // Scale font relative to screen height
+            style.fontSize = Mathf.RoundToInt(fontSize * (Screen.height / 1080f));
+
             string fpsText = $"FPS: {fps:F1}";
-            GUI.Label(new Rect(position.x, position.y, 200, 30), fpsText, style);
+            float xPos = position.x * Screen.width;
+            float yPos = position.y * Screen.height;
+
+            GUI.Label(new Rect(xPos, yPos, 200, 30), fpsText, style);
         }
     }
 }
