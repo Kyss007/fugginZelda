@@ -16,6 +16,11 @@ public class chest : MonoBehaviour
         inventory.keys++;
     }
 
+    public void unlockSword()
+    {
+        inventory.unlockedSword = true;
+    }
+
     public void debugOpenChest()
     {
         chestHinge.transform.localRotation = Quaternion.Euler(45, 0, 0);

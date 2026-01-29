@@ -4777,6 +4777,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2378930294912876544, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
+      propertyPath: swordEquipped
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378930294912876544, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
+      propertyPath: unlockedSword
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4244579278436318364, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 119.94
@@ -13075,7 +13083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4786386470794851599, guid: 92ab4bb503801a661998421b7a9614b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 137.08
+      value: 133.64
       objectReference: {fileID: 0}
     - target: {fileID: 4786386470794851599, guid: 92ab4bb503801a661998421b7a9614b0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13083,7 +13091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4786386470794851599, guid: 92ab4bb503801a661998421b7a9614b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -268.96
+      value: -267.68
       objectReference: {fileID: 0}
     - target: {fileID: 4786386470794851599, guid: 92ab4bb503801a661998421b7a9614b0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13112,6 +13120,10 @@ PrefabInstance:
     - target: {fileID: 4786386470794851599, guid: 92ab4bb503801a661998421b7a9614b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334438314242957600, guid: 92ab4bb503801a661998421b7a9614b0, type: 3}
+      propertyPath: interactionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: unlockSword
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
