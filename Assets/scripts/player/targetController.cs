@@ -83,19 +83,16 @@ public class targetController : MonoBehaviour
     {
         targets.Remove(toBeRemovedTarget);
 
-        //remove from suggested target
         if (toBeRemovedTarget == currentSuggestedTarget)
         {
             currentSuggestedTarget = null;
         }
 
-        //remove from sellected target
         if (toBeRemovedTarget == currentSellectedTarget)
         {
             currentSellectedTarget = null;
         }
 
-        //remove from last suggested target
         if (toBeRemovedTarget == lastSuggestedTarget)
         {
             lastSuggestedTarget = null;
@@ -104,25 +101,26 @@ public class targetController : MonoBehaviour
 
     private void Update()
     {
-        //this bullshit fixes an error that occurs when any of these get deleted when set in any of these fields
-        if (currentSellectedTarget == null)
-            currentSellectedTarget = null;
+        // Keep input detection in Update so button presses are never missed
+        isTargeting = inputDriver.getTargetInput();
+    }
 
-        if (currentSuggestedTarget == null)
-            currentSuggestedTarget = null;
+    private void LateUpdate()
+    {
+        // 1. Cleanup Nulls and Dead References
+        if (currentSellectedTarget == null) currentSellectedTarget = null;
+        if (currentSuggestedTarget == null) currentSuggestedTarget = null;
+        if (lastSuggestedTarget == null) lastSuggestedTarget = null;
 
-        if (lastSuggestedTarget == null)
-            lastSuggestedTarget = null;
-
-
-        for (int i = 0; i < targets.Count; i++)
+        for (int i = targets.Count - 1; i >= 0; i--)
         {
             if (targets[i] == null)
             {
-                targets.Remove(targets[i]);
+                targets.RemoveAt(i);
             }
         }
 
+        // 2. Frustum Check (Remove targets not seen by camera)
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
         for (int i = targets.Count - 1; i >= 0; i--)
         {
@@ -135,38 +133,30 @@ public class targetController : MonoBehaviour
             }
         } 
 
-
         targetSuggestionGO.SetActive(false);
         targetSellectedGO.SetActive(false);
 
-        isTargeting = inputDriver.getTargetInput();
-
-        //early out wenn keine potentiellen targets
+        // 3. Early out if empty
         if (targets.Count <= 0)
         {
             lastTargetsCount = 0;
             wasTargeting = false;
-
             lastSuggestedTarget = null;
             return;
         }
 
-
-        //wenn kein target suggested wird oder wenn grade der erste target drinne ist soll der erste in der liste suggested werden
+        // 4. Suggestion Logic
         if (currentSuggestedTarget == null || (lastTargetsCount <= 0 && targets.Count > 0))
         {
-            //TODO: statt einfach den nächsten in der liste picken, den nächsten zum letzten target
             int index = 0;
 
             if (targets.Contains(lastSuggestedTarget))
             {
                 index = targets.IndexOf(lastSuggestedTarget);
-
                 if (index >= targets.Count - 1)
                     index = 0;
             }
 
-            // falls nur ein target vorhanden ist nimm es trotzdem
             if (targets.Count == 1)
             {
                 if (targets[0] != currentSellectedTarget)
@@ -189,8 +179,7 @@ public class targetController : MonoBehaviour
             }
         }
 
-
-        //target sellecten
+        // 5. Select Target
         if (isTargeting && !wasTargeting)
         {
             currentSellectedTarget = currentSuggestedTarget;
@@ -200,22 +189,20 @@ public class targetController : MonoBehaviour
         if (!isTargeting)
             currentSellectedTarget = null;
 
-        //target suggestion dingen positionieren und an machen
+        // 6. Visual Updates
         if (currentSuggestedTarget != null)
         {
             targetSuggestionGO.SetActive(true);
-
             targetSuggestionGO.transform.position = currentSuggestedTarget.transform.position + new Vector3(0, suggestionDisplayOffset, 0);
         }
 
-        //sellected target dinge positionieren und an machen
         if (currentSellectedTarget != null)
         {
             targetSellectedGO.SetActive(true);
-
             targetSellectedGO.transform.position = currentSellectedTarget.transform.position;
         }
 
+        // 7. Rotation Logic (Use Time.deltaTime for LateUpdate)
         if (isTargeting && currentSellectedTarget != null)
         {
             Vector2 currentLookDirection = new Vector2(transform.forward.x, transform.forward.z).normalized;
@@ -223,10 +210,9 @@ public class targetController : MonoBehaviour
             Vector3 dir = currentSellectedTarget.transform.position - transform.parent.position;
             Vector2 targetLookDirection = new Vector2(dir.x, dir.z).normalized;
 
-            Vector2 lerpedLookDirection = Vector2.Lerp(currentLookDirection, targetLookDirection, turnToTargetSpeed * Time.fixedDeltaTime);
+            Vector2 lerpedLookDirection = Vector2.Lerp(currentLookDirection, targetLookDirection, turnToTargetSpeed * Time.deltaTime);
             movementDriver.setLookInput(lerpedLookDirection);
         }
-
 
         lastTargetsCount = targets.Count;
         wasTargeting = isTargeting;
