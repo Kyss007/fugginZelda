@@ -53,6 +53,8 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     public RaycastHit groundHit;
     private bool wasGrounded;
 
+    public bool autoWalk = false;
+
     // Platform rotation tracking
     private Rigidbody lastPlatformRigidbody;
     private Quaternion lastPlatformRotation;
@@ -61,7 +63,7 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
     private bool lastJumpInput;
     private Vector2 inputDir;
     private Vector3 moveDirection;
-    private Vector3 lastMoveDirection;
+    public Vector3 lastMoveDirection;
     private Vector3 lookDirection;
     public Rigidbody rb;
     public Camera camera;
@@ -113,7 +115,15 @@ public class thirdPersonMovementDriver : MonoBehaviour, kccIMovementDriver
 
     public void setMoveInput(Vector2 input)
     {
-        inputDir = input;
+        if (autoWalk && input == Vector2.zero)
+        {
+            // Inject forward movement if no manual input is detected
+            inputDir = new Vector2(0, 1); 
+        }
+        else
+        {
+            inputDir = input;
+        }
     }
 
     public void setJumpInput(bool input)

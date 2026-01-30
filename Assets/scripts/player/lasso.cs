@@ -15,7 +15,7 @@ public class lasso : MonoBehaviour
 
     [Header("Lasso Constraints")]
     public float maxLassoLength = 8f;
-    public float breakThreshold = 1.5f; // Extra distance allowed before the rope snaps
+    public float breakThreshold = 1.5f; 
     public float pullInDistance = 1f;
     public float pullInForce = 3f;
 
@@ -66,18 +66,30 @@ public class lasso : MonoBehaviour
 
     void Update()
     {
-        // UI Visuals for the reticle
+        // 1. CLAMP RETICLE VISUALS
         if (targetController.currentSellectedTarget != null)
-            target.position = targetController.currentSellectedTarget.transform.position;
+        {
+            Vector3 dirToTarget = targetController.currentSellectedTarget.transform.position - origin.position;
+            // Limit reticle position to maxLassoLength
+            if (dirToTarget.magnitude > maxLassoLength)
+            {
+                target.position = origin.position + (dirToTarget.normalized * maxLassoLength);
+            }
+            else
+            {
+                target.position = targetController.currentSellectedTarget.transform.position;
+            }
+        }
         else
+        {
             target.localPosition = ogLocalPosOfLassoTarget;
+        }
 
-        // Swing Logic and Break Check
+        // 2. SWING LOGIC
         if (isSwinging && activeGrapplePoint != null)
         {
             float currentDist = Vector3.Distance(playerRb.position, activeGrapplePoint.position);
 
-            // If player moves too far beyond the initial attachment length, break the rope
             if (currentDist > initialSwingDistance + breakThreshold || thirdPersonMovementDriver.isGrounded)
             {
                 StopSwinging();
@@ -104,14 +116,21 @@ public class lasso : MonoBehaviour
 
         lastFireTime = Time.time;
 
+        // Check distance before deciding to swing
         if (targetController.currentSellectedTarget != null && targetController.currentSellectedTarget.isLassoTarget)
         {
-            activeGrapplePoint = targetController.currentSellectedTarget.transform;
-            currentSwungOnTarget = targetController.currentSellectedTarget;
-            lassoRoutine = StartCoroutine(GrappleSequence(activeGrapplePoint));
-            return;
+            float dist = Vector3.Distance(origin.position, targetController.currentSellectedTarget.transform.position);
+            
+            if (dist <= maxLassoLength)
+            {
+                activeGrapplePoint = targetController.currentSellectedTarget.transform;
+                currentSwungOnTarget = targetController.currentSellectedTarget;
+                lassoRoutine = StartCoroutine(GrappleSequence(activeGrapplePoint));
+                return;
+            }
         }
 
+        // Default to normal shot if no target or target too far
         ExecuteNormalLasso();
     }
 
@@ -133,7 +152,7 @@ public class lasso : MonoBehaviour
         isSwinging = true;
         lassoRoutine = null;
 
-        transform.parent.GetComponent<Rigidbody>().AddForce((grapplePoint.position - transform.parent.position).normalized * pullInForce ,ForceMode.Impulse);
+        playerRb.AddForce((grapplePoint.position - playerRb.position).normalized * pullInForce ,ForceMode.Impulse);
     }
 
     void SetupSwingJoint(Vector3 anchorPos)
@@ -142,7 +161,6 @@ public class lasso : MonoBehaviour
         swingJoint.autoConfigureConnectedAnchor = false;
         swingJoint.connectedAnchor = anchorPos;
 
-        // Capture the distance at the exact moment of impact
         initialSwingDistance = Vector3.Distance(playerRb.position, anchorPos) - pullInDistance;
 
         swingJoint.xMotion = ConfigurableJointMotion.Limited;
@@ -158,6 +176,8 @@ public class lasso : MonoBehaviour
         spring.spring = swingSpring;
         spring.damper = swingDamper;
         swingJoint.linearLimitSpring = spring;
+
+        thirdPersonMovementDriver.autoWalk = true;
     }
 
     void StopSwinging()
@@ -170,6 +190,8 @@ public class lasso : MonoBehaviour
         lassoRoutine = StartCoroutine(RetractRoutine());
 
         currentSwungOnTarget = null;
+
+        thirdPersonMovementDriver.autoWalk = false;
     }
 
     IEnumerator RetractRoutine()
@@ -191,8 +213,20 @@ public class lasso : MonoBehaviour
         if (targetController != null && targetController.currentSellectedTarget != null)
         {
             localHitObject = targetController.currentSellectedTarget.gameObject;
-            reachedActualTarget = true;
-            FireLasso(localHitObject.transform.position);
+            Vector3 dir = (localHitObject.transform.position - origin.position);
+            float dist = dir.magnitude;
+
+            if (dist <= maxLassoLength)
+            {
+                reachedActualTarget = true;
+                FireLasso(localHitObject.transform.position);
+            }
+            else
+            {
+                // TARGET TOO FAR: Shoot line to max length only
+                reachedActualTarget = false;
+                FireLasso(origin.position + (dir.normalized * maxLassoLength));
+            }
         }
         else
         {
@@ -265,7 +299,16 @@ public class lasso : MonoBehaviour
     void UpdateLine(float progress)
     {
         Vector3 start = origin.position;
-        float currentDistance = Vector3.Distance(start, targetPos);
+        
+        // Ensure visual line never renders past maxLassoLength
+        Vector3 currentTargetPos = targetPos;
+        Vector3 fullDir = targetPos - start;
+        if (fullDir.magnitude > maxLassoLength)
+        {
+            currentTargetPos = start + (fullDir.normalized * maxLassoLength);
+        }
+
+        float currentDistance = Vector3.Distance(start, currentTargetPos);
         float lengthRatio = Mathf.Clamp01(currentDistance / maxLassoLength);
 
         float arcScale = Mathf.Lerp(1f, 0.2f, lengthRatio);
@@ -273,7 +316,7 @@ public class lasso : MonoBehaviour
         float arcT = progress * (1f - progress);
         Vector3 arcOffset = arcDirection * currentArcHeight * arcT;
 
-        Vector3 end = Vector3.Lerp(start, targetPos, progress) + arcOffset;
+        Vector3 end = Vector3.Lerp(start, currentTargetPos, progress) + arcOffset;
         Vector3 direction = (end - start).normalized;
 
         Vector3 right = Vector3.Cross(direction, Vector3.up).normalized;
