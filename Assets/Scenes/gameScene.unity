@@ -5042,22 +5042,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
-    - target: {fileID: 6684681797271819371, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: pullInForce
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6684681797271819371, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: swingDamper
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6684681797271819371, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: swingSpring
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 6684681797271819371, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
-      propertyPath: breakThreshold
-      value: 2.3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

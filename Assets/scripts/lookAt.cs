@@ -5,10 +5,10 @@ public class lookAt : MonoBehaviour
     public bool atCamera = false;
     public Transform targetTransform;
     public Camera cam;
-    
+
     [Header("Rotation Options")]
-    public bool matchTargetRotation = false; // New: Syncs rotation instead of looking at position
-    
+    public bool matchTargetRotation = false;
+
     [Space]
     public bool addSpin = false;
     public float spinSpeed = 90f;
@@ -26,9 +26,7 @@ public class lookAt : MonoBehaviour
     void LateUpdate()
     {
         if (atCamera && cam != null)
-        {
             targetTransform = cam.transform;
-        }
 
         if (targetTransform == null)
             return;
@@ -37,38 +35,38 @@ public class lookAt : MonoBehaviour
 
         if (matchTargetRotation)
         {
-            // Simply copy the rotation of the target
             finalRotation = targetTransform.rotation;
         }
         else
         {
-            // Calculate the rotation to face the target's position
-            Vector3 direction = (targetTransform.position - transform.position).normalized;
+            Vector3 direction;
+
+            if (atCamera)
+                direction = transform.position - targetTransform.position;
+            else
+                direction = targetTransform.position - transform.position;
 
             if (direction.sqrMagnitude < 0.0001f)
                 return;
 
-            finalRotation = Quaternion.LookRotation(direction);
+            finalRotation = Quaternion.LookRotation(direction, Vector3.up);
         }
 
         if (addSpin)
         {
             spinAngle += spinSpeed * Time.deltaTime;
 
-            Vector3 axis = Vector3.up;
-            switch (spinAxis)
+            Vector3 axis = spinAxis switch
             {
-                case Axis.X: axis = Vector3.right; break;
-                case Axis.Y: axis = Vector3.up; break;
-                case Axis.Z: axis = Vector3.forward; break;
-            }
+                Axis.X => Vector3.right,
+                Axis.Y => Vector3.up,
+                Axis.Z => Vector3.forward,
+                _ => Vector3.up
+            };
 
-            Quaternion spinRotation = Quaternion.AngleAxis(spinAngle, axis);
-            transform.rotation = finalRotation * spinRotation;
+            finalRotation *= Quaternion.AngleAxis(spinAngle, axis);
         }
-        else
-        {
-            transform.rotation = finalRotation;
-        }
+
+        transform.rotation = finalRotation;
     }
 }
