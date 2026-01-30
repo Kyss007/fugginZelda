@@ -21,6 +21,7 @@ public class inventory : MonoBehaviour
     public void reloadInventory()
     {
         loadSword();
+        loadLasso();
     }
 
     public void loadSword()
@@ -29,5 +30,10 @@ public class inventory : MonoBehaviour
             sword.SetActive(true);
         else
             sword.SetActive(false);
+    }
+
+    public void loadLasso()
+    {
+        lasso.SetActive(unlockedLasso);
     }
 }
