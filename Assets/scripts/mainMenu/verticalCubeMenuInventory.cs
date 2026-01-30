@@ -18,6 +18,8 @@ public class verticalCubeMenuInventory : MonoBehaviour
     [Space]
     public InputActionReference upAction;
     public InputActionReference downAction;
+    public InputActionReference leftAction;
+    public InputActionReference rightAction;
     public InputActionReference acceptAction;
 
     private RectTransform targetTransform;
@@ -25,9 +27,8 @@ public class verticalCubeMenuInventory : MonoBehaviour
     void OnEnable()
     {
         currentSelectedValue = 0;
-        // Immediate snap to first item on enable if desired
         if (menuOptionsParent.childCount > 0)
-            targetTransform = menuOptionsParent.GetChild(0).GetComponent<RectTransform>();
+            targetTransform = menuOptionsParent.GetChild(currentSelectedValue).GetComponent<RectTransform>();
     }
 
     void OnDisable()
@@ -45,22 +46,33 @@ public class verticalCubeMenuInventory : MonoBehaviour
 
     private void handleInput()
     {
-        // Safety check for empty menus
         if (menuOptionsParent.childCount == 0) return;
-
-        if(lockMenu)
-            return;
+        if (lockMenu) return;
 
         targetTransform = menuOptionsParent.GetChild(currentSelectedValue).GetComponent<RectTransform>();
+        
+        menuNavigationHint hint = targetTransform.GetComponent<menuNavigationHint>();
 
         if (upAction.action.triggered)
         {
-            menuUp();
+            if (hint != null && hint.up != null) SetSelectionByObject(hint.up);
+            else menuUp();
         }
         
         if (downAction.action.triggered)
         {
-            menuDown();
+            if (hint != null && hint.down != null) SetSelectionByObject(hint.down);
+            else menuDown();
+        }
+
+        if (leftAction != null && leftAction.action.triggered && hint != null && hint.left != null)
+        {
+            SetSelectionByObject(hint.left);
+        }
+
+        if (rightAction != null && rightAction.action.triggered && hint != null && hint.right != null)
+        {
+            SetSelectionByObject(hint.right);
         }
 
         if (acceptAction.action.triggered)
@@ -69,17 +81,24 @@ public class verticalCubeMenuInventory : MonoBehaviour
         }
     }
 
+    private void SetSelectionByObject(GameObject target)
+    {
+        if (target == null) return;
+        int index = target.transform.GetSiblingIndex();
+        
+        if (target.transform.parent == menuOptionsParent)
+        {
+            currentSelectedValue = index;
+        }
+    }
+
     private void updateSelectorTransform()
     {
         if (targetTransform == null) return;
 
-        // Apply vertical offset relative to the canvas/menu rotation
         Vector3 targetWorldPos = targetTransform.position + menuCanvas.transform.TransformVector((Vector3)verticalOffset);
-
-        // Smoothly follow the target button
         selector.position = Vector3.Lerp(selector.position, targetWorldPos, Time.unscaledDeltaTime * lerpSpeed);
 
-        // Standard vertical rotation (90 degrees)
         Quaternion targetRot = Quaternion.Euler(0, 0, 90);
         selector.rotation = Quaternion.Lerp(selector.rotation, targetRot, Time.unscaledDeltaTime * lerpSpeed);
     }

@@ -6,6 +6,7 @@ public class inventoryItemEquipper : MonoBehaviour
 {
     public inventory inventory;
     public verticalCubeMenuInventory menu;
+    public GameObject pressButtonIndicator;
     [Space]
     public bool isSword = false;
     public bool isLasso = false;
@@ -63,6 +64,8 @@ public class inventoryItemEquipper : MonoBehaviour
         bool inputFound = false;
         InputActionReference selectedAction = null;
 
+        pressButtonIndicator.SetActive(true);
+
         while (!inputFound)
         {
             foreach (var actionRef in actionItem.inputActions)
@@ -81,6 +84,8 @@ public class inventoryItemEquipper : MonoBehaviour
         actionItem.assignAction(selectedAction);
 
         yield return new WaitForEndOfFrame();
+
+        pressButtonIndicator.SetActive(false);
 
         menu.lockMenu = false;
     }
