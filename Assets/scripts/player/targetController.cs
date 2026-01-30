@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class targetController : MonoBehaviour
@@ -19,12 +18,10 @@ public class targetController : MonoBehaviour
     public bool wasTargeting = false;
 
     private int lastTargetsCount = 0;
-
     private target lastSuggestedTarget = null;
 
     private kccIinputDriver inputDriver;
     private kccIMovementDriver movementDriver;
-
     private Camera camera;
 
     void Start()
@@ -37,90 +34,79 @@ public class targetController : MonoBehaviour
         targetSellectedGO.transform.SetParent(null);
         targetSellectedGO.SetActive(false);
 
-        inputDriver = transform.parent.GetComponentInChildren<inputSystemInputDriver>();
+        inputDriver = transform.parent.GetComponentInChildren<kccIinputDriver>();
         movementDriver = transform.parent.GetComponentInChildren<kccIMovementDriver>();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        addNewTarget(other);
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        addNewTarget(other);
-    }
+    private void OnTriggerEnter(Collider other) => addNewTarget(other);
+    private void OnTriggerStay(Collider other) => addNewTarget(other);
 
     private void addNewTarget(Collider other)
     {
-        target newTarget = null;
-        other.gameObject.TryGetComponent<target>(out newTarget);
-
-        if (newTarget != null)
+        if (other.gameObject.TryGetComponent<target>(out target newTarget))
         {
-            if (!targets.Contains(newTarget))
-            {
-                targets.Add(newTarget);
-            }
+            if (!targets.Contains(newTarget)) targets.Add(newTarget);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        target toBeRemovedTarget = null;
-        other.gameObject.TryGetComponent<target>(out toBeRemovedTarget);
-
-        if (toBeRemovedTarget != null)
+        if (other.gameObject.TryGetComponent<target>(out target toBeRemovedTarget))
         {
-            if (targets.Contains(toBeRemovedTarget))
-            {
-                removeTarget(toBeRemovedTarget);
-            }
+            if (targets.Contains(toBeRemovedTarget)) removeTarget(toBeRemovedTarget);
         }
     }
 
     public void removeTarget(target toBeRemovedTarget)
     {
         targets.Remove(toBeRemovedTarget);
-
-        if (toBeRemovedTarget == currentSuggestedTarget)
-        {
-            currentSuggestedTarget = null;
-        }
-
-        if (toBeRemovedTarget == currentSellectedTarget)
-        {
-            currentSellectedTarget = null;
-        }
-
-        if (toBeRemovedTarget == lastSuggestedTarget)
-        {
-            lastSuggestedTarget = null;
-        }
+        if (toBeRemovedTarget == currentSuggestedTarget) currentSuggestedTarget = null;
+        if (toBeRemovedTarget == currentSellectedTarget) currentSellectedTarget = null;
+        if (toBeRemovedTarget == lastSuggestedTarget) lastSuggestedTarget = null;
     }
 
     private void Update()
     {
-        // Keep input detection in Update so button presses are never missed
         isTargeting = inputDriver.getTargetInput();
+
+        if (isTargeting && currentSellectedTarget != null)
+        {
+            Vector2 currentLookDirection = new Vector2(transform.forward.x, transform.forward.z);
+
+            Vector3 worldDir = currentSellectedTarget.transform.position - transform.parent.position;
+            Vector2 targetLookDirection = new Vector2(worldDir.x, worldDir.z);
+
+            if (targetLookDirection.sqrMagnitude > 0.001f)
+            {
+                targetLookDirection.Normalize();
+                
+                if(currentLookDirection.sqrMagnitude < 0.001f) 
+                    currentLookDirection = new Vector2(transform.parent.forward.x, transform.parent.forward.z);
+                else
+                    currentLookDirection.Normalize();
+
+                Vector2 stabilizedDirection = Vector2.MoveTowards(
+                    currentLookDirection, 
+                    targetLookDirection, 
+                    turnToTargetSpeed * Time.deltaTime
+                );
+
+                movementDriver.setLookInput(stabilizedDirection);
+            }
+        }
     }
 
     private void LateUpdate()
     {
-        // 1. Cleanup Nulls and Dead References
         if (currentSellectedTarget == null) currentSellectedTarget = null;
         if (currentSuggestedTarget == null) currentSuggestedTarget = null;
         if (lastSuggestedTarget == null) lastSuggestedTarget = null;
 
         for (int i = targets.Count - 1; i >= 0; i--)
         {
-            if (targets[i] == null)
-            {
-                targets.RemoveAt(i);
-            }
+            if (targets[i] == null) targets.RemoveAt(i);
         }
 
-        // 2. Frustum Check (Remove targets not seen by camera)
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
         for (int i = targets.Count - 1; i >= 0; i--)
         {
@@ -128,7 +114,6 @@ public class targetController : MonoBehaviour
             {
                 if (targets[i] == currentSuggestedTarget) currentSuggestedTarget = null;
                 if (targets[i] == currentSellectedTarget) currentSellectedTarget = null;
-
                 targets.RemoveAt(i);
             }
         } 
@@ -136,7 +121,6 @@ public class targetController : MonoBehaviour
         targetSuggestionGO.SetActive(false);
         targetSellectedGO.SetActive(false);
 
-        // 3. Early out if empty
         if (targets.Count <= 0)
         {
             lastTargetsCount = 0;
@@ -145,16 +129,13 @@ public class targetController : MonoBehaviour
             return;
         }
 
-        // 4. Suggestion Logic
         if (currentSuggestedTarget == null || (lastTargetsCount <= 0 && targets.Count > 0))
         {
             int index = 0;
-
             if (targets.Contains(lastSuggestedTarget))
             {
                 index = targets.IndexOf(lastSuggestedTarget);
-                if (index >= targets.Count - 1)
-                    index = 0;
+                if (index >= targets.Count - 1) index = 0;
             }
 
             if (targets.Count == 1)
@@ -179,17 +160,14 @@ public class targetController : MonoBehaviour
             }
         }
 
-        // 5. Select Target
         if (isTargeting && !wasTargeting)
         {
             currentSellectedTarget = currentSuggestedTarget;
             currentSuggestedTarget = null;
         }
 
-        if (!isTargeting)
-            currentSellectedTarget = null;
+        if (!isTargeting) currentSellectedTarget = null;
 
-        // 6. Visual Updates
         if (currentSuggestedTarget != null)
         {
             targetSuggestionGO.SetActive(true);
@@ -200,18 +178,6 @@ public class targetController : MonoBehaviour
         {
             targetSellectedGO.SetActive(true);
             targetSellectedGO.transform.position = currentSellectedTarget.transform.position;
-        }
-
-        // 7. Rotation Logic (Use Time.deltaTime for LateUpdate)
-        if (isTargeting && currentSellectedTarget != null)
-        {
-            Vector2 currentLookDirection = new Vector2(transform.forward.x, transform.forward.z).normalized;
-
-            Vector3 dir = currentSellectedTarget.transform.position - transform.parent.position;
-            Vector2 targetLookDirection = new Vector2(dir.x, dir.z).normalized;
-
-            Vector2 lerpedLookDirection = Vector2.Lerp(currentLookDirection, targetLookDirection, turnToTargetSpeed * Time.deltaTime);
-            movementDriver.setLookInput(lerpedLookDirection);
         }
 
         lastTargetsCount = targets.Count;
