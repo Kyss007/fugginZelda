@@ -24,9 +24,14 @@ public class verticalCubeMenuInventory : MonoBehaviour
 
     private RectTransform targetTransform;
 
-    void OnEnable()
+    void Start()
     {
         currentSelectedValue = 0;
+    }
+
+    void OnEnable()
+    {
+        //currentSelectedValue = 0;
         if (menuOptionsParent.childCount > 0)
             targetTransform = menuOptionsParent.GetChild(currentSelectedValue).GetComponent<RectTransform>();
     }
