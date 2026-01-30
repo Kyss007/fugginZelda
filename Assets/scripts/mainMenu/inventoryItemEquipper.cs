@@ -20,18 +20,12 @@ public class inventoryItemEquipper : MonoBehaviour
     {
         if(isSword)
         {
-            if(!inventory.unlockedSword)
-            {
-                gameObject.SetActive(false);
-            }
+            gameObject.SetActive(inventory.unlockedSword);
         }
 
         if(isLasso)
         {
-            if(!inventory.unlockedLasso)
-            {
-                gameObject.SetActive(false);
-            }
+            gameObject.SetActive(inventory.unlockedLasso);
         }
     }    
 
