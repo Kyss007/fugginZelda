@@ -7,6 +7,7 @@ public class cursorLockOnStart : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Application.targetFrameRate = 144;
     }
 
     // Update is called once per frame
