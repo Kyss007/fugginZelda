@@ -67,6 +67,9 @@ public class targetController : MonoBehaviour
 
     private void Update()
     {
+        if(!gameObject.activeSelf)
+            return;
+
         isTargeting = inputDriver.getTargetInput();
 
         if (isTargeting && currentSellectedTarget != null)
@@ -98,6 +101,9 @@ public class targetController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(!gameObject.activeSelf)
+            return;
+
         if (currentSellectedTarget == null) currentSellectedTarget = null;
         if (currentSuggestedTarget == null) currentSuggestedTarget = null;
         if (lastSuggestedTarget == null) lastSuggestedTarget = null;
@@ -182,5 +188,17 @@ public class targetController : MonoBehaviour
 
         lastTargetsCount = targets.Count;
         wasTargeting = isTargeting;
+    }
+
+    void OnDisable()
+    {
+        targetSuggestionGO.SetActive(false);
+        targetSellectedGO.SetActive(false);
+    }
+
+    void OnEnable()
+    {
+        targetSuggestionGO.SetActive(true);
+        targetSellectedGO.SetActive(true);
     }
 }

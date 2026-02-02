@@ -201,7 +201,19 @@ MonoBehaviour:
     m_ActionId: 89fcf66e-f73f-4b05-a865-beea4c157269
     m_ActionName: 'basePlayer/dodge[/Mouse/rightButton]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: firstPersonCamDriver, Assembly-CSharp
+        m_MethodName: takeInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 0d054016-e1b5-4060-8427-0fc9b658f971
     m_ActionName: 'basePlayer/Look[/Gamepad/rightStick,/Mouse/delta]'
   - m_PersistentCalls:
@@ -248,6 +260,42 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: b8c57d62-4c4b-4543-b618-e801af2a1474
     m_ActionName: 'Menus/acceptAction[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 18603cf4-e08f-4ce0-8674-3d4aab0bd1f6
+    m_ActionName: 'basePlayer/setActionTopLeft[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cb641caa-a65b-47b6-b891-8594d443f360
+    m_ActionName: 'basePlayer/setActionTopRight[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fa56fb67-7a5c-43b6-ac9a-5f2883f2966c
+    m_ActionName: 'basePlayer/setActionBottomRight[/Keyboard/f]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8aba9482-2d88-46d5-b68c-19e318c867e9
+    m_ActionName: 'basePlayer/setActionB[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9c7a66f4-a75e-4d1c-bfde-e9d7ae261234
+    m_ActionName: 'Menus/inventoryAction[/Keyboard/tab]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: cameraController, Assembly-CSharp
+        m_MethodName: changeView
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1d370c03-b7b4-4d1a-9755-987571278cfd
+    m_ActionName: 'basePlayer/changeView[/Keyboard/f5,/Gamepad/rightStickPress]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: basePlayer
@@ -1265,6 +1313,7 @@ Transform:
   - {fileID: 5707405217063551296}
   - {fileID: 8458888942829289712}
   - {fileID: 372113356516164285}
+  - {fileID: 4441600782646576182}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &282992021066616709
@@ -1494,6 +1543,37 @@ MonoBehaviour:
   addSpin: 1
   spinSpeed: -100
   spinAxis: 2
+--- !u!1 &4649730603925363523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4441600782646576182}
+  m_Layer: 3
+  m_Name: firstPersonCamSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4441600782646576182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4649730603925363523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4244579278436318364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4682453209293612618
 GameObject:
   m_ObjectHideFlags: 0

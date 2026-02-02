@@ -30,6 +30,8 @@ public class cameraController : MonoBehaviour
 
     private Vector3 currentTargetTrackingOffset;
 
+    public GameObject firstPersonCamObject;
+
     private void Awake()
     {
         cmOrbitFollow = GetComponent<CinemachineOrbitalFollow>();
@@ -58,7 +60,7 @@ public class cameraController : MonoBehaviour
         cmInputAxis.Controllers[1].Enabled = !isTargeting && canMoveCam;
 
         thirdPersonMovementDriver thirdPersonMovementDriver = (thirdPersonMovementDriver)movementDriver;
-        thirdPersonMovementDriver.lookRelativeInput = isTargeting;
+        thirdPersonMovementDriver.lookRelativeInput = firstPersonCamObject.activeSelf ? thirdPersonMovementDriver.lookRelativeInput : isTargeting;
 
         cm.Lens.FieldOfView = Mathf.Lerp(cm.Lens.FieldOfView, isTargeting ? (ogFov / 1.1f) : ogFov, 10 * Time.deltaTime);
     }
@@ -73,5 +75,10 @@ public class cameraController : MonoBehaviour
         Vector3 desiredOffset = isTargeting && targetController.currentSellectedTarget != null ? (targetController.currentSellectedTarget.transform.position - cc.transform.position) * targetPlayerDistancePercent : Vector3.zero;
         currentTargetTrackingOffset = Vector3.Lerp(currentTargetTrackingOffset, isTargeting && targetController.currentSellectedTarget != null ? desiredOffset : Vector3.zero, targetRotSpeed * Time.deltaTime);
         cameraLookAtTarget.transform.position = cc.transform.position + currentTargetTrackingOffset;
+    }
+
+    public void changeView()
+    {
+        firstPersonCamObject.SetActive(!firstPersonCamObject.activeSelf);
     }
 }
