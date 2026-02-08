@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -7,6 +8,8 @@ public class FirstPersonCameraDriver : MonoBehaviour
     [Header("References")]
     public Transform cameraPivot;
     public thirdPersonMovementDriver movementDriver;
+    public PhysicalWalk.DampedSpringMotionCopier springMotionCopier;
+    public cameraController cameraController;
 
     [Header("Settings")]
     public float sensitivity = 30f;
@@ -22,7 +25,6 @@ public class FirstPersonCameraDriver : MonoBehaviour
 
     private void Start()
     {
-        // Initialize pitch from pivot WITHOUT touching other axes
         Vector3 pivotEuler = cameraPivot.localEulerAngles;
         if (pivotEuler.x > 180f) pivotEuler.x -= 360f;
         pitch = pivotEuler.x;
@@ -31,6 +33,11 @@ public class FirstPersonCameraDriver : MonoBehaviour
         {
             Vector3 forward = movementDriver.transform.forward;
             yaw = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
+        }
+
+        if (springMotionCopier == null)
+        {
+            springMotionCopier = GetComponent<PhysicalWalk.DampedSpringMotionCopier>();
         }
     }
 
@@ -41,17 +48,15 @@ public class FirstPersonCameraDriver : MonoBehaviour
 
         Vector2 delta = currentLookInput * sensitivity * Time.deltaTime;
 
-        // ----- PITCH (camera pivot) -----
         pitch -= delta.y;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
         Vector3 pivotEuler = cameraPivot.localEulerAngles;
         if (pivotEuler.x > 180f) pivotEuler.x -= 360f;
 
-        pivotEuler.x = pitch;               // ONLY X is modified
+        pivotEuler.x = pitch;               
         cameraPivot.localEulerAngles = pivotEuler;
 
-        // ----- YAW (movement driver only) -----
         yaw += delta.x;
 
         Quaternion yawRotation = Quaternion.Euler(0f, yaw, 0f);
@@ -70,17 +75,36 @@ public class FirstPersonCameraDriver : MonoBehaviour
 
     private void OnDisable()
     {
-        pitch = 0f;
-        currentLookInput = Vector2.zero;
-
         diable.Invoke();
 
         if (movementDriver != null)
             movementDriver.lookRelativeInput = false;
+        
+        cameraController.resetCameraPosition();
     }
 
     private void OnEnable()
     {
+        pitch = 0f;
+        currentLookInput = Vector2.zero;
+
+        if (movementDriver != null)
+        {
+            Vector3 forward = movementDriver.transform.forward;
+            yaw = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
+
+            transform.rotation = Quaternion.Euler(0, yaw, 0);
+            
+            Vector3 pivotEuler = cameraPivot.localEulerAngles;
+            pivotEuler.x = 0f;
+            cameraPivot.localEulerAngles = pivotEuler;
+        }
+
+        if (springMotionCopier != null)
+        {
+            springMotionCopier.Reset();
+        }
+
         enable.Invoke();
 
         if (movementDriver != null)

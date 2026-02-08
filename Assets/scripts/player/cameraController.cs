@@ -1,6 +1,7 @@
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class cameraController : MonoBehaviour
 {
@@ -80,5 +81,51 @@ public class cameraController : MonoBehaviour
     public void changeView()
     {
         firstPersonCamObject.SetActive(!firstPersonCamObject.activeSelf);
+    }
+
+    public void changeViewInput(InputAction.CallbackContext callbackContext)
+    {
+        if(callbackContext.started)
+            changeView();
+    }
+
+    public void resetCameraPosition()
+    {
+        Debug.Log("Resetting camera position");
+        
+        if (cc == null) return;
+        
+        // Get the camera's current world position and player position
+        Vector3 camPos = cm.transform.position;
+        Vector3 playerPos = cc.transform.position;
+        Vector3 playerForward = cc.transform.forward;
+        
+        // Calculate the direction from player to camera (on horizontal plane)
+        Vector3 camDirection = camPos - playerPos;
+        camDirection.y = 0; // Flatten to horizontal plane
+        
+        // Calculate the direction that would be "behind" the player
+        Vector3 behindPlayer = -playerForward;
+        behindPlayer.y = 0;
+        
+        // Calculate the angle between current camera position and "behind player"
+        float currentAngle = Mathf.Atan2(camDirection.x, camDirection.z) * Mathf.Rad2Deg;
+        float targetAngle = Mathf.Atan2(behindPlayer.x, behindPlayer.z) * Mathf.Rad2Deg;
+        
+        // Calculate the difference
+        float angleDifference = Mathf.DeltaAngle(currentAngle, targetAngle);
+        
+        // Apply to horizontal axis (add the difference to current value)
+        cmOrbitFollow.HorizontalAxis.Value += angleDifference;
+        
+        // Reset vertical to default
+        cmOrbitFollow.VerticalAxis.Value = 0.5f;
+        
+        // Cancel damping for instant snap
+        cmOrbitFollow.HorizontalAxis.CancelRecentering();
+        cmOrbitFollow.VerticalAxis.CancelRecentering();
+        
+        // Force update
+        cm.InternalUpdateCameraState(Vector3.up, 0);
     }
 }

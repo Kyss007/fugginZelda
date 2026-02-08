@@ -5376,6 +5376,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[18].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1341513019}
@@ -5383,6 +5387,10 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[18].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 242672879}
+    - target: {fileID: 3400819875172670653, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[18].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: changeViewInput
+      objectReference: {fileID: 0}
     - target: {fileID: 4244579278436318364, guid: 8a391f81eba800b49946243d8718a1a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 119.94
@@ -9846,6 +9854,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::firstPersonCamDriver
   cameraPivot: {fileID: 1341513018}
   movementDriver: {fileID: 1802347879}
+  springMotionCopier: {fileID: 1341513020}
+  cameraController: {fileID: 242672879}
   sensitivity: 1
   minPitch: -90
   maxPitch: 90
@@ -9957,7 +9967,7 @@ MonoBehaviour:
     naturalFrequency: 150
     applySpringInMovingReferenceFrame: 0
     fixRelativeOrientationAtStart: 0
-  useUnscaledTime: 0
+  useUnscaledTime: 1
 --- !u!54 &1341513021
 Rigidbody:
   m_ObjectHideFlags: 0
