@@ -96,7 +96,7 @@ public class interactionController : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        interaction interaction = other.GetComponent<interaction>();
+        interaction interaction = other?.GetComponent<interaction>();
 
         if (interaction.mustBeInfront)
         {

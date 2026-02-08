@@ -20,7 +20,8 @@ public class flash : MonoBehaviour
 
     public void Flash()
     {
-        StartCoroutine(doFlash());
+        if(gameObject.activeSelf)
+            StartCoroutine(doFlash());
     }
 
     public IEnumerator doFlash()
