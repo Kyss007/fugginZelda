@@ -1,0 +1,165 @@
+"filename", "language", "JSON", "XML", "Markdown", "UnityShader", "C#", "Shell Script", "UnityUXML", "UnityUSS", "HTML", "comment", "blank", "total"
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/DampedSpringMotionCopier/Code/DampedSpringMotionCopier.Utils.cs", "C#", 0, 0, 0, 0, 231, 0, 0, 0, 0, 7, 22, 260
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/DampedSpringMotionCopier/Code/DampedSpringMotionCopier.cs", "C#", 0, 0, 0, 0, 210, 0, 0, 0, 0, 16, 66, 292
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/DampedSpringMotionCopier/Code/TooltipAttribute.cs", "C#", 0, 0, 0, 0, 69, 0, 0, 0, 0, 1, 15, 85
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/DampedSpringMotionCopier/Docs/Html/DampedSpringMotionCopier.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 0, 63, 0, 5, 68
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/MobileDependencyResolver/Editor/CHANGELOG.md", "Markdown", 0, 0, 1215, 0, 0, 0, 0, 0, 0, 0, 211, 1426
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/MobileDependencyResolver/Editor/README.md", "Markdown", 0, 0, 680, 0, 0, 0, 0, 0, 0, 0, 224, 904
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/AYellowpaper.SerializedCollections.Editor.asmdef", "JSON", 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Assets/KeysGeneratorSelectorWindow.uss", "UnityUSS", 0, 0, 0, 0, 0, 0, 0, 94, 0, 0, 17, 111
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Assets/KeysGeneratorSelectorWindow.uxml", "UnityUXML", 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 1, 27
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Data/ElementData.cs", "C#", 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 3, 23
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Data/ElementSettings.cs", "C#", 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 2, 15
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Data/PropertyData.cs", "C#", 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 6, 44
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/DisplayType.cs", "C#", 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 1, 13
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/Implementors/EnumGenerator.cs", "C#", 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 1, 15
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/Implementors/IntRangeGenerator.cs", "C#", 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 2, 24
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/Implementors/IntSteppingGenerator.cs", "C#", 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 2, 26
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/KeyListGenerator.cs", "C#", 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 1, 11
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/KeyListGeneratorAttribute.cs", "C#", 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 2, 19
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/KeyListGeneratorCache.cs", "C#", 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 3, 36
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/KeyListGeneratorData.cs", "C#", 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 2, 20
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/KeyListGeneratorEditor.cs", "C#", 0, 0, 0, 0, 24, 0, 0, 0, 0, 1, 1, 26
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/KeyListGeneratorSelectorWindow.cs", "C#", 0, 0, 0, 0, 154, 0, 0, 0, 0, 0, 28, 182
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/KeyListGenerators/ModificationType.cs", "C#", 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 10
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/PagingElement.cs", "C#", 0, 0, 0, 0, 61, 0, 0, 0, 0, 0, 7, 68
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Search/Matchers/EnumMatcher.cs", "C#", 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 1, 21
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Search/Matchers/Matcher.cs", "C#", 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 3, 20
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Search/Matchers/Matchers.cs", "C#", 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 5, 30
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Search/Matchers/NumericMatcher.cs", "C#", 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 9, 109
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Search/Matchers/StringMatcher.cs", "C#", 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 1, 15
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Search/PropertySearchResult.cs", "C#", 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 3, 22
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Search/SearchQuery.cs", "C#", 0, 0, 0, 0, 58, 0, 0, 0, 0, 0, 8, 66
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Search/SearchResultEntry.cs", "C#", 0, 0, 0, 0, 28, 0, 0, 0, 0, 0, 3, 31
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/SerializedDictionaryDrawer.cs", "C#", 0, 0, 0, 0, 60, 0, 0, 0, 0, 0, 5, 65
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/SerializedDictionaryInstanceDrawer.cs", "C#", 0, 0, 0, 0, 621, 0, 0, 0, 0, 2, 105, 728
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Settings/EditorUserSettings.cs", "C#", 0, 0, 0, 0, 52, 0, 0, 0, 0, 0, 8, 60
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Settings/EditorUserSettingsProvider.cs", "C#", 0, 0, 0, 0, 68, 0, 0, 0, 0, 0, 14, 82
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/States/DefaultListState.cs", "C#", 0, 0, 0, 0, 45, 0, 0, 0, 0, 0, 10, 55
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/States/ListState.cs", "C#", 0, 0, 0, 0, 29, 0, 0, 0, 0, 0, 5, 34
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/States/SearchListState.cs", "C#", 0, 0, 0, 0, 91, 0, 0, 0, 0, 0, 18, 109
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Utility/GUIEnabledScope.cs", "C#", 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 3, 23
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Utility/LabelWidth.cs", "C#", 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 3, 24
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Utility/RectUtility.cs", "C#", 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 6, 41
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Utility/SCEditorUtility.cs", "C#", 0, 0, 0, 0, 220, 0, 0, 0, 0, 0, 25, 245
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Editor/Scripts/Utility/SCEnumUtility.cs", "C#", 0, 0, 0, 0, 85, 0, 0, 0, 0, 0, 13, 98
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Runtime/AYellowpaper.SerializedCollections.asmdef", "JSON", 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Runtime/LookupTables/DictionaryLookupTable.cs", "C#", 0, 0, 0, 0, 73, 0, 0, 0, 0, 0, 15, 88
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Runtime/LookupTables/IKeyable.cs", "C#", 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 3, 21
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Runtime/Scripts/AssemblyInfo.cs", "C#", 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 3
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Runtime/Scripts/SerializedCollectionsUtility.cs", "C#", 0, 0, 0, 0, 24, 0, 0, 0, 0, 1, 2, 27
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Runtime/Scripts/SerializedDictionary.cs", "C#", 0, 0, 0, 0, 148, 0, 0, 0, 0, 4, 25, 177
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Runtime/Scripts/SerializedDictionaryAttribute.cs", "C#", 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 2, 21
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Runtime/Scripts/SerializedKeyValuePair.cs", "C#", 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 3, 20
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Sample/SerializedDictionarySample.cs", "C#", 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 2, 20
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Sample/SerializedDictionarySampleThree.cs", "C#", 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 1, 12
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Plugins/SerializedCollections/Sample/SerializedDictionarySampleTwo.cs", "C#", 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 2, 19
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/Resources/BillingMode.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/SDFFunctions.hlsl", "UnityShader", 0, 0, 0, 130, 0, 0, 0, 0, 0, 18, 31, 179
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader", "UnityShader", 0, 0, 0, 113, 0, 0, 0, 0, 0, 2, 31, 146
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader", "UnityShader", 0, 0, 0, 123, 0, 0, 0, 0, 0, 3, 30, 156
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader", "UnityShader", 0, 0, 0, 113, 0, 0, 0, 0, 0, 2, 31, 146
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader", "UnityShader", 0, 0, 0, 253, 0, 0, 0, 0, 0, 4, 70, 327
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader", "UnityShader", 0, 0, 0, 253, 0, 0, 0, 0, 0, 4, 65, 322
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader", "UnityShader", 0, 0, 0, 198, 0, 0, 0, 0, 0, 10, 51, 259
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader", "UnityShader", 0, 0, 0, 193, 0, 0, 0, 0, 0, 8, 52, 253
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader", "UnityShader", 0, 0, 0, 82, 0, 0, 0, 0, 0, 4, 21, 107
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile-2-Pass.shader", "UnityShader", 0, 0, 0, 290, 0, 0, 0, 0, 0, 15, 85, 390
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader", "UnityShader", 0, 0, 0, 192, 0, 0, 0, 0, 0, 8, 51, 251
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader", "UnityShader", 0, 0, 0, 104, 0, 0, 0, 0, 0, 8, 28, 140
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader", "UnityShader", 0, 0, 0, 123, 0, 0, 0, 0, 0, 4, 33, 160
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_SDF.shader", "UnityShader", 0, 0, 0, 253, 0, 0, 0, 0, 0, 4, 70, 327
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMP_Sprite.shader", "UnityShader", 0, 0, 0, 111, 0, 0, 0, 0, 0, 0, 21, 132
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMPro.cginc", "UnityShader", 0, 0, 0, 63, 0, 0, 0, 0, 0, 2, 20, 85
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc", "UnityShader", 0, 0, 0, 129, 0, 0, 0, 0, 0, 2, 35, 166
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc", "UnityShader", 0, 0, 0, 62, 0, 0, 0, 0, 0, 6, 13, 81
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc", "UnityShader", 0, 0, 0, 75, 0, 0, 0, 0, 0, 7, 18, 100
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/TextMesh Pro/Sprites/EmojiOne.json", "JSON", 155, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 157
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/camera/smoothFollow.cs", "C#", 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 4, 19
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/chest.cs", "C#", 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 7, 29
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/cursorLockOnStart.cs", "C#", 0, 0, 0, 0, 12, 0, 0, 0, 0, 2, 5, 19
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/damageProvider.cs", "C#", 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 7, 37
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/debug/debugKeysUI.cs", "C#", 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 6, 32
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/debug/displayPlayerHealth.cs", "C#", 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 7, 27
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/debug/onGUIFPS.cs", "C#", 0, 0, 0, 0, 47, 0, 0, 0, 0, 1, 9, 57
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/destructTrigger.cs", "C#", 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 4, 23
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/dialog/dialogHelper.cs", "C#", 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 4, 15
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/dialog/dialogOptionText.cs", "C#", 0, 0, 0, 0, 52, 0, 0, 0, 0, 0, 17, 69
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/dialog/dialogOptionTextHelper.cs", "C#", 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 5, 23
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/dialog/dialogScriptableObject.cs", "C#", 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 4, 26
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/dialog/endOfTextIndicator.cs", "C#", 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 13, 51
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/dialog/triggerDialog.cs", "C#", 0, 0, 0, 0, 102, 0, 0, 0, 0, 0, 39, 141
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/debug/flash.cs", "C#", 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 7, 37
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/debug/spriteFlash.cs", "C#", 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 7, 37
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/dummySwordSwing.cs", "C#", 0, 0, 0, 0, 46, 0, 0, 0, 0, 2, 13, 61
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/segmentedLineRenderer.cs", "C#", 0, 0, 0, 0, 39, 0, 0, 0, 0, 1, 11, 51
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/simpleRigidbodyMover.cs", "C#", 0, 0, 0, 0, 45, 0, 0, 0, 0, 4, 10, 59
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/spiderAI.cs", "C#", 0, 0, 0, 0, 313, 0, 0, 0, 0, 15, 60, 388
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/spiderController.cs", "C#", 0, 0, 0, 0, 273, 0, 0, 0, 0, 2, 61, 336
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/spikeBall.cs", "C#", 0, 0, 0, 0, 92, 0, 0, 0, 0, 1, 27, 120
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/spikeBallTarget.cs", "C#", 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 5, 20
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/triangleEnemy.cs", "C#", 0, 0, 0, 0, 116, 0, 0, 0, 0, 0, 25, 141
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/enemy/twoBodeIK.cs", "C#", 0, 0, 0, 0, 62, 0, 0, 0, 0, 18, 18, 98
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/healthProvider.cs", "C#", 0, 0, 0, 0, 140, 0, 0, 0, 0, 0, 38, 178
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/hitReciever.cs", "C#", 0, 0, 0, 0, 22, 0, 0, 0, 0, 1, 7, 30
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/hitTrigger.cs", "C#", 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 14, 64
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/holdableObject.cs", "C#", 0, 0, 0, 0, 125, 0, 0, 0, 0, 15, 48, 188
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/hoverPlatform.cs", "C#", 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 14, 64
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/inputSystemAddons/pressAndRepeatInteraction.cs", "C#", 0, 0, 0, 0, 45, 0, 0, 0, 0, 0, 12, 57
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/interaction.cs", "C#", 0, 0, 0, 0, 43, 0, 0, 0, 0, 0, 7, 50
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/lockedDoor.cs", "C#", 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 10, 60
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/lookAt.cs", "C#", 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 17, 73
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/changeScene.cs", "C#", 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 5, 22
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/clickableObject.cs", "C#", 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 5, 26
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/debugFunctions.cs", "C#", 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 13, 45
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/debugShowunlockStateInDebugLabel.cs", "C#", 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 9, 53
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/faceDirectionChecker.cs", "C#", 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 11, 55
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/inventoryFlapOpener.cs", "C#", 0, 0, 0, 0, 62, 0, 0, 0, 0, 0, 19, 81
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/inventoryItemEquipper.cs", "C#", 0, 0, 0, 0, 69, 0, 0, 0, 0, 2, 16, 87
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/inventoryMenuInputThing.cs", "C#", 0, 0, 0, 0, 92, 0, 0, 0, 0, 2, 21, 115
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/inventoryMenuShowGrid.cs", "C#", 0, 0, 0, 0, 71, 0, 0, 0, 0, 2, 16, 89
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/mainMenuInputThing.cs", "C#", 0, 0, 0, 0, 92, 0, 0, 0, 0, 0, 19, 111
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/menuCubeController.cs", "C#", 0, 0, 0, 0, 67, 0, 0, 0, 0, 0, 16, 83
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/menuNavigationHint.cs", "C#", 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 2, 10
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/pauseMenuSpwanAnimat.cs", "C#", 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 7, 34
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/randomRotator.cs", "C#", 0, 0, 0, 0, 29, 0, 0, 0, 0, 0, 9, 38
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/sliderSelector.cs", "C#", 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 2, 9
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/sliderValueLabel.cs", "C#", 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 6, 27
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/toggleSelector.cs", "C#", 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 2, 8
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/verticalCubeMenu.cs", "C#", 0, 0, 0, 0, 164, 0, 0, 0, 0, 0, 35, 199
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/verticalCubeMenuDebug.cs", "C#", 0, 0, 0, 0, 171, 0, 0, 0, 0, 0, 37, 208
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/mainMenu/verticalCubeMenuInventory.cs", "C#", 0, 0, 0, 0, 155, 0, 0, 0, 0, 19, 37, 211
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/newCharacterController/firstPersonMovementDriver.cs", "C#", 0, 0, 0, 0, 295, 0, 0, 0, 0, 15, 70, 380
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/newCharacterController/inputSystemInputDriver.cs", "C#", 0, 0, 0, 0, 74, 0, 0, 0, 0, 0, 17, 91
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/newCharacterController/kccIMovementDriver.cs", "C#", 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 4, 16
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/newCharacterController/kccIinputDriver.cs", "C#", 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 5, 20
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/newCharacterController/keanusCharacterController.cs", "C#", 0, 0, 0, 0, 69, 0, 0, 0, 0, 11, 20, 100
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/newCharacterController/thirdPersonMovementDriver.cs", "C#", 0, 0, 0, 0, 348, 0, 0, 0, 0, 9, 85, 442
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/pauseMenu.cs", "C#", 0, 0, 0, 0, 80, 0, 0, 0, 0, 0, 17, 97
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/pickUps/orbitingMovement.cs", "C#", 0, 0, 0, 0, 88, 0, 0, 0, 0, 0, 27, 115
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/cameraController.cs", "C#", 0, 0, 0, 0, 86, 0, 0, 0, 0, 2, 33, 121
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/characterController.cs", "C#", 0, 0, 0, 0, 474, 0, 0, 0, 0, 20, 130, 624
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/debugDodgeAnimation.cs", "C#", 0, 0, 0, 0, 45, 0, 0, 0, 0, 0, 14, 59
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/dogingCollisionThingy.cs", "C#", 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 9, 50
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/firstPersonCamDriver.cs", "C#", 0, 0, 0, 0, 87, 0, 0, 0, 0, 0, 26, 113
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/interactionController.cs", "C#", 0, 0, 0, 0, 102, 0, 0, 0, 0, 0, 23, 125
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/inventory.cs", "C#", 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 7, 40
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/lasso.cs", "C#", 0, 0, 0, 0, 280, 0, 0, 0, 0, 7, 56, 343
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/moveToGround.cs", "C#", 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 3, 21
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/objectHold.cs", "C#", 0, 0, 0, 0, 126, 0, 0, 0, 0, 0, 32, 158
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/selectableActionItem.cs", "C#", 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 7, 31
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/swordSwinger.cs", "C#", 0, 0, 0, 0, 101, 0, 0, 0, 0, 13, 28, 142
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/targetController.cs", "C#", 0, 0, 0, 0, 169, 0, 0, 0, 0, 0, 35, 204
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/player/teleporter.cs", "C#", 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 5, 22
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/prefabSpawner.cs", "C#", 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 3, 14
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/settingsManager.cs", "C#", 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 9, 42
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/target.cs", "C#", 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 2, 7
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/throwableObject.cs", "C#", 0, 0, 0, 0, 96, 0, 0, 0, 0, 15, 35, 146
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/tickDamageProvider.cs", "C#", 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 6, 27
+"/home/keanu/Documents/gitHub/fugginZelda/Assets/scripts/tickDamageSetterUpper.cs", "C#", 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 5, 21
+"/home/keanu/Documents/gitHub/fugginZelda/Packages/manifest.json", "JSON", 59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 60
+"/home/keanu/Documents/gitHub/fugginZelda/Packages/packages-lock.json", "JSON", 623, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 624
+"/home/keanu/Documents/gitHub/fugginZelda/README.md", "Markdown", 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 8
+"/home/keanu/Documents/gitHub/fugginZelda/dotnet-install.sh", "Shell Script", 0, 0, 0, 0, 0, 1443, 0, 0, 0, 194, 251, 1888
+"/home/keanu/Documents/gitHub/fugginZelda/fugginZelda.slnx", "XML", 0, 92, 0, 0, 0, 0, 0, 0, 0, 0, 1, 93
+"Total", "-", 868, 92, 1899, 2860, 8996, 1443, 26, 94, 63, 516, 3484, 20341

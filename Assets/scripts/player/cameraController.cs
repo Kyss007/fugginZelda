@@ -68,11 +68,9 @@ public class cameraController : MonoBehaviour
     
     private void LateUpdate()
     {
-        //rotate camera target a bit when target selected for side view
         Quaternion targetRot = Quaternion.Euler(0, isTargeting && targetController.currentSellectedTarget != null ? targetSideAngle : 0, 0);
         cameraTrackingTarget.transform.localRotation = Quaternion.Slerp(cameraTrackingTarget.transform.localRotation, targetRot, targetSideAngleSpeed * Time.deltaTime);
 
-        //move cam target between target and player
         Vector3 desiredOffset = isTargeting && targetController.currentSellectedTarget != null ? (targetController.currentSellectedTarget.transform.position - cc.transform.position) * targetPlayerDistancePercent : Vector3.zero;
         currentTargetTrackingOffset = Vector3.Lerp(currentTargetTrackingOffset, isTargeting && targetController.currentSellectedTarget != null ? desiredOffset : Vector3.zero, targetRotSpeed * Time.deltaTime);
         cameraLookAtTarget.transform.position = cc.transform.position + currentTargetTrackingOffset;

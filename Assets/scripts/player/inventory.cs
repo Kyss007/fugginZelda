@@ -13,6 +13,12 @@ public class inventory : MonoBehaviour
     public GameObject lasso;
     public bool unlockedLasso = true;
 
+    [Space]
+    public GameObject hookShot;
+    public bool unlockedHookShot = true;
+
+    public bool gay;
+
     void Start()
     {
         reloadInventory();
@@ -35,5 +41,10 @@ public class inventory : MonoBehaviour
     public void loadLasso()
     {
         lasso.SetActive(unlockedLasso);
+    }
+
+    public void loadHookshot()
+    {
+        hookShot.SetActive(unlockedHookShot);
     }
 }
