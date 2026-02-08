@@ -5261,6 +5261,10 @@ MonoBehaviour:
   allowDown: 1
   allowLeft: 1
   allowRight: 1
+  isUpToggle: 0
+  isDownToggle: 0
+  isLeftToggle: 0
+  isRightToggle: 0
 --- !u!1 &6836075327158168106
 GameObject:
   m_ObjectHideFlags: 0
