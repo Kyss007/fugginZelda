@@ -10,6 +10,7 @@ public class inventoryItemEquipper : MonoBehaviour
     [Space]
     public bool isSword = false;
     public bool isLasso = false;
+    public bool isHookshot = false;
 
     void OnEnable()
     {
@@ -27,6 +28,11 @@ public class inventoryItemEquipper : MonoBehaviour
         {
             gameObject.SetActive(inventory.unlockedLasso);
         }
+
+        if(isHookshot)
+        {
+            gameObject.SetActive(inventory.unlockedHookShot);
+        }
     }    
 
     public void equipSword()
@@ -42,6 +48,12 @@ public class inventoryItemEquipper : MonoBehaviour
     {
         menu.lockMenu = true;
         StartCoroutine(selectAssianbleAction(inventory.lasso));
+    }
+
+    public void equipHookshot()
+    {
+        menu.lockMenu = true;
+        StartCoroutine(selectAssianbleAction(inventory.hookShot));
     }
 
     public IEnumerator selectAssianbleAction(GameObject targetObject)

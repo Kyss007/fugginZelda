@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,26 +6,95 @@ using UnityEngine.InputSystem;
 
 public class selectableActionItem : MonoBehaviour
 {
+    [Flags]
+    public enum ActionTriggerState
+    {
+        Started = 1 << 0,
+        Performed = 1 << 1,
+        Canceled = 1 << 2
+    }
+
     public List<InputActionReference> inputActions;
 
     public InputActionReference assigedAction = null;
 
+    public ActionTriggerState triggerOn = ActionTriggerState.Performed;
+
     public UnityEvent onAssignedActionTriggered;
+
+    private bool wasSubscribed = false;
 
     public void assignAction(InputActionReference action)
     {
         if(inputActions.Contains(action))
+        {
+            UnsubscribeFromAction();
             assigedAction = action;
+            SubscribeToAction();
+        }
     }
 
-    public void Update()
+    private void OnEnable()
     {
-        if(assigedAction == null)
+        SubscribeToAction();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeFromAction();
+    }
+
+    private void SubscribeToAction()
+    {
+        if(assigedAction == null || wasSubscribed)
             return;
 
-        if(assigedAction.action.triggered)
+        if((triggerOn & ActionTriggerState.Started) != 0)
+            assigedAction.action.started += OnActionStarted;
+
+        if((triggerOn & ActionTriggerState.Performed) != 0)
+            assigedAction.action.performed += OnActionPerformed;
+
+        if((triggerOn & ActionTriggerState.Canceled) != 0)
+            assigedAction.action.canceled += OnActionCanceled;
+
+        wasSubscribed = true;
+    }
+
+    private void UnsubscribeFromAction()
+    {
+        if(assigedAction == null || !wasSubscribed)
+            return;
+
+        assigedAction.action.started -= OnActionStarted;
+        assigedAction.action.performed -= OnActionPerformed;
+        assigedAction.action.canceled -= OnActionCanceled;
+
+        wasSubscribed = false;
+    }
+
+    private void OnActionStarted(InputAction.CallbackContext context)
+    {
+        TriggerEvent("started");
+    }
+
+    private void OnActionPerformed(InputAction.CallbackContext context)
+    {
+        TriggerEvent("performed");
+    }
+
+    private void OnActionCanceled(InputAction.CallbackContext context)
+    {
+        TriggerEvent("canceled");
+    }
+
+    private void TriggerEvent(string stateName)
+    {
+        onAssignedActionTriggered.Invoke();
+
+        if(onAssignedActionTriggered.GetPersistentEventCount() == 0)
         {
-            onAssignedActionTriggered.Invoke();
+            Debug.Log(gameObject.name + ": action " + stateName + " with " + assigedAction.name);
         }
     }
 }

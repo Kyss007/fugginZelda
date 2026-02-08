@@ -9,6 +9,10 @@ public class lookAt : MonoBehaviour
     [Header("Rotation Options")]
     public bool matchTargetRotation = false;
 
+    [Header("Interpolation")]
+    public bool interpolateRotation = false;
+    public float rotationLerpSpeed = 10f;
+
     [Space]
     public bool addSpin = false;
     public float spinSpeed = 90f;
@@ -67,6 +71,17 @@ public class lookAt : MonoBehaviour
             finalRotation *= Quaternion.AngleAxis(spinAngle, axis);
         }
 
-        transform.rotation = finalRotation;
+        if (interpolateRotation)
+        {
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                finalRotation,
+                rotationLerpSpeed * Time.deltaTime
+            );
+        }
+        else
+        {
+            transform.rotation = finalRotation;
+        }
     }
 }
