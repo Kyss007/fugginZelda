@@ -584,6 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e74926fc8d61e20bbeac54495821aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 2378930294912876544}
   hookshotActive: 0
   hookshotCrosshair: {fileID: 8965343299900805917}
   hookshotCrosshairDot: {fileID: 8688706370358362732}

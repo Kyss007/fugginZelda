@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class hookshot : MonoBehaviour
 {
+
+    public inventory inventory;
     public bool hookshotActive = false;
 
     public GameObject hookshotCrosshair;
@@ -151,6 +153,9 @@ public class hookshot : MonoBehaviour
 
     public void doHookshotAction()
     {
+        if(!inventory.unlockedHookShot)
+            return;
+
         if (!hookshotActive)
         {
             //print("activate");
