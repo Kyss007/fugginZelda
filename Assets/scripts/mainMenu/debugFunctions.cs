@@ -35,6 +35,22 @@ public class debugFunctions : MonoBehaviour
         }
     }
 
+    public void unlockHookshot()
+    {
+        inventory inventory = FindFirstObjectByType<inventory>();
+
+        inventory.unlockedHookShot = !inventory.unlockedHookShot;
+
+        inventory.reloadInventory();
+
+        inventoryItemEquipper[] itemEquippers = FindObjectsByType<inventoryItemEquipper>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (var itemEquipper in itemEquippers)
+        {
+            itemEquipper.checkIfUnlocked();
+        }
+    }
+
     public void summonObject(GameObject prefab)
     {
         Transform playerPos = FindFirstObjectByType<keanusCharacterController>().transform;

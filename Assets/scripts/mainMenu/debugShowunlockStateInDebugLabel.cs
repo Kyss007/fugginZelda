@@ -11,6 +11,7 @@ public class debugShowunlockStateInDebugLabel : MonoBehaviour
 
     public bool isSword;
     public bool isLasso;
+    public bool isHookshot;
 
     void Awake()
     {
@@ -40,6 +41,18 @@ public class debugShowunlockStateInDebugLabel : MonoBehaviour
         if(isLasso)
         {
             if(inventory.unlockedLasso)
+            {
+                text.text = ogString + " [x]";
+            }
+            else
+            {
+                text.text = ogString + " [ ]";
+            }
+        }
+
+        if(isHookshot)
+        {
+            if(inventory.unlockedHookShot)
             {
                 text.text = ogString + " [x]";
             }
