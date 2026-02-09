@@ -26,13 +26,30 @@ public class selectableActionItem : MonoBehaviour
 
     public void assignAction(InputActionReference action)
     {
-        if(inputActions.Contains(action))
+        UnsubscribeFromAction();
+        assigedAction = action;
+        SubscribeToAction();
+
+        if (action == null)
+            return;
+
+        var items = FindObjectsByType<selectableActionItem>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+
+        foreach (var item in items)
         {
-            UnsubscribeFromAction();
-            assigedAction = action;
-            SubscribeToAction();
+            if (item == this)
+                continue;
+
+            if (item.assigedAction != null &&
+                item.assigedAction.action == action.action)
+            {
+                item.assignAction(null);
+            }
         }
     }
+
 
     private void OnEnable()
     {

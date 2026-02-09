@@ -16,10 +16,12 @@ public class hookshot : MonoBehaviour
     public float hookshotSpeed = 20f;
     public float arrivalThreshold = 0.1f;
     
-    [Header("Line Renderer Settings")]
     public float lineWidth = 0.05f;
     public Material lineMaterial;
     public float lineExtendSpeed = 30f;
+
+    public float minHookshotDistance = 2f;
+    public float maxHookshotDistance = 50f;
 
     private bool hasValidTarget = false;
 
@@ -67,12 +69,15 @@ public class hookshot : MonoBehaviour
             RaycastHit hit;
             int rayMask = ~excludeLayers;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, rayMask))
+            if (Physics.Raycast(ray, out hit, maxHookshotDistance, rayMask))
             {
-                hasHit = true;
+                float distance = Vector3.Distance(firstPersonCamera.cameraPivot.position, hit.point);
+
+                hasHit = distance >= minHookshotDistance;
                 targetPosition = hit.point;
 
                 hasValidTarget =
+                    hasHit &&
                     ((1 << hit.collider.gameObject.layer) & validTargetLayers) != 0;
             }
             else
@@ -148,7 +153,7 @@ public class hookshot : MonoBehaviour
     {
         if (!hookshotActive)
         {
-            print("activate");
+            //print("activate");
             hookshotActive = true;
 
             if (!firstPersonCamera.gameObject.activeSelf)
@@ -156,7 +161,7 @@ public class hookshot : MonoBehaviour
         }
         else
         {
-            print("trigger hookshot");
+            //print("trigger hookshot");
             TriggerHookshot();
         }
     }

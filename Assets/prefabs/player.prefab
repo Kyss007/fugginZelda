@@ -600,6 +600,8 @@ MonoBehaviour:
   lineWidth: 0.2
   lineMaterial: {fileID: 2100000, guid: ae76180e16e7cbf8faa6d7a61ed313ca, type: 2}
   lineExtendSpeed: 120
+  minHookshotDistance: 5
+  maxHookshotDistance: 50
 --- !u!1 &1105717290294105417
 GameObject:
   m_ObjectHideFlags: 0

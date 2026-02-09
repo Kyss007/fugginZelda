@@ -9641,7 +9641,7 @@ MonoBehaviour:
   movementDriver: {fileID: 1802347879}
   springMotionCopier: {fileID: 1341513020}
   cameraController: {fileID: 242672879}
-  sensitivity: 1
+  sensitivity: 0.6
   minPitch: -90
   maxPitch: 90
   diable:
