@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using System.Linq.Expressions;
 
 public class Lasso : MonoBehaviour
 {
@@ -283,7 +284,7 @@ public class Lasso : MonoBehaviour
         if (swingJoint != null) Destroy(swingJoint);
 
         if (lassoRoutine != null) StopCoroutine(lassoRoutine);
-        lassoRoutine = StartCoroutine(RetractRoutine());
+        if (gameObject.activeSelf) lassoRoutine = StartCoroutine(RetractRoutine());
 
         currentSwungOnTarget = null;
         thirdPersonMovementDriver.autoWalk = false;
@@ -440,5 +441,15 @@ public class Lasso : MonoBehaviour
     void OnDisable()
     {
         if(lassoReticle != null) lassoReticle.SetActive(false);
+
+        if(lassoRoutine != null)
+        {
+            StopCoroutine(lassoRoutine);
+            lassoRoutine = null;
+        }
+
+
+        StopSwinging();
+        line.enabled = false;
     }
 }
