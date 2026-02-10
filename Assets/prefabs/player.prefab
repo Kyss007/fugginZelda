@@ -2023,7 +2023,7 @@ MonoBehaviour:
   line: {fileID: 9113245565513054208}
   playerRb: {fileID: 4244579278436318369}
   lassoReticle: {fileID: 6395762297151699695}
-  maxLassoLength: 15
+  maxLassoLength: 12
   breakThreshold: 2.5
   pullInDistance: 2
   pullInForce: 10
@@ -2168,7 +2168,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 15
+  m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5017599920566579060
 GameObject:
