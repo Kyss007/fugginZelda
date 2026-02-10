@@ -43,7 +43,7 @@ public class targetController : MonoBehaviour
 
     private void addNewTarget(Collider other)
     {
-        if (other.gameObject.TryGetComponent<target>(out target newTarget))
+        if (other.gameObject.TryGetComponent<target>(out target newTarget) && !newTarget.isLassoTarget)
         {
             if (!targets.Contains(newTarget)) targets.Add(newTarget);
         }
@@ -59,7 +59,14 @@ public class targetController : MonoBehaviour
 
     public void removeTarget(target toBeRemovedTarget)
     {
-        targets.Remove(toBeRemovedTarget);
+        if (toBeRemovedTarget == null) return;
+
+        if (targets.Contains(toBeRemovedTarget))
+        {
+            targets.Remove(toBeRemovedTarget);
+        }
+
+        // Reset references if they match the removed target
         if (toBeRemovedTarget == currentSuggestedTarget) currentSuggestedTarget = null;
         if (toBeRemovedTarget == currentSellectedTarget) currentSellectedTarget = null;
         if (toBeRemovedTarget == lastSuggestedTarget) lastSuggestedTarget = null;

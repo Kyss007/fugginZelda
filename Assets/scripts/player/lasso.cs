@@ -1,106 +1,196 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
-public class lasso : MonoBehaviour
+public class Lasso : MonoBehaviour
 {
     public inventory inventory;
-    public targetController targetController;
     public thirdPersonMovementDriver thirdPersonMovementDriver;
+    public InputActionReference moveInput;
 
     [Header("References")]
     public Transform origin;
-    public Transform target;
     public LineRenderer line;
     public Rigidbody playerRb; 
+    public GameObject lassoReticle; // Dedicated reference for the lasso's target visual
 
     [Header("Lasso Constraints")]
-    public float maxLassoLength = 8f;
-    public float breakThreshold = 1.5f; 
-    public float pullInDistance = 1f;
-    public float pullInForce = 3f;
+    public float maxLassoLength = 12f;
+    public float breakThreshold = 2f; 
+    public float pullInDistance = 1.5f;
+    public float pullInForce = 5f;
 
-    [Header("Swing Physics")]
-    public float swingSpring = 1000f; 
-    public float swingDamper = 20f;
-    private ConfigurableJoint swingJoint;
+    [Header("Dedicated Lasso Targeting")]
+    public List<target> lassoTargetsInRange = new List<target>();
+    public target currentLassoTarget;
+
+    [Header("Vine Swing Physics")]
+    public float swingSpring = 150f;
+    public float swingDamper = 10f;
+    public float swingMassScale = 4.5f;
+    public float swingForce = 40f;
+    private SpringJoint swingJoint;
     private bool isSwinging = false;
     private Transform activeGrapplePoint;
-    private float initialSwingDistance;
+    private float currentRopeLength;
+    public float minSwingDuration = 0.2f;
 
     [Header("Lasso Timing")]
     public int segments = 30;
-    public float travelTime = 0.4f;
-    public float retractMultiplier = 1.8f;
+    public float travelTime = 0.3f;
+    public float retractMultiplier = 2f;
     
     [Header("Cooldown")]
-    public float lassoCooldown = 0.5f;
+    public float lassoCooldown = 0.4f;
     private float lastFireTime;
 
     [Header("Visual Arc & Wobble")]
-    public float arcHeight = 0.6f;
-    public float arcAngleRandom = 20f;
-    public float swingAmplitude = 0.6f;
-    public float swingFrequency = 6f;
-    public float randomness = 0.4f;
-    public float pullForce = 5f;
+    public float arcHeight = 0.5f;
+    public float arcAngleRandom = 15f;
+    public float swingAmplitude = 0.4f;
+    public float swingFrequency = 5f;
+    public float randomness = 0.3f;
+    public float pullForce = 8f;
 
     Vector3 targetPos;
     Vector3 arcDirection;
     Coroutine lassoRoutine;
     
     bool reachedActualTarget = false;
-    private Vector3 ogLocalPosOfLassoTarget;
     private GameObject localHitObject;
-
     private target currentSwungOnTarget;
+
+    private Camera mainCam;
+    private float swingStartTime;
 
     void Awake()
     {
         if (playerRb == null) playerRb = GetComponentInParent<Rigidbody>();
         
-        ogLocalPosOfLassoTarget = target.localPosition;
         line.positionCount = segments;
         line.enabled = false;
         lastFireTime = -lassoCooldown; 
+
+        if (lassoReticle != null)
+        {
+            lassoReticle.transform.SetParent(null);
+            lassoReticle.SetActive(false);
+        }
+    }
+
+    void Start()
+    {
+        mainCam = Camera.main;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent<target>(out target t) && t.isLassoTarget)
+        {
+            if (!lassoTargetsInRange.Contains(t)) lassoTargetsInRange.Add(t);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<target>(out target t))
+        {
+            if (lassoTargetsInRange.Contains(t)) lassoTargetsInRange.Remove(t);
+            if (currentLassoTarget == t) currentLassoTarget = null;
+        }
+    }
+
+    private void CalculateBestLassoTarget()
+    {
+        currentLassoTarget = null;
+
+        // Keep the grounded check to ensure default lasso happens on floor
+        if (thirdPersonMovementDriver.isGrounded) return;
+
+        float bestScore = float.MaxValue;
+
+        for (int i = lassoTargetsInRange.Count - 1; i >= 0; i--)
+        {
+            target t = lassoTargetsInRange[i];
+            if (t == null)
+            {
+                lassoTargetsInRange.RemoveAt(i);
+                continue;
+            }
+
+            Vector3 dirToTarget = (t.transform.position - transform.parent.position).normalized;
+            
+            // We compare against camera forward for "aiming" feel
+            // Dot result is 1.0 (perfectly in front) to -1.0 (perfectly behind)
+            float dot = Vector3.Dot(mainCam.transform.forward, dirToTarget);
+            
+            // Map dot from (1 to -1) to a "Penalty Multiplier" (1 to 10)
+            // 1.0 (Front) -> Multiplier 1 (No penalty)
+            // -1.0 (Behind) -> Multiplier 10 (Heavy penalty)
+            float anglePenalty = Mathf.Lerp(10f, 1f, (dot + 1f) / 2f);
+
+            float dist = Vector3.Distance(transform.parent.position, t.transform.position);
+            
+            // Final Score: Distance x Penalty
+            // A target 5m away in front (5x1 = 5) beats a target 2m away behind (2x10 = 20)
+            float score = dist * anglePenalty;
+
+            if (score < bestScore)
+            {
+                bestScore = score;
+                currentLassoTarget = t;
+            }
+        }
     }
 
     void Update()
     {
-        // 1. CLAMP RETICLE VISUALS
-        if (targetController.currentSellectedTarget != null)
+        CalculateBestLassoTarget();
+        HandleReticle();
+
+        if (isSwinging && activeGrapplePoint != null)
         {
-            Vector3 dirToTarget = targetController.currentSellectedTarget.transform.position - origin.position;
-            // Limit reticle position to maxLassoLength
-            if (dirToTarget.magnitude > maxLassoLength)
+            HandleSwingPhysics();
+            
+            if (Time.time >= swingStartTime + minSwingDuration)
             {
-                target.position = origin.position + (dirToTarget.normalized * maxLassoLength);
+                float currentDist = Vector3.Distance(playerRb.position, activeGrapplePoint.position);
+                if (currentDist > currentRopeLength + breakThreshold || thirdPersonMovementDriver.isGrounded)
+                {
+                    StopSwinging();
+                }
             }
-            else
+        }
+    }
+
+    private void HandleReticle()
+    {
+        if (currentLassoTarget != null && !isSwinging && !thirdPersonMovementDriver.isGrounded)
+        {
+            if (lassoReticle != null)
             {
-                target.position = targetController.currentSellectedTarget.transform.position;
+                lassoReticle.SetActive(true);
+                lassoReticle.transform.position = currentLassoTarget.transform.position;
             }
         }
         else
         {
-            target.localPosition = ogLocalPosOfLassoTarget;
+            if (lassoReticle != null) lassoReticle.SetActive(false);
         }
+    }
 
-        // 2. SWING LOGIC
-        if (isSwinging && activeGrapplePoint != null)
-        {
-            float currentDist = Vector3.Distance(playerRb.position, activeGrapplePoint.position);
+    private void HandleSwingPhysics()
+    {
+        float h = moveInput.action.ReadValue<Vector2>().x;
+        float v = moveInput.action.ReadValue<Vector2>().y;
+        Vector3 moveDir = (mainCam.transform.right * h + mainCam.transform.forward * v).normalized;
+        moveDir.y = 0;
 
-            if (currentDist > initialSwingDistance + breakThreshold || thirdPersonMovementDriver.isGrounded)
-            {
-                StopSwinging();
-            }
-            else
-            {
-                targetPos = activeGrapplePoint.position;
-                targetController.removeTarget(currentSwungOnTarget);
-                UpdateLine(1f); 
-            }
-        }
+        playerRb.AddForce(moveDir * swingForce, ForceMode.Acceleration);
+
+        targetPos = activeGrapplePoint.position;
+        UpdateLine(1f); 
     }
 
     public void doLassoAction()
@@ -116,21 +206,18 @@ public class lasso : MonoBehaviour
 
         lastFireTime = Time.time;
 
-        // Check distance before deciding to swing
-        if (targetController.currentSellectedTarget != null && targetController.currentSellectedTarget.isLassoTarget)
+        if (currentLassoTarget != null && !thirdPersonMovementDriver.isGrounded)
         {
-            float dist = Vector3.Distance(origin.position, targetController.currentSellectedTarget.transform.position);
-            
+            float dist = Vector3.Distance(origin.position, currentLassoTarget.transform.position);
             if (dist <= maxLassoLength)
             {
-                activeGrapplePoint = targetController.currentSellectedTarget.transform;
-                currentSwungOnTarget = targetController.currentSellectedTarget;
+                activeGrapplePoint = currentLassoTarget.transform;
+                currentSwungOnTarget = currentLassoTarget;
                 lassoRoutine = StartCoroutine(GrappleSequence(activeGrapplePoint));
                 return;
             }
         }
 
-        // Default to normal shot if no target or target too far
         ExecuteNormalLasso();
     }
 
@@ -148,40 +235,42 @@ public class lasso : MonoBehaviour
             yield return null;
         }
 
-        SetupSwingJoint(grapplePoint.position);
+        if (currentSwungOnTarget != null)
+        {
+             lassoTargetsInRange.Remove(currentSwungOnTarget);
+        }
+
+        SetupSpringJoint(grapplePoint.position);
         isSwinging = true;
         lassoRoutine = null;
+        swingStartTime = Time.time;
 
-        playerRb.AddForce((grapplePoint.position - playerRb.position).normalized * pullInForce ,ForceMode.Impulse);
+        Vector3 kickDir = Vector3.ProjectOnPlane(playerRb.linearVelocity, (grapplePoint.position - playerRb.position).normalized);
+        playerRb.AddForce(kickDir.normalized * 10f, ForceMode.Impulse);
     }
 
-    void SetupSwingJoint(Vector3 anchorPos)
+    void SetupSpringJoint(Vector3 anchorPos)
     {
-        swingJoint = playerRb.gameObject.AddComponent<ConfigurableJoint>();
+        swingJoint = playerRb.gameObject.AddComponent<SpringJoint>();
         swingJoint.autoConfigureConnectedAnchor = false;
         swingJoint.connectedAnchor = anchorPos;
 
-        initialSwingDistance = Vector3.Distance(playerRb.position, anchorPos) - pullInDistance;
+        float distance = Vector3.Distance(playerRb.position, anchorPos);
+        swingJoint.maxDistance = distance * 0.85f;
+        swingJoint.minDistance = distance * 0.1f;
 
-        swingJoint.xMotion = ConfigurableJointMotion.Limited;
-        swingJoint.yMotion = ConfigurableJointMotion.Limited;
-        swingJoint.zMotion = ConfigurableJointMotion.Limited;
+        swingJoint.spring = swingSpring;
+        swingJoint.damper = swingDamper;
+        swingJoint.massScale = swingMassScale;
 
-        SoftJointLimit limit = new SoftJointLimit();
-        limit.limit = initialSwingDistance; 
-        limit.contactDistance = 0.05f; 
-        swingJoint.linearLimit = limit;
-        
-        SoftJointLimitSpring spring = new SoftJointLimitSpring();
-        spring.spring = swingSpring;
-        spring.damper = swingDamper;
-        swingJoint.linearLimitSpring = spring;
-
-        thirdPersonMovementDriver.autoWalk = true;
+        currentRopeLength = swingJoint.maxDistance;
+        thirdPersonMovementDriver.autoWalk = true; 
     }
 
     void StopSwinging()
     {
+        if (!isSwinging) return;
+        
         isSwinging = false;
         activeGrapplePoint = null;
         if (swingJoint != null) Destroy(swingJoint);
@@ -190,7 +279,6 @@ public class lasso : MonoBehaviour
         lassoRoutine = StartCoroutine(RetractRoutine());
 
         currentSwungOnTarget = null;
-
         thirdPersonMovementDriver.autoWalk = false;
     }
 
@@ -210,20 +298,17 @@ public class lasso : MonoBehaviour
 
     private void ExecuteNormalLasso()
     {
-        if (targetController != null && targetController.currentSellectedTarget != null)
+        if (currentLassoTarget != null)
         {
-            localHitObject = targetController.currentSellectedTarget.gameObject;
+            localHitObject = currentLassoTarget.gameObject;
             Vector3 dir = (localHitObject.transform.position - origin.position);
-            float dist = dir.magnitude;
-
-            if (dist <= maxLassoLength)
+            if (dir.magnitude <= maxLassoLength)
             {
                 reachedActualTarget = true;
                 FireLasso(localHitObject.transform.position);
             }
             else
             {
-                // TARGET TOO FAR: Shoot line to max length only
                 reachedActualTarget = false;
                 FireLasso(origin.position + (dir.normalized * maxLassoLength));
             }
@@ -231,8 +316,7 @@ public class lasso : MonoBehaviour
         else
         {
             Vector3 direction = transform.parent.forward;
-            Ray ray = new Ray(origin.position, direction);
-            if (Physics.Raycast(ray, out RaycastHit hit, maxLassoLength))
+            if (Physics.Raycast(origin.position, direction, out RaycastHit hit, maxLassoLength))
             {
                 localHitObject = hit.collider.gameObject;
                 reachedActualTarget = true;
@@ -299,18 +383,16 @@ public class lasso : MonoBehaviour
     void UpdateLine(float progress)
     {
         Vector3 start = origin.position;
-        
-        // Ensure visual line never renders past maxLassoLength
         Vector3 currentTargetPos = targetPos;
         Vector3 fullDir = targetPos - start;
-        if (fullDir.magnitude > maxLassoLength)
+        
+        if (fullDir.magnitude > maxLassoLength && !isSwinging)
         {
             currentTargetPos = start + (fullDir.normalized * maxLassoLength);
         }
 
         float currentDistance = Vector3.Distance(start, currentTargetPos);
         float lengthRatio = Mathf.Clamp01(currentDistance / maxLassoLength);
-
         float arcScale = Mathf.Lerp(1f, 0.2f, lengthRatio);
         float currentArcHeight = arcHeight * arcScale;
         float arcT = progress * (1f - progress);
@@ -339,5 +421,10 @@ public class lasso : MonoBehaviour
             point += right * wave * amp + up * noise * amp * randomness;
             line.SetPosition(i, point);
         }
+    }
+
+    void OnDisable()
+    {
+        if(lassoReticle != null) lassoReticle.SetActive(false);
     }
 }
