@@ -25,6 +25,9 @@ public class hookshot : MonoBehaviour
     public float minHookshotDistance = 2f;
     public float maxHookshotDistance = 50f;
 
+    public float minCrosshairScale = 0.3f;
+    public float maxCrosshairScale = 3f;
+
     private bool hasValidTarget = false;
 
     private Vector3 targetPosition;
@@ -41,6 +44,9 @@ public class hookshot : MonoBehaviour
     private bool lineExtending = false;
     private float lineExtendProgress = 0f;
     private Vector3 lineStartPosition;
+
+    private bool crosshairWasActive = false;
+
 
     void Start()
     {
@@ -75,6 +81,14 @@ public class hookshot : MonoBehaviour
             {
                 float distance = Vector3.Distance(firstPersonCamera.cameraPivot.position, hit.point);
 
+                float t = Mathf.InverseLerp(minHookshotDistance, maxHookshotDistance, distance);
+                float scale = Mathf.Lerp(minCrosshairScale, maxCrosshairScale, t);
+
+                Vector3 scaleVec = Vector3.one * scale;
+                hookshotCrosshair.transform.localScale = scaleVec;
+                hookshotCrosshairDot.transform.localScale = scaleVec;
+
+
                 hasHit = distance >= minHookshotDistance;
                 targetPosition = hit.point;
 
@@ -92,6 +106,25 @@ public class hookshot : MonoBehaviour
             hasValidTarget = false;
         }
 
+        bool shouldShowCrosshair = hookshotActive && hasHit && hasValidTarget;
+        bool shouldShowDot = hookshotActive && hasHit && !hasValidTarget;
+
+        // Detect activation frame
+        if ((shouldShowCrosshair || shouldShowDot) && !crosshairWasActive)
+        {
+            hookshotCrosshair.transform.position = targetPosition;
+            hookshotCrosshairDot.transform.position = targetPosition;
+
+            crosshairVelocity = Vector3.zero;
+            dotVelocity = Vector3.zero;
+        }
+
+        hookshotCrosshair.SetActive(shouldShowCrosshair);
+        hookshotCrosshairDot.SetActive(shouldShowDot);
+
+        crosshairWasActive = shouldShowCrosshair || shouldShowDot;
+
+
         if (hasHit)
         {
             hookshotCrosshair.transform.position = Vector3.SmoothDamp(
@@ -108,6 +141,7 @@ public class hookshot : MonoBehaviour
                 crosshairSmoothTime
             );
         }
+
 
         hookshotCrosshair.SetActive(hookshotActive && hasHit && hasValidTarget);
         hookshotCrosshairDot.SetActive(hookshotActive && hasHit && !hasValidTarget);

@@ -603,6 +603,8 @@ MonoBehaviour:
   lineExtendSpeed: 120
   minHookshotDistance: 5
   maxHookshotDistance: 50
+  minCrosshairScale: 0.5
+  maxCrosshairScale: 4
 --- !u!1 &1105717290294105417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3578,7 +3580,7 @@ MonoBehaviour:
   atCamera: 1
   targetTransform: {fileID: 0}
   cam: {fileID: 0}
-  matchTargetRotation: 0
+  matchTargetRotation: 1
   interpolateRotation: 0
   rotationLerpSpeed: 10
   addSpin: 0
@@ -3688,9 +3690,9 @@ MonoBehaviour:
   atCamera: 1
   targetTransform: {fileID: 0}
   cam: {fileID: 0}
-  matchTargetRotation: 0
-  interpolateRotation: 0
-  rotationLerpSpeed: 10
+  matchTargetRotation: 1
+  interpolateRotation: 1
+  rotationLerpSpeed: 200
   addSpin: 1
   spinSpeed: 100
   spinAxis: 2
