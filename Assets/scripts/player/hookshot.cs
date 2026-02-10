@@ -119,7 +119,8 @@ public class hookshot : MonoBehaviour
 
     void LateUpdate()
     {
-        bCanCancel = selectableActionItem.assigedAction.action.id == bButtonAction.action.id ? false : true;
+        if(selectableActionItem.assigedAction != null)
+            bCanCancel = selectableActionItem.assigedAction.action.id == bButtonAction.action.id ? false : true;
 
         if (hookshotActive && !hookshotInProgress && !lineExtending && 
         ((cancelAction != null && cancelAction.action.WasPressedThisFrame()) || 
