@@ -8,12 +8,13 @@ public class Lasso : MonoBehaviour
     public inventory inventory;
     public thirdPersonMovementDriver thirdPersonMovementDriver;
     public InputActionReference moveInput;
+    public targetController targetController;
 
     [Header("References")]
     public Transform origin;
     public LineRenderer line;
     public Rigidbody playerRb; 
-    public GameObject lassoReticle; // Dedicated reference for the lasso's target visual
+    public GameObject lassoReticle; 
 
     [Header("Lasso Constraints")]
     public float maxLassoLength = 12f;
@@ -40,7 +41,7 @@ public class Lasso : MonoBehaviour
     public int segments = 30;
     public float travelTime = 0.3f;
     public float retractMultiplier = 2f;
-    
+
     [Header("Cooldown")]
     public float lassoCooldown = 0.4f;
     private float lastFireTime;
@@ -56,7 +57,7 @@ public class Lasso : MonoBehaviour
     Vector3 targetPos;
     Vector3 arcDirection;
     Coroutine lassoRoutine;
-    
+
     bool reachedActualTarget = false;
     private GameObject localHitObject;
     private target currentSwungOnTarget;
@@ -67,7 +68,7 @@ public class Lasso : MonoBehaviour
     void Awake()
     {
         if (playerRb == null) playerRb = GetComponentInParent<Rigidbody>();
-        
+
         line.positionCount = segments;
         line.enabled = false;
         lastFireTime = -lassoCooldown; 
@@ -105,7 +106,6 @@ public class Lasso : MonoBehaviour
     {
         currentLassoTarget = null;
 
-        // Keep the grounded check to ensure default lasso happens on floor
         if (thirdPersonMovementDriver.isGrounded) return;
 
         float bestScore = float.MaxValue;
@@ -120,20 +120,13 @@ public class Lasso : MonoBehaviour
             }
 
             Vector3 dirToTarget = (t.transform.position - transform.parent.position).normalized;
-            
-            // We compare against camera forward for "aiming" feel
-            // Dot result is 1.0 (perfectly in front) to -1.0 (perfectly behind)
+
             float dot = Vector3.Dot(mainCam.transform.forward, dirToTarget);
-            
-            // Map dot from (1 to -1) to a "Penalty Multiplier" (1 to 10)
-            // 1.0 (Front) -> Multiplier 1 (No penalty)
-            // -1.0 (Behind) -> Multiplier 10 (Heavy penalty)
+
             float anglePenalty = Mathf.Lerp(10f, 1f, (dot + 1f) / 2f);
 
             float dist = Vector3.Distance(transform.parent.position, t.transform.position);
-            
-            // Final Score: Distance x Penalty
-            // A target 5m away in front (5x1 = 5) beats a target 2m away behind (2x10 = 20)
+
             float score = dist * anglePenalty;
 
             if (score < bestScore)
@@ -146,13 +139,25 @@ public class Lasso : MonoBehaviour
 
     void Update()
     {
-        CalculateBestLassoTarget();
-        HandleReticle();
+
+        bool isCombatTargeting = targetController != null && targetController.isTargeting;
+
+        if (!isCombatTargeting)
+        {
+            CalculateBestLassoTarget();
+            HandleReticle();
+        }
+        else
+        {
+
+            currentLassoTarget = null;
+            if (lassoReticle != null) lassoReticle.SetActive(false);
+        }
 
         if (isSwinging && activeGrapplePoint != null)
         {
             HandleSwingPhysics();
-            
+
             if (Time.time >= swingStartTime + minSwingDuration)
             {
                 float currentDist = Vector3.Distance(playerRb.position, activeGrapplePoint.position);
@@ -206,7 +211,9 @@ public class Lasso : MonoBehaviour
 
         lastFireTime = Time.time;
 
-        if (currentLassoTarget != null && !thirdPersonMovementDriver.isGrounded)
+        bool isCombatTargeting = targetController != null && targetController.isTargeting;
+
+        if (!isCombatTargeting && currentLassoTarget != null && !thirdPersonMovementDriver.isGrounded)
         {
             float dist = Vector3.Distance(origin.position, currentLassoTarget.transform.position);
             if (dist <= maxLassoLength)
@@ -270,11 +277,11 @@ public class Lasso : MonoBehaviour
     void StopSwinging()
     {
         if (!isSwinging) return;
-        
+
         isSwinging = false;
         activeGrapplePoint = null;
         if (swingJoint != null) Destroy(swingJoint);
-        
+
         if (lassoRoutine != null) StopCoroutine(lassoRoutine);
         lassoRoutine = StartCoroutine(RetractRoutine());
 
@@ -298,21 +305,28 @@ public class Lasso : MonoBehaviour
 
     private void ExecuteNormalLasso()
     {
-        if (currentLassoTarget != null)
+
+        if (targetController != null && targetController.currentSellectedTarget != null)
         {
-            localHitObject = currentLassoTarget.gameObject;
-            Vector3 dir = (localHitObject.transform.position - origin.position);
-            if (dir.magnitude <= maxLassoLength)
+            localHitObject = targetController.currentSellectedTarget.gameObject;
+            float dist = Vector3.Distance(origin.position, localHitObject.transform.position);
+
+            if (dist <= maxLassoLength)
             {
                 reachedActualTarget = true;
                 FireLasso(localHitObject.transform.position);
             }
             else
             {
+
                 reachedActualTarget = false;
-                FireLasso(origin.position + (dir.normalized * maxLassoLength));
+                Vector3 dir = (localHitObject.transform.position - origin.position).normalized;
+                FireLasso(origin.position + (dir * maxLassoLength));
             }
+            return; 
+
         }
+
         else
         {
             Vector3 direction = transform.parent.forward;
@@ -385,7 +399,7 @@ public class Lasso : MonoBehaviour
         Vector3 start = origin.position;
         Vector3 currentTargetPos = targetPos;
         Vector3 fullDir = targetPos - start;
-        
+
         if (fullDir.magnitude > maxLassoLength && !isSwinging)
         {
             currentTargetPos = start + (fullDir.normalized * maxLassoLength);
@@ -415,7 +429,7 @@ public class Lasso : MonoBehaviour
 
             float wave = Mathf.Sin(p * Mathf.PI * swingFrequency + Time.time * swingFrequency);
             float noise = Mathf.PerlinNoise(Time.time * 3f, p * 5f) * 2f - 1f;
-            
+
             float amp = swingAmplitude * (1f - p) * progressStraighten * stretchStraighten;
 
             point += right * wave * amp + up * noise * amp * randomness;

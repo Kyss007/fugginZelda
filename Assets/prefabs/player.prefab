@@ -2018,6 +2018,7 @@ MonoBehaviour:
   inventory: {fileID: 2378930294912876544}
   thirdPersonMovementDriver: {fileID: 4820373867556585335}
   moveInput: {fileID: 6578366288447438663, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  targetController: {fileID: 2050566669739553905}
   origin: {fileID: 372113356516164285}
   line: {fileID: 9113245565513054208}
   playerRb: {fileID: 4244579278436318369}
