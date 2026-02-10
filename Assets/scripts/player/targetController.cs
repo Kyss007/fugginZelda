@@ -192,8 +192,11 @@ public class targetController : MonoBehaviour
 
     void OnDisable()
     {
-        targetSuggestionGO.SetActive(false);
-        targetSellectedGO.SetActive(false);
+        if(targetSuggestionGO != null)
+            targetSuggestionGO.SetActive(false);
+        
+        if(targetSellectedGO != null)
+            targetSellectedGO.SetActive(false);
     }
 
     void OnEnable()
