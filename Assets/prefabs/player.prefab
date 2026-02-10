@@ -572,6 +572,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  assignmentCooldown: 0.2
+  resumeCooldown: 0.2
 --- !u!114 &8723112528967162895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,6 +586,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e74926fc8d61e20bbeac54495821aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cancelAction: {fileID: -2224398279964500451, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  backAction: {fileID: -6100007879763909765, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
+  bCanCancel: 1
+  bButtonAction: {fileID: -3748679576350768177, guid: ca86e15944ab9e0be92e7a3fb7b5aa7b, type: 3}
   inventory: {fileID: 2378930294912876544}
   hookshotActive: 0
   hookshotCrosshair: {fileID: 8965343299900805917}
@@ -605,6 +611,13 @@ MonoBehaviour:
   maxHookshotDistance: 50
   minCrosshairScale: 0.5
   maxCrosshairScale: 4
+  objectsToDeactivate:
+  - {fileID: 7249343806544305860}
+  - {fileID: 3932779046025950953}
+  - {fileID: 7870317904622158450}
+  - {fileID: 4682453209293612618}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1105717290294105417
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,6 +1827,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  assignmentCooldown: 0.2
+  resumeCooldown: 0.2
 --- !u!114 &6684681797271819371
 MonoBehaviour:
   m_ObjectHideFlags: 0

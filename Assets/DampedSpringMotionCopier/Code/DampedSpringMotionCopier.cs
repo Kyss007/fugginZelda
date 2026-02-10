@@ -287,5 +287,31 @@ namespace PhysicalWalk
 				ApplyRotationalSpring(useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime);
 			}
 		}
+		void OnEnable()
+		{
+			if (positionalSpring.sourceObject != null)
+			{
+				// Snap to current source position when re-enabled
+				Vector3 sourcePosition = positionalSpring.frozenWorldlOffset
+					+ positionalSpring.sourceObject.TransformPoint(positionalSpring.frozenLocalOffset);
+				
+				transform.position = sourcePosition;
+				positionalSpring.lastSourcePosition = sourcePosition;
+				positionalSpring.lastPosition = sourcePosition;
+				positionalSpring.springVelocity = Vector3.zero;
+			}
+			
+			if (rotationalSpring.sourceObject != null)
+			{
+				// Snap to current source rotation when re-enabled
+				Quaternion sourceRotation = rotationalSpring.sourceObject.rotation * rotationalSpring.frozenLocalOffset;
+				
+				transform.rotation = sourceRotation;
+				rotationalSpring.lastSourceRotation = sourceRotation;
+				rotationalSpring.lastRotation = sourceRotation;
+				rotationalSpring.springVelocity = Vector3.zero;
+			}
+		}
 	}
+
 }// namespace PhysicalWalk

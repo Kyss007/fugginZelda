@@ -33,6 +33,8 @@ public class cameraController : MonoBehaviour
 
     public GameObject firstPersonCamObject;
 
+    private hookshot hookshot;
+
     private void Awake()
     {
         cmOrbitFollow = GetComponent<CinemachineOrbitalFollow>();
@@ -48,6 +50,8 @@ public class cameraController : MonoBehaviour
         inputDriver = cc.inputDriver;
         movementDriver = cc.currentMovementDriver;
         targetController = cc.GetComponentInChildren<targetController>();
+
+        hookshot = cc.GetComponentInChildren<hookshot>();
     }
 
     void Update()
@@ -83,8 +87,10 @@ public class cameraController : MonoBehaviour
 
     public void changeViewInput(InputAction.CallbackContext callbackContext)
     {
-        if(callbackContext.started)
+        if(callbackContext.started && !hookshot.hookshotActive)
+        {
             changeView();
+        }
     }
 
     public void resetCameraPosition()

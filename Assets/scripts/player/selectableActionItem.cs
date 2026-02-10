@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,12 +23,20 @@ public class selectableActionItem : MonoBehaviour
 
     public UnityEvent onAssignedActionTriggered;
 
+    public float assignmentCooldown = 0.2f;
+
+    public float resumeCooldown = 0.2f;
+
     private bool wasSubscribed = false;
+    private float lastAssignmentTime = -999f;
+    private float lastResumeTime = -999f;
+    private float lastTimeScale = 1f;
 
     public void assignAction(InputActionReference action)
     {
         UnsubscribeFromAction();
         assigedAction = action;
+        lastAssignmentTime = Time.unscaledTime;
         SubscribeToAction();
 
         if (action == null)
@@ -54,6 +63,7 @@ public class selectableActionItem : MonoBehaviour
     private void OnEnable()
     {
         SubscribeToAction();
+        lastTimeScale = Time.timeScale;
     }
 
     private void OnDisable()
@@ -90,23 +100,47 @@ public class selectableActionItem : MonoBehaviour
         wasSubscribed = false;
     }
 
+    private void CheckForResume()
+    {
+        // Detect transition from paused (0) to unpaused (>0)
+        if (lastTimeScale == 0 && Time.timeScale > 0)
+        {
+            lastResumeTime = Time.unscaledTime;
+        }
+        lastTimeScale = Time.timeScale;
+    }
+
     private void OnActionStarted(InputAction.CallbackContext context)
     {
+        CheckForResume();
         TriggerEvent("started");
     }
 
     private void OnActionPerformed(InputAction.CallbackContext context)
     {
+        CheckForResume();
         TriggerEvent("performed");
     }
 
     private void OnActionCanceled(InputAction.CallbackContext context)
     {
+        CheckForResume();
         TriggerEvent("canceled");
     }
 
     private void TriggerEvent(string stateName)
     {
+        // Block events during cooldown period after resuming from pause
+        if(Time.unscaledTime - lastResumeTime < resumeCooldown)
+            return;
+
+        if(Time.timeScale == 0)
+            return;
+
+        // Block events during cooldown period after assignment
+        if(Time.unscaledTime - lastAssignmentTime < assignmentCooldown)
+            return;
+
         onAssignedActionTriggered.Invoke();
 
         if(onAssignedActionTriggered.GetPersistentEventCount() == 0)

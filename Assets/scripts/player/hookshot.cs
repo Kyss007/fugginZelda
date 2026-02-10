@@ -1,7 +1,15 @@
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class hookshot : MonoBehaviour
 {
+
+    public InputActionReference cancelAction;
+    public InputActionReference backAction;
+
+    public bool bCanCancel = true;
+    public InputActionReference bButtonAction;
 
     public inventory inventory;
     public bool hookshotActive = false;
@@ -28,6 +36,12 @@ public class hookshot : MonoBehaviour
     public float minCrosshairScale = 0.3f;
     public float maxCrosshairScale = 3f;
 
+    // List of GameObjects to deactivate when hookshot is active
+    public List<GameObject> objectsToDeactivate = new List<GameObject>();
+    
+    // Dictionary to store active states at the moment hookshot is activated
+    private Dictionary<GameObject, bool> storedActiveStates = new Dictionary<GameObject, bool>();
+
     private bool hasValidTarget = false;
 
     private Vector3 targetPosition;
@@ -47,6 +61,12 @@ public class hookshot : MonoBehaviour
 
     private bool crosshairWasActive = false;
 
+    private selectableActionItem selectableActionItem;
+
+    void Awake()
+    {
+        selectableActionItem = GetComponent<selectableActionItem>();
+    }
 
     void Start()
     {
@@ -63,8 +83,52 @@ public class hookshot : MonoBehaviour
         }
     }
 
+    private void StoreCurrentActiveStates()
+    {
+        storedActiveStates.Clear();
+        foreach (GameObject obj in objectsToDeactivate)
+        {
+            if (obj != null)
+            {
+                storedActiveStates[obj] = obj.activeSelf;
+            }
+        }
+    }
+
+    private void DeactivateObjects()
+    {
+        foreach (GameObject obj in objectsToDeactivate)
+        {
+            if (obj != null)
+            {
+                obj.SetActive(false);
+            }
+        }
+    }
+
+    private void RestoreActiveStates()
+    {
+        foreach (GameObject obj in objectsToDeactivate)
+        {
+            if (obj != null && storedActiveStates.ContainsKey(obj))
+            {
+                obj.SetActive(storedActiveStates[obj]);
+            }
+        }
+    }
+
     void LateUpdate()
     {
+        bCanCancel = selectableActionItem.assigedAction.action.id == bButtonAction.action.id ? false : true;
+
+        if (hookshotActive && !hookshotInProgress && !lineExtending && 
+        ((cancelAction != null && cancelAction.action.WasPressedThisFrame()) || 
+        (backAction != null && backAction.action.WasPressedThisFrame() && bCanCancel)))
+        {
+            cancelHookshotMode();
+            return;
+        }
+
         bool hasHit = false;
 
         if (hookshotActive)
@@ -187,6 +251,9 @@ public class hookshot : MonoBehaviour
 
     public void doHookshotAction()
     {
+        if(Time.timeScale == 0)
+            return;
+
         if(!inventory.unlockedHookShot)
             return;
 
@@ -194,6 +261,10 @@ public class hookshot : MonoBehaviour
         {
             //print("activate");
             hookshotActive = true;
+            
+            // Store current states RIGHT NOW, then deactivate
+            StoreCurrentActiveStates();
+            DeactivateObjects();
 
             if (!firstPersonCamera.gameObject.activeSelf)
                 firstPersonCamera.gameObject.SetActive(true);
@@ -282,5 +353,23 @@ public class hookshot : MonoBehaviour
         lineExtending = false;
 
         hookshotActive = false;
+        
+        // Restore to the exact states they had BEFORE hookshot was activated
+        RestoreActiveStates();
+    }
+
+    public void cancelHookshotMode()
+    {
+        hookshotActive = false;
+        
+        // Hide crosshairs
+        hookshotCrosshair.SetActive(false);
+        hookshotCrosshairDot.SetActive(false);
+        crosshairWasActive = false;
+
+        firstPersonCamera.gameObject.SetActive(false);
+        
+        // Restore objects to their previous states
+        RestoreActiveStates();
     }
 }
