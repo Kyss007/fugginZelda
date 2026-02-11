@@ -15,6 +15,9 @@ public class holdableObject : MonoBehaviour
     public Collider collider;
     public LayerMask groundLayer;
 
+    public bool doNotRotate = false;
+    public bool dontSetKinematic = false;
+
     public string heldObjectLayer = "heldObject";
     private Rigidbody rb;
 
@@ -41,7 +44,9 @@ public class holdableObject : MonoBehaviour
         if (isHeld)
         {
             motionCopier.positionalSpring.sourceObject = holdPoint;
-            motionCopier.transform.forward = holdPoint.forward;
+
+            if(!doNotRotate)
+                motionCopier.transform.forward = holdPoint.forward;
             
             motionCopier.positionalSpring.frozenLocalOffset = holdOffset;
         }
@@ -58,12 +63,14 @@ public class holdableObject : MonoBehaviour
         {
             isHeld = true;
 
-            rb.isKinematic = true;
+            rb.isKinematic = !dontSetKinematic;
 
             ogHeldObjectLayer = collider.gameObject.layer;
             collider.gameObject.layer = LayerMask.NameToLayer(heldObjectLayer);
 
             holdPoint = holdPointInput;
+
+            motionCopier.Reset();
         }
     }
 

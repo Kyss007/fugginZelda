@@ -155,8 +155,8 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 5
   m_Drag: 1
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_AngularDrag: 10
+  m_CenterOfMass: {x: 0, y: -0.4, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
@@ -191,6 +191,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  doNotRotate: 1
+  dontSetKinematic: 1
   heldObjectLayer: heldObject
   holdOffset: {x: 0, y: 0, z: 1.6}
   throwTargetHeightOffset: 0.35
@@ -209,9 +211,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionalSpring:
     sourceObject: {fileID: 0}
-    motionCopyingType: 0
+    motionCopyingType: 1
     dampingCriticality: 1
-    naturalFrequency: {x: 200, y: 200, z: 200}
+    naturalFrequency: {x: 400, y: 400, z: 400}
     applySpringInMovingReferenceFrame: 1
     fixRelativePositionAtStart: 1
     scalesAndLimits:
@@ -220,7 +222,7 @@ MonoBehaviour:
       minDisplacement: {x: -3.4028235e+38, y: -3.4028235e+38, z: -3.4028235e+38}
   rotationalSpring:
     sourceObject: {fileID: 0}
-    motionCopyingType: 0
+    motionCopyingType: 2
     dampingCriticality: 1
     naturalFrequency: 200
     applySpringInMovingReferenceFrame: 1
@@ -404,8 +406,8 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 5
   m_Drag: 1
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_AngularDrag: 10
+  m_CenterOfMass: {x: 0, y: -0.4, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
@@ -440,6 +442,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  doNotRotate: 1
+  dontSetKinematic: 1
   heldObjectLayer: heldObject
   holdOffset: {x: 0, y: 0, z: 1.6}
   throwTargetHeightOffset: 0.35
@@ -458,9 +462,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionalSpring:
     sourceObject: {fileID: 0}
-    motionCopyingType: 0
+    motionCopyingType: 1
     dampingCriticality: 1
-    naturalFrequency: {x: 200, y: 200, z: 200}
+    naturalFrequency: {x: 400, y: 400, z: 400}
     applySpringInMovingReferenceFrame: 1
     fixRelativePositionAtStart: 1
     scalesAndLimits:
@@ -469,7 +473,7 @@ MonoBehaviour:
       minDisplacement: {x: -3.4028235e+38, y: -3.4028235e+38, z: -3.4028235e+38}
   rotationalSpring:
     sourceObject: {fileID: 0}
-    motionCopyingType: 0
+    motionCopyingType: 2
     dampingCriticality: 1
     naturalFrequency: 200
     applySpringInMovingReferenceFrame: 1
@@ -525,10 +529,19 @@ MonoBehaviour:
   openSlashNutPrefab: {fileID: 8585360533839220413}
   closeSlashNutPrefab: {fileID: 4213997758582898203, guid: 58777afdbb8706abf852529a70f614c3, type: 3}
   springJoint: {fileID: 3089149724724044700}
+  jointChild1: {fileID: 0}
+  jointChild2: {fileID: 0}
+  child1ForwardAxis: 2
+  child2ForwardAxis: 2
+  torqueIntensity: 10000
+  torqueDamper: 50
+  initialBurstForce: 50
+  upOffset: 1.5
+  forwardOffset: 1
   enableLineRenderer: 1
   lineMaterial: {fileID: 2100000, guid: 45c9910cdd57c22b798b25cf8b163141, type: 2}
   lineWidthAtEnds: 1.5
-  minLineWidthAtCenter: 1.2
+  minLineWidthAtCenter: 1.5
   widthCurve:
     serializedVersion: 2
     m_Curve:
@@ -566,5 +579,6 @@ MonoBehaviour:
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   timeUntilClose: 5
   springForceIncreaseRate: 150
-  closeDistanceThreshold: 0.4
+  torqueIncreaseRate: 1000
+  closeDistanceThreshold: 0.5
   breakDistanceThreshold: 13

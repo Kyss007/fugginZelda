@@ -261,30 +261,36 @@ namespace PhysicalWalk
 //		public void FixedUpdate()
 		public void Update()
 		{
-			if (!useUnscaledTime)
-			{
-				if (Time.deltaTime <= Mathf.Epsilon)
-					return;
-			}
+			// 1. Safety check: If neither spring has a source, there is nothing to do.
+			if (positionalSpring.sourceObject == null && rotationalSpring.sourceObject == null)
+				return;
+
+			if (!useUnscaledTime && Time.deltaTime <= Mathf.Epsilon)
+				return;
+
+			float dt = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
 
 			if (resetOnNextUpdate)
 			{
-				transform.position = positionalSpring.sourceObject.TransformPoint(positionalSpring.frozenLocalOffset);
+				// Only reset position if we actually have a source to reference
+				if (positionalSpring.sourceObject != null)
+				{
+					transform.position = positionalSpring.sourceObject.TransformPoint(positionalSpring.frozenLocalOffset);
+					
+					if (positionalSpring.fixRelativePositionAtStart == PositionalSpringTweaksAndState.eFreezeType.DONT_FIX_INITIAL_RELATIVE_POSITION)
+						positionalSpring.lastSourcePosition = positionalSpring.sourceObject.position;
+					else
+						positionalSpring.lastSourcePosition = transform.position;
 
-				if (positionalSpring.fixRelativePositionAtStart == PositionalSpringTweaksAndState.eFreezeType.DONT_FIX_INITIAL_RELATIVE_POSITION)
-					positionalSpring.lastSourcePosition = positionalSpring.sourceObject.position;
-				else
-					positionalSpring.lastSourcePosition = transform.position;
-
-				positionalSpring.lastPosition = transform.position;
-				positionalSpring.springVelocity = Vector3.zero;
-
+					positionalSpring.lastPosition = transform.position;
+					positionalSpring.springVelocity = Vector3.zero;
+				}
 				resetOnNextUpdate = false;
 			}
 			else
 			{
-				ApplyPositionalSpring(useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime);
-				ApplyRotationalSpring(useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime);
+				ApplyPositionalSpring(dt);
+				ApplyRotationalSpring(dt);
 			}
 		}
 		void OnEnable()
