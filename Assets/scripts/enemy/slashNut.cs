@@ -55,8 +55,12 @@ public class slashNut : MonoBehaviour
     private holdableObject holdable1;
     private holdableObject holdable2;
 
+    private keanusCharacterController cc;
+
     void Start()
     {
+        cc = FindFirstObjectByType<keanusCharacterController>();
+
         if (isOpen)
         {
             FindChildren();
@@ -163,7 +167,7 @@ public class slashNut : MonoBehaviour
             {
                 transform.gameObject.layer = layerWhenDropped;
             }
-            
+
             child2.gameObject.layer = layerWhenDropped;
             foreach(Transform transform in child2.transform)
             {
@@ -336,7 +340,10 @@ public class slashNut : MonoBehaviour
 
     public void openNut()
     {
-        Instantiate(openSlashNutPrefab, transform.position, transform.rotation);
+        Vector3 direction = cc.transform.position - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        Instantiate(openSlashNutPrefab, transform.position, targetRotation);
+        
         Destroy(gameObject);
     }
 }
