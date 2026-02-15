@@ -4,6 +4,7 @@ using PhysicalWalk;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class holdableObject : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class holdableObject : MonoBehaviour
     private int ogHeldObjectLayer;
 
 
-    private DampedSpringMotionCopier motionCopier;
+    public DampedSpringMotionCopier motionCopier;
 
     private Transform holdPoint;
     public Vector3 holdOffset;

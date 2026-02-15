@@ -144,35 +144,72 @@ public class slashNut : MonoBehaviour
     {
         if (holdable1 == null || holdable2 == null) return;
 
-        // If EITHER part is held, BOTH should be on the heldObject layer
-        if (holdable1.isHeld || holdable2.isHeld)
-        {
-            child1.gameObject.layer = layerWhenHeld;
-            foreach(Transform transform in child1.transform)
-            {
-                transform.gameObject.layer = layerWhenHeld;
-            }
+        bool eitherHeld = holdable1.isHeld || holdable2.isHeld;
+        
+        // Get Rigidbodies
+        Rigidbody rb1 = child1.GetComponent<Rigidbody>();
+        Rigidbody rb2 = child2.GetComponent<Rigidbody>();
 
-            child2.gameObject.layer = layerWhenHeld;
-            foreach(Transform transform in child2.transform)
+        // 1. Handle Kinematic state and Layers
+        if (eitherHeld)
+        {
+            SetLayerRecursive(child1, layerWhenHeld);
+            SetLayerRecursive(child2, layerWhenHeld);
+            
+            // If an object is being held, we make it kinematic so it follows the hand perfectly
+            //if (holdable1.isHeld) rb1.isKinematic = true;
+            //if (holdable2.isHeld) rb2.isKinematic = true;
+        }
+        else
+        {
+            // Return to physics when dropped
+            if (!holdable1.isThrow) 
             {
-                transform.gameObject.layer = layerWhenHeld;
+                SetLayerRecursive(child1, layerWhenDropped);
+                //rb1.isKinematic = false;
+            }
+            if (!holdable2.isThrow) 
+            {
+                SetLayerRecursive(child2, layerWhenDropped);
+                //rb2.isKinematic = false;
             }
         }
-        else if (!holdable1.isThrow && !holdable2.isThrow) 
-        {
-            // Only reset to default layer if neither is currently being thrown
-            child1.gameObject.layer = layerWhenDropped;
-            foreach(Transform transform in child1.transform)
-            {
-                transform.gameObject.layer = layerWhenDropped;
-            }
 
-            child2.gameObject.layer = layerWhenDropped;
-            foreach(Transform transform in child2.transform)
-            {
-                transform.gameObject.layer = layerWhenDropped;
-            }
+        // 2. Forced Look-At logic while held
+        // Since joints don't work well on Kinematic bodies, we manually rotate them
+        //if (holdable1.isHeld) ForceRotationToOther(child1, child2, child1ForwardAxis);
+        //if (holdable2.isHeld) ForceRotationToOther(child2, child1, child2ForwardAxis);
+    }
+
+    void ForceRotationToOther(Transform self, Transform target, LocalAxis axis)
+    {
+        Vector3 direction = (target.position - self.position).normalized;
+        if (direction == Vector3.zero) return;
+
+        // Determine what "Forward" is for this specific child
+        Vector3 localForward = axis switch
+        {
+            LocalAxis.X => Vector3.right,
+            LocalAxis.Y => Vector3.up,
+            LocalAxis.Z => Vector3.forward,
+            LocalAxis.NegativeX => Vector3.left,
+            LocalAxis.NegativeY => Vector3.down,
+            LocalAxis.NegativeZ => Vector3.back,
+            _ => Vector3.forward
+        };
+
+        // Calculate the rotation so that the chosen local axis points at the target
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        self.rotation = lookRotation * Quaternion.Inverse(Quaternion.LookRotation(localForward));
+    }
+
+    // Helper to keep the code clean
+    void SetLayerRecursive(Transform obj, int layer)
+    {
+        obj.gameObject.layer = layer;
+        foreach (Transform child in obj)
+        {
+            child.gameObject.layer = layer;
         }
     }
 
