@@ -44,6 +44,8 @@ public class holdableObject : MonoBehaviour
     {
         if (isHeld)
         {
+            transform.position = holdPoint.TransformPoint(holdOffset);
+
             motionCopier.positionalSpring.sourceObject = holdPoint;
 
             if(!doNotRotate)
