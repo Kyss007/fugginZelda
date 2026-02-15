@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 3491290779635626232}
   - component: {fileID: 6207202344630594577}
   m_Layer: 21
-  m_Name: summonClosedSlashNut
+  m_Name: toggleWorld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,11 +150,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6207202344630594577}
         m_TargetAssemblyTypeName: debugFunctions, Assembly-CSharp
-        m_MethodName: summonObject
-        m_Mode: 2
+        m_MethodName: toggleActiveStateOfObject
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4213997758582898203, guid: 58777afdbb8706abf852529a70f614c3, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a4ae2a3123341c9f94b76628d9088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::debugFunctions
+  gameobject: {fileID: 0}
 --- !u!1 &677610855335017648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,6 +1092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a4ae2a3123341c9f94b76628d9088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::debugFunctions
+  gameobject: {fileID: 0}
 --- !u!1 &1144721486512224935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,6 +1170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a4ae2a3123341c9f94b76628d9088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::debugFunctions
+  gameobject: {fileID: 0}
 --- !u!1 &1541356742669505195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,7 +1951,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2383215719676948832}
   m_HandleRect: {fileID: 4760185659338280629}
   m_Direction: 2
-  m_Value: 0.74969476
+  m_Value: 1
   m_Size: 0.8333672
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2019,7 +2022,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: summon closedSlashNut
+  m_text: toggleWorld
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3056,16 +3059,16 @@ RectTransform:
   - {fileID: 2712804356034123424}
   - {fileID: 7556327837131149595}
   - {fileID: 1597108545727168866}
+  - {fileID: 7884561745126989904}
   - {fileID: 7835956523041575718}
   - {fileID: 3012213276794259432}
   - {fileID: 884644101767190632}
   - {fileID: 5882011915648295531}
-  - {fileID: 7884561745126989904}
   m_Father: {fileID: 2042366201330798940}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0097958855, y: 50.04883}
+  m_AnchoredPosition: {x: 0.0097958855, y: 0}
   m_SizeDelta: {x: -783, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5522908678306257161
@@ -3341,6 +3344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a4ae2a3123341c9f94b76628d9088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::debugFunctions
+  gameobject: {fileID: 0}
 --- !u!1 &4292453809716709355
 GameObject:
   m_ObjectHideFlags: 0
@@ -3681,6 +3685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a4ae2a3123341c9f94b76628d9088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::debugFunctions
+  gameobject: {fileID: 0}
 --- !u!1 &4574103700448419480
 GameObject:
   m_ObjectHideFlags: 0
@@ -5466,6 +5471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a4ae2a3123341c9f94b76628d9088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::debugFunctions
+  gameobject: {fileID: 0}
 --- !u!1 &7040222477052041407
 GameObject:
   m_ObjectHideFlags: 0
@@ -5785,6 +5791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a4ae2a3123341c9f94b76628d9088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::debugFunctions
+  gameobject: {fileID: 0}
 --- !u!1 &7927187388881589201
 GameObject:
   m_ObjectHideFlags: 0
@@ -6347,3 +6354,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a4ae2a3123341c9f94b76628d9088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::debugFunctions
+  gameobject: {fileID: 0}

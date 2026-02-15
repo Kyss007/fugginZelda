@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class debugFunctions : MonoBehaviour
 {
+    public GameObject go;
+
     public void unlockSword()
     {
         inventory inventory = FindFirstObjectByType<inventory>();
@@ -56,5 +58,10 @@ public class debugFunctions : MonoBehaviour
         Transform playerPos = FindFirstObjectByType<keanusCharacterController>().transform;
 
         Instantiate(prefab, playerPos.position + new Vector3(0, 3, 0) + (playerPos.forward * 10),quaternion.identity);
+    }
+
+    public void toggleActiveStateOfObject()
+    {
+        go.SetActive(!go.activeSelf);
     }
 }

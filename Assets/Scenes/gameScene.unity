@@ -17138,6 +17138,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1620426193617439825, guid: cddda6266572d78a7877da8d2356d8d7, type: 3}
+--- !u!1 &1295421047 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3509178246055450671, guid: cddda6266572d78a7877da8d2356d8d7, type: 3}
+  m_PrefabInstance: {fileID: 1507534174}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1296642578 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8306084524283712515, guid: cddda6266572d78a7877da8d2356d8d7, type: 3}
@@ -21549,6 +21554,10 @@ PrefabInstance:
     - target: {fileID: 3509178246055450671, guid: cddda6266572d78a7877da8d2356d8d7, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509178246055450671, guid: cddda6266572d78a7877da8d2356d8d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3639141387288433459, guid: cddda6266572d78a7877da8d2356d8d7, type: 3}
       propertyPath: m_Layer
@@ -32277,6 +32286,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6207202344630594577, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
+      propertyPath: go
+      value: 
+      objectReference: {fileID: 1295421047}
+    - target: {fileID: 6207202344630594577, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
+      propertyPath: gameobject
+      value: 
+      objectReference: {fileID: 1295421047}
+    - target: {fileID: 6629410447822361027, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7556327837131149595, guid: 69e4b8d5e6b1b63da9f74d885c601dea, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -32635,6 +32656,7 @@ SceneRoots:
   - {fileID: 1639195167}
   - {fileID: 47173143}
   - {fileID: 1502516087}
+  - {fileID: 2439988196857232152}
   - {fileID: 8673729141627025598}
   - {fileID: 960620624}
   - {fileID: 1083049361}
@@ -32644,5 +32666,4 @@ SceneRoots:
   - {fileID: 2020629384}
   - {fileID: 4697256924222008716}
   - {fileID: 6350360565376858794}
-  - {fileID: 2439988196857232152}
   - {fileID: 1507534174}
