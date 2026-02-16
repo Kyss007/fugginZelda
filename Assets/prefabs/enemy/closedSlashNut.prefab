@@ -162,6 +162,9 @@ GameObject:
   - component: {fileID: 3097573377906407729}
   - component: {fileID: 3888634757142699987}
   - component: {fileID: 4386131126680966494}
+  - component: {fileID: 8585112962262927429}
+  - component: {fileID: 8828386183703035236}
+  - component: {fileID: 2282099018154044459}
   m_Layer: 0
   m_Name: closedSlashNut
   m_TagString: Untagged
@@ -295,6 +298,80 @@ MonoBehaviour:
   torqueIncreaseRate: 1000
   closeDistanceThreshold: 0.5
   breakDistanceThreshold: 8
+  enableAI: 1
+  playerDetectionRange: 15
+  attackRange: 12
+  wanderJumpForce: 8
+  wanderJumpInterval: 2
+  wanderJumpRandomness: 1
+  tumbleForce: 400
+  tumbleDuration: 3
+  rollSpeed: 25
+  attackJumpForce: 10
+  attackJumpArc: 1.2
+  circleOrbitRadius: 10
+  circleOrbitSpeed: 25
+  circleOrbitDuration: 5
+  reboundForce: 10
+  chanceRollAttack: 0.4
+  chanceJumpAttack: 0.35
+  chanceCircleAttack: 0.25
+--- !u!114 &8585112962262927429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213997758582898203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 163e0c0df81281b4ca80e92a0b9e0f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+  doesTickDamage: 0
+  damageProvider: {fileID: 8828386183703035236}
+  tickDamageProvider: {fileID: 0}
+--- !u!114 &8828386183703035236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213997758582898203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2df4ea655bf231449f70bc28c8b1165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageList:
+    _serializedList: []
+  currentDamageName: nutDamage
+  currentDamage: 2
+  doesKnockback: 0
+  currentKnockbackUpForce: 0
+  currentKnockbackBackForce: 0
+--- !u!135 &2282099018154044459
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213997758582898203}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4340133915922068458
 GameObject:
   m_ObjectHideFlags: 0

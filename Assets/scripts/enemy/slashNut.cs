@@ -37,18 +37,43 @@ public class slashNut : MonoBehaviour
     [Header("Closing & Breaking Settings")]
     public float timeUntilClose = 5f;
     public float springForceIncreaseRate = 10f; 
-    public float torqueIncreaseRate = 1000f; // NEW: How fast manual torque builds
+    public float torqueIncreaseRate = 1000f;
     public float closeDistanceThreshold = 0.5f; 
-    public float breakDistanceThreshold = 8.0f; 
+    public float breakDistanceThreshold = 8.0f;
+    
+    [Header("AI Settings (Closed Nut Only)")]
+    public bool enableAI = false;
+    public float playerDetectionRange = 15f;
+    public float attackRange = 12f;
+    
+    [Header("AI - Wander Settings")]
+    public float wanderJumpForce = 8f;
+    public float wanderJumpInterval = 2f;
+    public float wanderJumpRandomness = 1f;
+    public float tumbleForce = 300f;
+    public float tumbleDuration = 1.5f;
+    
+    [Header("AI - Attack Settings")]
+    public float rollSpeed = 12f;
+    public float attackJumpForce = 18f;
+    public float attackJumpArc = 1.2f;
+    public float circleOrbitRadius = 6f;
+    public float circleOrbitSpeed = 8f;
+    public float circleOrbitDuration = 3f;
+    public float reboundForce = 10f;
+    
+    [Header("AI - Behavior Weights")]
+    [Range(0f, 1f)] public float chanceRollAttack = 0.4f;
+    [Range(0f, 1f)] public float chanceJumpAttack = 0.35f;
+    [Range(0f, 1f)] public float chanceCircleAttack = 0.25f;
 
     private LineRenderer lineRenderer;
     private Transform child1;
     private Transform child2;
     private float openTimer = 0f;
-    private float currentExtraTorque = 0f; // Tracks accumulated torque strength
+    private float currentExtraTorque = 0f;
     private bool isClosing = false;
     private bool isBroken = false;
-
 
     private int layerWhenHeld;
     private int layerWhenDropped;
@@ -56,6 +81,18 @@ public class slashNut : MonoBehaviour
     private holdableObject holdable2;
 
     private keanusCharacterController cc;
+    
+    // AI State Machine
+    private enum AIState { Idle, Wandering, Tumbling, Attacking, Circling, Rebounding }
+    private AIState currentState = AIState.Idle;
+    private Rigidbody rb;
+    private Transform player;
+    private float stateTimer = 0f;
+    private Vector3 wanderDirection;
+    private int tumbleDirection; // -1 for left, 1 for right
+    private float circleAngle = 0f;
+    private Vector3 circleCenter;
+    private Vector3 lastPlayerPosition;
 
     void Start()
     {
@@ -69,7 +106,7 @@ public class slashNut : MonoBehaviour
             if (child1) holdable1 = child1.GetComponent<holdableObject>();
             if (child2) holdable2 = child2.GetComponent<holdableObject>();
             
-            layerWhenDropped = child1.gameObject.layer; // Or a specific layer like "Interactable"
+            layerWhenDropped = child1.gameObject.layer;
             layerWhenHeld = LayerMask.NameToLayer("heldObject");
             
             if (enableLineRenderer)
@@ -78,6 +115,23 @@ public class slashNut : MonoBehaviour
             }
             
             StartCoroutine(DelayedInitialBurst());
+        }
+        else if (enableAI)
+        {
+            // Closed nut AI initialization
+            rb = GetComponent<Rigidbody>();
+            if (rb == null)
+            {
+                rb = gameObject.AddComponent<Rigidbody>();
+            }
+            
+            if (cc != null)
+            {
+                player = cc.transform;
+            }
+            
+            // Start wandering behavior
+            StartCoroutine(AIBehaviorLoop());
         }
     }
     
@@ -97,7 +151,6 @@ public class slashNut : MonoBehaviour
 
             float currentDistance = Vector3.Distance(child1.position, child2.position);
 
-            // Break if pulled too far
             if (currentDistance > breakDistanceThreshold)
             {
                 BreakJoint();
@@ -113,14 +166,12 @@ public class slashNut : MonoBehaviour
 
             if (isClosing)
             {
-                // Pull them back together via Spring
                 if (springJoint != null)
                 {
                     springJoint.spring += springForceIncreaseRate * Time.fixedDeltaTime;
                     springJoint.minDistance = 0;
                 }
 
-                // NEW: Increase and Apply Manual Torque for extra alignment strength
                 currentExtraTorque += torqueIncreaseRate * Time.fixedDeltaTime;
                 ApplyClosingTorque();
 
@@ -129,6 +180,11 @@ public class slashNut : MonoBehaviour
                     CloseNut();
                 }
             }
+        }
+        else if (enableAI && rb != null)
+        {
+            // AI physics updates
+            UpdateAIPhysics();
         }
     }
 
@@ -140,45 +196,306 @@ public class slashNut : MonoBehaviour
         }
     }
 
+    #region AI System
+    
+    IEnumerator AIBehaviorLoop()
+    {
+        yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
+        
+        while (enableAI)
+        {
+            if (player == null)
+            {
+                yield return new WaitForSeconds(0.5f);
+                continue;
+            }
+            
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            
+            // Check if player is in range
+            if (distanceToPlayer <= attackRange)
+            {
+                // Choose attack behavior
+                yield return StartCoroutine(ChooseAndExecuteAttack());
+                yield return StartCoroutine(PerformTumble());
+            }
+            else if (distanceToPlayer <= playerDetectionRange)
+            {
+                // Close but not attacking - wander with slight bias toward player
+                yield return StartCoroutine(WanderTowardPlayer());
+                yield return StartCoroutine(PerformTumble());
+            }
+            else
+            {
+                // Wander randomly
+                yield return StartCoroutine(WanderRandomly());
+                yield return StartCoroutine(PerformTumble());
+            }
+            
+            // Small pause between behaviors
+            yield return new WaitForSeconds(Random.Range(0.3f, 0.8f));
+        }
+    }
+    
+    IEnumerator WanderRandomly()
+    {
+        currentState = AIState.Wandering;
+        
+        // Pick random direction on XZ plane
+        wanderDirection = new Vector3(
+            Random.Range(-1f, 1f),
+            0f,
+            Random.Range(-1f, 1f)
+        ).normalized;
+        
+        // Apply jump force
+        Vector3 jumpForce = wanderDirection * wanderJumpForce + Vector3.up * wanderJumpForce;
+        jumpForce += Random.insideUnitSphere * wanderJumpRandomness;
+        rb.AddForce(jumpForce, ForceMode.Impulse);
+        
+        yield return new WaitForSeconds(wanderJumpInterval);
+    }
+    
+    IEnumerator WanderTowardPlayer()
+    {
+        currentState = AIState.Wandering;
+        
+        // Jump with slight bias toward player
+        Vector3 toPlayer = (player.position - transform.position).normalized;
+        wanderDirection = Vector3.Lerp(
+            new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized,
+            toPlayer,
+            0.3f
+        ).normalized;
+        
+        Vector3 jumpForce = wanderDirection * wanderJumpForce + Vector3.up * wanderJumpForce;
+        rb.AddForce(jumpForce, ForceMode.Impulse);
+        
+        yield return new WaitForSeconds(wanderJumpInterval);
+    }
+    
+    IEnumerator ChooseAndExecuteAttack()
+    {
+        // Normalize probabilities
+        float total = chanceRollAttack + chanceJumpAttack + chanceCircleAttack;
+        float roll = Random.Range(0f, total);
+        
+        if (roll < chanceRollAttack)
+        {
+            yield return StartCoroutine(RollAttack());
+        }
+        else if (roll < chanceRollAttack + chanceJumpAttack)
+        {
+            yield return StartCoroutine(JumpAttack());
+        }
+        else
+        {
+            yield return StartCoroutine(CircleAttack());
+        }
+    }
+    
+    IEnumerator RollAttack()
+    {
+        currentState = AIState.Attacking;
+        lastPlayerPosition = player.position;
+        
+        float rollDuration = 1.5f;
+        float elapsed = 0f;
+        
+        while (elapsed < rollDuration)
+        {
+            if (player != null)
+            {
+                Vector3 directionToPlayer = (player.position - transform.position);
+                directionToPlayer.y = 0;
+                directionToPlayer.Normalize();
+                
+                // Apply rolling force
+                rb.AddForce(directionToPlayer * rollSpeed, ForceMode.Acceleration);
+                
+                // Add spin torque for rolling effect
+                Vector3 spinAxis = Vector3.Cross(Vector3.up, directionToPlayer);
+                rb.AddTorque(spinAxis * rollSpeed * 2f, ForceMode.Acceleration);
+            }
+            
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+    }
+    
+    IEnumerator JumpAttack()
+    {
+        currentState = AIState.Attacking;
+        
+        if (player == null) yield break;
+        
+        Vector3 toPlayer = player.position - transform.position;
+        float distance = toPlayer.magnitude;
+        toPlayer.y = 0;
+        toPlayer.Normalize();
+        
+        // Calculate jump with arc
+        Vector3 jumpDirection = toPlayer * attackJumpForce + Vector3.up * attackJumpForce * attackJumpArc;
+        rb.AddForce(jumpDirection, ForceMode.Impulse);
+        
+        // Wait for landing
+        yield return new WaitForSeconds(0.8f);
+        
+        // Check if we need to rebound
+        if (Vector3.Distance(transform.position, player.position) < 3f)
+        {
+            yield return StartCoroutine(Rebound());
+        }
+    }
+    
+    IEnumerator CircleAttack()
+    {
+        currentState = AIState.Circling;
+        
+        if (player == null) yield break;
+        
+        // Set up circle parameters
+        circleCenter = player.position;
+        Vector3 toNut = transform.position - circleCenter;
+        toNut.y = 0;
+        
+        // If too close or too far, adjust position first
+        float currentDistance = toNut.magnitude;
+        if (currentDistance < circleOrbitRadius * 0.5f || currentDistance > circleOrbitRadius * 1.5f)
+        {
+            // Quick jump to orbit distance
+            Vector3 targetPos = circleCenter + toNut.normalized * circleOrbitRadius;
+            Vector3 toTarget = targetPos - transform.position;
+            toTarget.y = 0;
+            rb.AddForce(toTarget.normalized * rollSpeed + Vector3.up * wanderJumpForce, ForceMode.Impulse);
+            yield return new WaitForSeconds(0.5f);
+        }
+        
+        // Start circling
+        circleAngle = Mathf.Atan2(toNut.z, toNut.x);
+        float elapsed = 0f;
+        
+        while (elapsed < circleOrbitDuration)
+        {
+            if (player != null)
+            {
+                // Update circle center to follow player slightly
+                circleCenter = Vector3.Lerp(circleCenter, player.position, Time.fixedDeltaTime * 0.5f);
+                
+                // Calculate target position on circle
+                circleAngle += (circleOrbitSpeed / circleOrbitRadius) * Time.fixedDeltaTime;
+                Vector3 targetPos = circleCenter + new Vector3(
+                    Mathf.Cos(circleAngle) * circleOrbitRadius,
+                    0f,
+                    Mathf.Sin(circleAngle) * circleOrbitRadius
+                );
+                
+                // Apply force toward target position
+                Vector3 toTarget = targetPos - transform.position;
+                toTarget.y = 0;
+                rb.AddForce(toTarget * circleOrbitSpeed, ForceMode.Acceleration);
+                
+                // Add spin for rolling effect
+                Vector3 tangent = new Vector3(-Mathf.Sin(circleAngle), 0f, Mathf.Cos(circleAngle));
+                Vector3 spinAxis = Vector3.Cross(Vector3.up, tangent);
+                rb.AddTorque(spinAxis * circleOrbitSpeed * 2f, ForceMode.Acceleration);
+            }
+            
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+    }
+    
+    IEnumerator Rebound()
+    {
+        currentState = AIState.Rebounding;
+        
+        // Bounce away from player
+        Vector3 awayFromPlayer = (transform.position - player.position).normalized;
+        awayFromPlayer.y = 0;
+        
+        Vector3 reboundJump = awayFromPlayer * reboundForce + Vector3.up * reboundForce * 0.8f;
+        rb.AddForce(reboundJump, ForceMode.Impulse);
+        
+        yield return new WaitForSeconds(0.5f);
+    }
+    
+    IEnumerator PerformTumble()
+    {
+        currentState = AIState.Tumbling;
+        
+        // Randomly pick left or right tumble
+        tumbleDirection = Random.Range(0f, 1f) > 0.5f ? 1 : -1;
+        
+        // Get current movement direction or use forward
+        Vector3 moveDir = rb.linearVelocity;
+        moveDir.y = 0;
+        if (moveDir.magnitude < 0.1f)
+        {
+            moveDir = transform.forward;
+        }
+        moveDir.Normalize();
+        
+        // Calculate tumble axis (perpendicular to movement)
+        Vector3 tumbleAxis = Vector3.Cross(Vector3.up, moveDir) * tumbleDirection;
+        
+        float elapsed = 0f;
+        while (elapsed < tumbleDuration)
+        {
+            // Apply spinning torque
+            rb.AddTorque(tumbleAxis * tumbleForce * Time.fixedDeltaTime, ForceMode.Acceleration);
+            
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        
+        currentState = AIState.Idle;
+    }
+    
+    void UpdateAIPhysics()
+    {
+        // Apply slight damping when not actively moving
+        if (currentState == AIState.Idle || currentState == AIState.Tumbling)
+        {
+            rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, new Vector3(0, rb.linearVelocity.y, 0), Time.fixedDeltaTime * 0.5f);
+        }
+        
+        // Limit maximum velocity
+        if (rb.linearVelocity.magnitude > rollSpeed * 2f)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * rollSpeed * 2f;
+        }
+    }
+    
+    #endregion
+
+    #region Original Methods
+    
     void SyncChildLayers()
     {
         if (holdable1 == null || holdable2 == null) return;
 
         bool eitherHeld = holdable1.isHeld || holdable2.isHeld;
         
-        // Get Rigidbodies
         Rigidbody rb1 = child1.GetComponent<Rigidbody>();
         Rigidbody rb2 = child2.GetComponent<Rigidbody>();
 
-        // 1. Handle Kinematic state and Layers
         if (eitherHeld)
         {
             SetLayerRecursive(child1, layerWhenHeld);
             SetLayerRecursive(child2, layerWhenHeld);
-            
-            // If an object is being held, we make it kinematic so it follows the hand perfectly
-            //if (holdable1.isHeld) rb1.isKinematic = true;
-            //if (holdable2.isHeld) rb2.isKinematic = true;
         }
         else
         {
-            // Return to physics when dropped
             if (!holdable1.isThrow) 
             {
                 SetLayerRecursive(child1, layerWhenDropped);
-                //rb1.isKinematic = false;
             }
             if (!holdable2.isThrow) 
             {
                 SetLayerRecursive(child2, layerWhenDropped);
-                //rb2.isKinematic = false;
             }
         }
-
-        // 2. Forced Look-At logic while held
-        // Since joints don't work well on Kinematic bodies, we manually rotate them
-        //if (holdable1.isHeld) ForceRotationToOther(child1, child2, child1ForwardAxis);
-        //if (holdable2.isHeld) ForceRotationToOther(child2, child1, child2ForwardAxis);
     }
 
     void ForceRotationToOther(Transform self, Transform target, LocalAxis axis)
@@ -186,7 +503,6 @@ public class slashNut : MonoBehaviour
         Vector3 direction = (target.position - self.position).normalized;
         if (direction == Vector3.zero) return;
 
-        // Determine what "Forward" is for this specific child
         Vector3 localForward = axis switch
         {
             LocalAxis.X => Vector3.right,
@@ -198,12 +514,10 @@ public class slashNut : MonoBehaviour
             _ => Vector3.forward
         };
 
-        // Calculate the rotation so that the chosen local axis points at the target
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         self.rotation = lookRotation * Quaternion.Inverse(Quaternion.LookRotation(localForward));
     }
 
-    // Helper to keep the code clean
     void SetLayerRecursive(Transform obj, int layer)
     {
         obj.gameObject.layer = layer;
@@ -263,7 +577,6 @@ public class slashNut : MonoBehaviour
         }
     }
 
-    // Manual torque application to assist the ConfigurableJoints during closing
     void ApplyClosingTorque()
     {
         Rigidbody rb1 = child1.GetComponent<Rigidbody>();
@@ -288,7 +601,6 @@ public class slashNut : MonoBehaviour
             _ => rb.transform.forward
         };
 
-        // Cross product finds the axis needed to rotate toward the target direction
         Vector3 torqueVector = Vector3.Cross(localAxisDir, targetDir);
         rb.AddTorque(torqueVector * currentExtraTorque, ForceMode.Acceleration);
     }
@@ -383,4 +695,6 @@ public class slashNut : MonoBehaviour
         
         Destroy(gameObject);
     }
+    
+    #endregion
 }
