@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4178001458526217355}
   - component: {fileID: 9154442201202259964}
   - component: {fileID: 2300174487731753800}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hemiSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 99934453246645829}
   - component: {fileID: 8105229575759245518}
   - component: {fileID: 3089149724724044700}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: holdableHalf1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,8 @@ MonoBehaviour:
   doNotRotate: 1
   dontSetKinematic: 1
   heldObjectLayer: heldObject
-  holdOffset: {x: 0, y: 0, z: 1.6}
+  motionCopier: {fileID: 0}
+  holdOffset: {x: 0, y: 0, z: 0.96}
   throwTargetHeightOffset: 0.35
   isThrow: 0
 --- !u!114 &8105229575759245518
@@ -241,7 +242,7 @@ SpringJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_Spring: 100
+  m_Spring: 1000
   m_Damper: 1.2
   m_MinDistance: 1
   m_MaxDistance: 0
@@ -264,7 +265,7 @@ GameObject:
   - component: {fileID: 7124852076806084587}
   - component: {fileID: 6694991726553494784}
   - component: {fileID: 1556500982966129778}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hemiSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +374,7 @@ GameObject:
   - component: {fileID: 535263163554649616}
   - component: {fileID: 3504865636356563173}
   - component: {fileID: 7106230806778710865}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: holdableHalf2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +446,8 @@ MonoBehaviour:
   doNotRotate: 1
   dontSetKinematic: 1
   heldObjectLayer: heldObject
-  holdOffset: {x: 0, y: 0, z: 1.6}
+  motionCopier: {fileID: 0}
+  holdOffset: {x: 0, y: 0, z: 0.96}
   throwTargetHeightOffset: 0.35
   isThrow: 0
 --- !u!114 &7106230806778710865
@@ -506,8 +508,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 108.3, y: 2.37, z: -291}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6548735243567657243}
   - {fileID: 7811268120579906735}
@@ -540,8 +542,8 @@ MonoBehaviour:
   forwardOffset: 1
   enableLineRenderer: 1
   lineMaterial: {fileID: 2100000, guid: 45c9910cdd57c22b798b25cf8b163141, type: 2}
-  lineWidthAtEnds: 1.5
-  minLineWidthAtCenter: 1.5
+  lineWidthAtEnds: 1
+  minLineWidthAtCenter: 1
   widthCurve:
     serializedVersion: 2
     m_Curve:
@@ -576,9 +578,27 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   lineSegments: 20
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  lineColor: {r: 0.3089593, g: 1, b: 0.2561553, a: 1}
   timeUntilClose: 5
   springForceIncreaseRate: 150
   torqueIncreaseRate: 1000
   closeDistanceThreshold: 0.5
-  breakDistanceThreshold: 13
+  breakDistanceThreshold: 10
+  enableAI: 0
+  playerDetectionRange: 15
+  attackRange: 12
+  wanderJumpForce: 8
+  wanderJumpInterval: 2
+  wanderJumpRandomness: 1
+  tumbleForce: 300
+  tumbleDuration: 1.5
+  rollSpeed: 12
+  attackJumpForce: 18
+  attackJumpArc: 1.2
+  circleOrbitRadius: 6
+  circleOrbitSpeed: 8
+  circleOrbitDuration: 3
+  reboundForce: 10
+  chanceRollAttack: 0.4
+  chanceJumpAttack: 0.35
+  chanceCircleAttack: 0.25

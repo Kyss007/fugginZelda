@@ -182,8 +182,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.35110638, z: 0, w: 0.93633556}
   m_LocalPosition: {x: 108.3, y: 2.37, z: -291}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 535090228045480108}
   - {fileID: 4505282639075052852}
@@ -260,9 +260,9 @@ MonoBehaviour:
   child2ForwardAxis: 2
   torqueIntensity: 5000
   torqueDamper: 100
-  initialBurstForce: 15
-  upOffset: 0.5
-  forwardOffset: 0.3
+  initialBurstForce: 13
+  upOffset: 0.3
+  forwardOffset: 0.2
   enableLineRenderer: 1
   lineMaterial: {fileID: 0}
   lineWidthAtEnds: 0.2
@@ -306,11 +306,11 @@ MonoBehaviour:
   wanderJumpRandomness: 1
   tumbleForce: 400
   tumbleDuration: 3
-  rollSpeed: 25
+  rollSpeed: 12
   attackJumpForce: 10
   attackJumpArc: 1.2
-  circleOrbitRadius: 10
-  circleOrbitSpeed: 25
+  circleOrbitRadius: 5
+  circleOrbitSpeed: 8
   circleOrbitDuration: 5
   reboundForce: 10
   chanceRollAttack: 0.4
